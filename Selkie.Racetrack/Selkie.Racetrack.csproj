@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C0C3967F-0CB2-4632-9FE9-CDAD632F45C8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Selkie.Racetrack</RootNamespace>
+    <AssemblyName>Selkie.Racetrack</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Calculators\BaseLinesToLinesRacetracksCalculator.cs" />
+    <Compile Include="Calculators\BaseRacetrackCalculator.cs" />
+    <Compile Include="Calculators\ForwardToForwardCalculator.cs" />
+    <Compile Include="Calculators\ForwardToReverseCalculator.cs" />
+    <Compile Include="Calculators\IBaseLinesToLinesRacetracksCalculator.cs" />
+    <Compile Include="Calculators\IBaseRacetrackCalculator.cs" />
+    <Compile Include="Calculators\ICalculator.cs" />
+    <Compile Include="Calculators\ICalculatorFactory.cs" />
+    <Compile Include="Calculators\IForwardToForwardCalculator.cs" />
+    <Compile Include="Calculators\IForwardToReverseCalculator.cs" />
+    <Compile Include="Calculators\ILinePairToRacetrackCalculator.cs" />
+    <Compile Include="Calculators\ILinesToLinesForwardToForwardRacetrackCalculator.cs" />
+    <Compile Include="Calculators\ILinesToLinesForwardToReverseRacetrackCalculator.cs" />
+    <Compile Include="Calculators\ILinesToLinesReverseToForwardRacetrackCalculator.cs" />
+    <Compile Include="Calculators\ILinesToLinesReverseToReverseRacetrackCalculator.cs" />
+    <Compile Include="Calculators\IPathSelectorCalculator.cs" />
+    <Compile Include="Calculators\IRacetracksCalculator.cs" />
+    <Compile Include="Calculators\IReverseToForwardCalculator.cs" />
+    <Compile Include="Calculators\IReverseToReverseCalculator.cs" />
+    <Compile Include="Calculators\LinePairToRacetrackCalculator.cs" />
+    <Compile Include="Calculators\LinesToLinesForwardToForwardRacetrackCalculator.cs" />
+    <Compile Include="Calculators\LinesToLinesForwardToReverseRacetrackCalculator.cs" />
+    <Compile Include="Calculators\LinesToLinesReverseToForwardRacetrackCalculator.cs" />
+    <Compile Include="Calculators\LinesToLinesReverseToReverseRacetrackCalculator.cs" />
+    <Compile Include="Calculators\PathCalculator.cs" />
+    <Compile Include="Calculators\PathSelectorCalculator.cs" />
+    <Compile Include="Calculators\RacetracksCalculator.cs" />
+    <Compile Include="Calculators\ReverseToForwardCalculator.cs" />
+    <Compile Include="Calculators\ReverseToReverseCalculator.cs" />
+    <Compile Include="Converter\ITurnCirclePairsToPathsConverter.cs" />
+    <Compile Include="Converter\ITurnCirclePairToPathCreator.cs" />
+    <Compile Include="Converter\TurnCirclePairToPathCreator.cs" />
+    <Compile Include="Calculators\IPathCalculator.cs" />
+    <Compile Include="Calculators\ILinePointDirectionCalculator.cs" />
+    <Compile Include="Converter\IConverter.cs" />
+    <Compile Include="Installer.cs" />
+    <Compile Include="IPath.cs" />
+    <Compile Include="Calculators\IRacetrackLineDirectionCalculator.cs" />
+    <Compile Include="Converter\ITurnCirclePairToPathConverter.cs" />
+    <Compile Include="Calculators\LinePointDirectionForHorizontalOrVerticalLineCalculator.cs" />
+    <Compile Include="IPathShortestFinder.cs" />
+    <Compile Include="IPathValidator.cs" />
+    <Compile Include="IRacetracks.cs" />
+    <Compile Include="PathValidator.cs" />
+    <Compile Include="Calculators\RacetrackLineDirectionCalculator.cs" />
+    <Compile Include="Turn\IPossibleTurnCirclePairs.cs" />
+    <Compile Include="Turn\IPossibleTurnCircles.cs" />
+    <Compile Include="ISettings.cs" />
+    <Compile Include="Turn\ITurnCircleArcSegment.cs" />
+    <Compile Include="Turn\ITurnCirclePair.cs" />
+    <Compile Include="UTurn\AngleToCentrePointCalculator.cs" />
+    <Compile Include="UTurn\DetermineTurnCircleCalculator.cs" />
+    <Compile Include="UTurn\IDetermineTurnCircleCalculator.cs" />
+    <Compile Include="UTurn\IUTurnCircleCalculator.cs" />
+    <Compile Include="UTurn\IAngleToCentrePointCalculator.cs" />
+    <Compile Include="UTurn\IUTurnCircle.cs" />
+    <Compile Include="UTurn\IUTurnPath.cs" />
+    <Compile Include="Path.cs" />
+    <Compile Include="PathShortestFinder.cs" />
+    <Compile Include="Turn\PossibleTurnCirclePairs.cs" />
+    <Compile Include="Turn\PossibleTurnCircles.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Turn\ITurnCircle.cs" />
+    <Compile Include="Turn\TurnCircle.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Turn\TurnCircleArcSegment.cs" />
+    <Compile Include="Turn\TurnCirclePair.cs" />
+    <Compile Include="Converter\TurnCirclePairsToPathsConverter.cs" />
+    <Compile Include="Converter\TurnCirclePairToPathConverter.cs" />
+    <Compile Include="UTurn\UTurnCircle.cs" />
+    <Compile Include="UTurn\UTurnCircleCalculator.cs" />
+    <Compile Include="UTurn\UTurnPath.cs" />
+    <Compile Include="UTurn\DetermineCirclePairCalculator.cs" />
+    <Compile Include="UTurn\IDetermineCirclePairCalculator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Facilities.Logging">
+      <HintPath>..\packages\Castle.LoggingFacility.3.3.0\lib\net45\Castle.Facilities.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Services.Logging.NLogIntegration">
+      <HintPath>..\packages\Castle.Core-NLog.3.3.3\lib\net45\Castle.Services.Logging.NLogIntegration.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="JetBrains.Annotations">
+      <HintPath>..\packages\JetBrains.Annotations.Redist.7.1\lib\net40\JetBrains.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.3.1.0.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Selkie.Common, Version=0.6.146.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selkie.Common.0.6.146.0\lib\net45\Selkie.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Selkie.Geometry, Version=0.6.60.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selkie.Geometry.0.6.60.0\lib\net45\Selkie.Geometry.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Selkie.Windsor, Version=0.6.210.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selkie.Windsor.0.6.210.0\lib\net45\Selkie.Windsor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy $(TargetDir)Selkie.Racetrack.dll $(SolutionDir)NuGet.Selkie.Racetrack\lib\net45 /Y /E</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
