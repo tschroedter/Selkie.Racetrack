@@ -1,7 +1,6 @@
 using JetBrains.Annotations;
 using Selkie.Geometry;
 using Selkie.Geometry.Shapes;
-using Selkie.Racetrack.Turn;
 using Selkie.Windsor;
 
 namespace Selkie.Racetrack.UTurn

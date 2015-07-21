@@ -4,7 +4,6 @@ using NSubstitute;
 using NUnit.Framework;
 using Selkie.Geometry.Primitives;
 using Selkie.Geometry.Shapes;
-using Selkie.Racetrack.Turn;
 
 namespace Selkie.Racetrack.Tests.NUnit
 {

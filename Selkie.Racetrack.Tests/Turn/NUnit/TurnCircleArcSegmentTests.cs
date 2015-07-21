@@ -3,7 +3,6 @@ using NUnit.Framework;
 using Selkie.Geometry.Primitives;
 using Selkie.Geometry.Shapes;
 using Selkie.NUnit.Extensions;
-using Selkie.Racetrack.Turn;
 using Constants = Selkie.Geometry.Constants;
 
 namespace Selkie.Racetrack.Tests.Turn.NUnit

@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Selkie.Geometry.Shapes;
 using Selkie.Racetrack.Calculators;
 using Selkie.Racetrack.Turn;
 
