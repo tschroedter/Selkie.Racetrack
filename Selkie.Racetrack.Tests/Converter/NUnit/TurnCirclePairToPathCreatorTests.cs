@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Castle.Core.Logging;
 using NSubstitute;
 using NUnit.Framework;
 using Selkie.Geometry.Primitives;
@@ -9,6 +8,7 @@ using Selkie.Geometry.Shapes;
 using Selkie.NUnit.Extensions;
 using Selkie.Racetrack.Converter;
 using Selkie.Racetrack.Turn;
+using Selkie.Windsor;
 using Constants = Selkie.Geometry.Constants;
 
 namespace Selkie.Racetrack.Tests.Converter.NUnit
@@ -23,7 +23,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
             [SetUp]
             public void Setup()
             {
-                m_Logger = Substitute.For <ILogger>();
+                m_Logger = Substitute.For <ISelkieLogger>();
 
                 m_StartPoint = new Point(18.5,
                                          2.5);
@@ -65,7 +65,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
 
             private TurnCirclePairToPathCreator m_Creator;
             private Point m_FinishPoint;
-            private ILogger m_Logger;
+            private ISelkieLogger m_Logger;
             private ISettings m_Settings;
             private Point m_StartPoint;
             private ILine m_Tangent;
@@ -162,7 +162,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
             [SetUp]
             public void Setup()
             {
-                m_Logger = Substitute.For <ILogger>();
+                m_Logger = Substitute.For <ISelkieLogger>();
 
                 m_StartPoint = new Point(8.5,
                                          2.5);
@@ -203,7 +203,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
 
             private TurnCirclePairToPathCreator m_Creator;
             private Point m_FinishPoint;
-            private ILogger m_Logger;
+            private ISelkieLogger m_Logger;
             private ISettings m_Settings;
             private Point m_StartPoint;
             private ILine m_Tangent;
@@ -308,7 +308,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
             [SetUp]
             public void Setup()
             {
-                m_Logger = Substitute.For <ILogger>();
+                m_Logger = Substitute.For <ISelkieLogger>();
 
                 m_StartPoint = new Point(8.5,
                                          2.5);
@@ -350,7 +350,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
 
             private TurnCirclePairToPathCreator m_Creator;
             private Point m_FinishPoint;
-            private ILogger m_Logger;
+            private ISelkieLogger m_Logger;
             private ISettings m_Settings;
             private Point m_StartPoint;
             private ILine m_Tangent;
@@ -447,7 +447,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
             [SetUp]
             public void Setup()
             {
-                m_Logger = Substitute.For <ILogger>();
+                m_Logger = Substitute.For <ISelkieLogger>();
 
                 m_StartPoint = new Point(12.5,
                                          14.0);
@@ -489,7 +489,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
 
             private TurnCirclePairToPathCreator m_Creator;
             private Point m_FinishPoint;
-            private ILogger m_Logger;
+            private ISelkieLogger m_Logger;
             private ISettings m_Settings;
             private Point m_StartPoint;
             private ILine m_Tangent;
@@ -586,7 +586,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
             [SetUp]
             public void Setup()
             {
-                m_Logger = Substitute.For <ILogger>();
+                m_Logger = Substitute.For <ISelkieLogger>();
 
                 m_StartPoint = new Point(12.5,
                                          14.0);
@@ -628,7 +628,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
 
             private TurnCirclePairToPathCreator m_Creator;
             private Point m_FinishPoint;
-            private ILogger m_Logger;
+            private ISelkieLogger m_Logger;
             private ISettings m_Settings;
             private Point m_StartPoint;
             private ILine m_Tangent;
@@ -725,7 +725,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
             [SetUp]
             public void Setup()
             {
-                m_Logger = Substitute.For <ILogger>();
+                m_Logger = Substitute.For <ISelkieLogger>();
 
                 m_StartPoint = new Point(12.5,
                                          14.0);
@@ -767,7 +767,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
 
             private TurnCirclePairToPathCreator m_Creator;
             private Point m_FinishPoint;
-            private ILogger m_Logger;
+            private ISelkieLogger m_Logger;
             private ISettings m_Settings;
             private Point m_StartPoint;
             private ILine m_Tangent;

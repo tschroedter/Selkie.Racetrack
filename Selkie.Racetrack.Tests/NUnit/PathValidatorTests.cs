@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Castle.Core.Logging;
 using JetBrains.Annotations;
 using NSubstitute;
 using NUnit.Framework;
 using Selkie.Geometry;
 using Selkie.Geometry.Shapes;
+using Selkie.Windsor;
 
 namespace Selkie.Racetrack.Tests.NUnit
 {
@@ -20,12 +20,12 @@ namespace Selkie.Racetrack.Tests.NUnit
         {
             m_DefaultTurnDirection = Constants.TurnDirection.Clockwise;
 
-            m_Logger = Substitute.For <ILogger>();
+            m_Logger = Substitute.For <ISelkieLogger>();
             m_DefaultTurnDirection = Constants.TurnDirection.Clockwise;
         }
 
         private Constants.TurnDirection m_DefaultTurnDirection;
-        private ILogger m_Logger;
+        private ISelkieLogger m_Logger;
 
         [NotNull]
         private PathValidator CreatePathValidator()

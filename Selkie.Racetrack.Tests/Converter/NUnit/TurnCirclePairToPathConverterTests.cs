@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Castle.Core.Logging;
 using NSubstitute;
 using NUnit.Framework;
 using Selkie.Geometry.Primitives;
@@ -8,6 +7,7 @@ using Selkie.Geometry.Shapes;
 using Selkie.NUnit.Extensions;
 using Selkie.Racetrack.Converter;
 using Selkie.Racetrack.Turn;
+using Selkie.Windsor;
 using Constants = Selkie.Geometry.Constants;
 
 namespace Selkie.Racetrack.Tests.Converter.NUnit
@@ -24,7 +24,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
             [SetUp]
             public void Setup()
             {
-                m_Logger = Substitute.For <ILogger>();
+                m_Logger = Substitute.For <ISelkieLogger>();
 
                 m_PathValidator = Substitute.For <IPathValidator>();
 
@@ -67,7 +67,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
 
             private TurnCirclePairToPathConverter m_Converter;
             private Point m_FinishPoint;
-            private ILogger m_Logger;
+            private ISelkieLogger m_Logger;
             private IPathValidator m_PathValidator;
             private ISettings m_Settings;
             private Point m_StartPoint;
@@ -93,7 +93,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
             [SetUp]
             public void Setup()
             {
-                m_Logger = Substitute.For <ILogger>();
+                m_Logger = Substitute.For <ISelkieLogger>();
 
                 m_PathValidator = Substitute.For <IPathValidator>();
 
@@ -135,7 +135,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
 
             private TurnCirclePairToPathConverter m_Converter;
             private Point m_FinishPoint;
-            private ILogger m_Logger;
+            private ISelkieLogger m_Logger;
             private IPathValidator m_PathValidator;
             private ISettings m_Settings;
             private Point m_StartPoint;
@@ -239,7 +239,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
             [SetUp]
             public void Setup()
             {
-                m_Logger = Substitute.For <ILogger>();
+                m_Logger = Substitute.For <ISelkieLogger>();
 
                 m_PathValidator = Substitute.For <IPathValidator>();
 
@@ -281,7 +281,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
 
             private TurnCirclePairToPathConverter m_Converter;
             private Point m_FinishPoint;
-            private ILogger m_Logger;
+            private ISelkieLogger m_Logger;
             private IPathValidator m_PathValidator;
             private ISettings m_Settings;
             private Point m_StartPoint;
@@ -507,7 +507,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
             [SetUp]
             public void Setup()
             {
-                m_Logger = Substitute.For <ILogger>();
+                m_Logger = Substitute.For <ISelkieLogger>();
 
                 m_PathValidator = new PathValidator(m_Logger);
 
@@ -553,7 +553,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
 
             private TurnCirclePairToPathConverter m_Converter;
             private Point m_FinishPoint;
-            private ILogger m_Logger;
+            private ISelkieLogger m_Logger;
             private IPathValidator m_PathValidator;
             private ISettings m_Settings;
             private Point m_StartPoint;
@@ -674,13 +674,13 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
 
         internal sealed class GeneralTests
         {
-            private ILogger m_Logger;
+            private ISelkieLogger m_Logger;
             private IPathValidator m_PathValidator;
 
             [SetUp]
             public void Setup()
             {
-                m_Logger = Substitute.For <ILogger>();
+                m_Logger = Substitute.For <ISelkieLogger>();
                 m_PathValidator = Substitute.For <IPathValidator>();
             }
 

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Castle.Core.Logging;
 using NSubstitute;
 using NUnit.Framework;
 using Selkie.Geometry.Primitives;
@@ -11,6 +10,7 @@ using Selkie.Racetrack.Calculators;
 using Selkie.Racetrack.Converter;
 using Selkie.Racetrack.Turn;
 using Selkie.Racetrack.UTurn;
+using Selkie.Windsor;
 using Constants = Selkie.Geometry.Constants;
 
 namespace Selkie.Racetrack.Tests.Calculators.NUnit
@@ -28,7 +28,7 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
             [SetUp]
             public void Setup()
             {
-                m_Logger = Substitute.For <ILogger>();
+                m_Logger = Substitute.For <ISelkieLogger>();
 
                 m_FromLine = new Line(new Point(100.0,
                                                 0.0),
@@ -106,7 +106,7 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
             private TurnCirclePairToPathConverter m_Converter;
             private DetermineTurnCircleCalculator m_DetermineTurnCircleCalculator;
             private ILine m_FromLine;
-            private ILogger m_Logger;
+            private ISelkieLogger m_Logger;
             private PathShortestFinder m_PathShortestFinder;
             private PathValidator m_PathValidator;
             private IPossibleTurnCirclePairs m_PossibleTurnCirclePairs;
@@ -237,7 +237,7 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
             // ReSharper disable once MethodTooLong
             public void Setup()
             {
-                m_Logger = Substitute.For <ILogger>();
+                m_Logger = Substitute.For <ISelkieLogger>();
 
                 m_FromLine = new Line(new Point(100.0,
                                                 0.0),
@@ -316,7 +316,7 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
             private TurnCirclePairToPathConverter m_Converter;
             private DetermineTurnCircleCalculator m_DetermineTurnCircleCalculator;
             private ILine m_FromLine;
-            private ILogger m_Logger;
+            private ISelkieLogger m_Logger;
             private PathShortestFinder m_PathShortestFinder;
             private PathValidator m_PathValidator;
             private IPossibleTurnCirclePairs m_PossibleTurnCirclePairs;
@@ -451,7 +451,7 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
             // ReSharper disable once MethodTooLong
             public void Setup()
             {
-                m_Logger = Substitute.For <ILogger>();
+                m_Logger = Substitute.For <ISelkieLogger>();
 
                 m_FromLine = new Line(new Point(8.5,
                                                 2.5),
@@ -525,7 +525,7 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
             private TurnCirclePairToPathConverter m_Converter;
             private DetermineTurnCircleCalculator m_DetermineTurnCircleCalculator;
             private Line m_FromLine;
-            private ILogger m_Logger;
+            private ISelkieLogger m_Logger;
             private PathShortestFinder m_PathShortestFinder;
             private PathValidator m_PathValidator;
             private IPossibleTurnCirclePairs m_PossibleTurnCirclePairs;
@@ -629,7 +629,7 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
             // ReSharper disable once MethodTooLong
             public void Setup()
             {
-                Substitute.For <ILogger>();
+                Substitute.For <ISelkieLogger>();
 
                 m_StartPoint = new Point(1.0,
                                          2.0);
@@ -737,7 +737,7 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
             // ReSharper disable once MethodTooLong
             public void Setup()
             {
-                m_Logger = Substitute.For <ILogger>();
+                m_Logger = Substitute.For <ISelkieLogger>();
 
                 m_StartPoint = new Point(1.0,
                                          2.0);
@@ -797,7 +797,7 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
             private TurnCirclePairToPathConverter m_Converter;
             private Angle m_FinishAzimuth;
             private Point m_FinishPoint;
-            private ILogger m_Logger;
+            private ISelkieLogger m_Logger;
             private IPath m_Path;
             private IPath m_PathForUTurnPath;
             private IEnumerable <IPath> m_Paths;
@@ -843,7 +843,7 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
             // ReSharper disable once MethodTooLong
             public void Setup()
             {
-                m_Logger = Substitute.For <ILogger>();
+                m_Logger = Substitute.For <ISelkieLogger>();
 
                 m_FromLine = new Line(new Point(8.5,
                                                 0.0),
@@ -914,7 +914,7 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
             private TurnCirclePairToPathConverter m_Converter;
             private DetermineTurnCircleCalculator m_DetermineTurnCircleCalculator;
             private Line m_FromLine;
-            private ILogger m_Logger;
+            private ISelkieLogger m_Logger;
             private PathShortestFinder m_PathShortestFinder;
             private PathValidator m_PathValidator;
             private IPossibleTurnCirclePairs m_PossibleTurnCirclePairs;

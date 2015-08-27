@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Castle.Core.Logging;
 using JetBrains.Annotations;
 using Selkie.Geometry;
 using Selkie.Geometry.Shapes;
@@ -11,9 +10,9 @@ namespace Selkie.Racetrack
     [ProjectComponent(Lifestyle.Transient)]
     public class PathValidator : IPathValidator
     {
-        private readonly ILogger m_Logger;
+        private readonly ISelkieLogger m_Logger;
 
-        public PathValidator([NotNull] ILogger logger)
+        public PathValidator([NotNull] ISelkieLogger logger)
         {
             m_Logger = logger;
         }

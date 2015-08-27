@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Castle.Core.Logging;
 using NSubstitute;
 using NUnit.Framework;
 using Selkie.Geometry;
@@ -9,6 +8,7 @@ using Selkie.Geometry.Primitives;
 using Selkie.Geometry.Shapes;
 using Selkie.Racetrack.Converter;
 using Selkie.Racetrack.Turn;
+using Selkie.Windsor;
 
 namespace Selkie.Racetrack.Tests.Converter.NUnit
 {
@@ -20,7 +20,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
         [SetUp]
         public void Setup()
         {
-            m_Logger = Substitute.For <ILogger>();
+            m_Logger = Substitute.For <ISelkieLogger>();
 
             m_StartPoint = new Point(12.5,
                                      14.0);
@@ -93,7 +93,7 @@ namespace Selkie.Racetrack.Tests.Converter.NUnit
 
         private TurnCirclePairsToPathsConverter m_Converter;
         private Point m_FinishPoint;
-        private ILogger m_Logger;
+        private ISelkieLogger m_Logger;
         private TurnCirclePair m_PairOne;
         private TurnCirclePair m_PairTwo;
         private PathValidator m_PathValidator;

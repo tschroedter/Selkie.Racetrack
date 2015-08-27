@@ -1,24 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Castle.Core.Logging;
 using JetBrains.Annotations;
 using Selkie.Geometry;
 using Selkie.Geometry.Shapes;
 using Selkie.Racetrack.Turn;
+using Selkie.Windsor;
 
 namespace Selkie.Racetrack.Converter
 {
     public class TurnCirclePairToPathConverter : ITurnCirclePairToPathConverter
     {
-        private readonly ILogger m_Logger;
+        private readonly ISelkieLogger m_Logger;
         private readonly IPathValidator m_PathValidator;
         private IEnumerable <IPath> m_Paths = new IPath[0];
         private IEnumerable <IPath> m_PossiblePaths = new IPath[0];
         private ISettings m_Settings = Racetrack.Settings.Unknown;
         private ITurnCirclePair m_TurnCirclePair = Turn.TurnCirclePair.Unknown;
 
-        public TurnCirclePairToPathConverter([NotNull] ILogger logger,
+        public TurnCirclePairToPathConverter([NotNull] ISelkieLogger logger,
                                              [NotNull] IPathValidator pathValidator)
         {
             m_Logger = logger;
