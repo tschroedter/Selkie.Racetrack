@@ -548,7 +548,7 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
                                                                                 m_Circles);
 
                 Assert.AreEqual(1,
-                                pairs.Count(),
+                                pairs.Count,
                                 "Count");
             }
 

@@ -9,6 +9,7 @@ using Selkie.Windsor;
 
 namespace Selkie.Racetrack.Tests.NUnit
 {
+    // todo cleanup all tests, make sure to use arrange, act, assert and method name
     // ReSharper disable ClassTooBig
     // ReSharper disable MethodTooLong
     [TestFixture]

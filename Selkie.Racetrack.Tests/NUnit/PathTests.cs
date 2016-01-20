@@ -2,6 +2,7 @@
 using System.Linq;
 using NSubstitute;
 using NUnit.Framework;
+using Selkie.Geometry;
 using Selkie.Geometry.Primitives;
 using Selkie.Geometry.Shapes;
 
@@ -10,6 +11,8 @@ namespace Selkie.Racetrack.Tests.NUnit
     [ExcludeFromCodeCoverage]
     internal sealed class PathTests
     {
+        private const int DoNotCareId = -1;
+
         #region Nested type: CommonTests
 
         [TestFixture]
@@ -36,12 +39,15 @@ namespace Selkie.Racetrack.Tests.NUnit
             private ITurnCircleArcSegment m_StartArcSegment;
 
             [Test]
-            public void AddTest()
+            public void Add_AddsSegmentToSegments_ForSegment()
             {
+                // Arrange
                 var path = new Path(Point.Unknown);
 
+                // Act
                 path.AddSegment(m_Segment1);
 
+                // Assert
                 Assert.AreEqual(1,
                                 path.Segments.Count(),
                                 "Count");
@@ -56,13 +62,16 @@ namespace Selkie.Racetrack.Tests.NUnit
             }
 
             [Test]
-            public void ConstructorOnePointTest()
+            public void Constructor_AddsPointToSegments_ForSinglePoint()
             {
+                // Arrange
                 var startPoint = new Point(10.0,
                                            10.0);
 
+                // Act
                 var path = new Path(startPoint);
 
+                // Assert
                 Assert.AreEqual(startPoint,
                                 path.StartPoint,
                                 "StartPoint");
@@ -72,17 +81,21 @@ namespace Selkie.Racetrack.Tests.NUnit
             }
 
             [Test]
-            public void ConstructorPolylineTest()
+            public void Constructor_AddsPolylineToSegements_ForPolyline()
             {
+                // Arrange
                 var line = new Line(-10.0,
                                     -10.0,
                                     10.0,
                                     10.0);
-                var polyline = new Polyline();
+                var polyline = new Polyline(DoNotCareId,
+                                            Constants.LineDirection.Forward);
                 polyline.AddSegment(line);
 
+                // Act
                 var path = new Path(polyline);
 
+                // Assert
                 Assert.AreEqual(line.StartPoint,
                                 path.StartPoint,
                                 "StartPoint");
@@ -95,76 +108,95 @@ namespace Selkie.Racetrack.Tests.NUnit
             }
 
             [Test]
-            public void DefaultIsUnknownTest()
+            public void Constructor_AddsSegments_ForEndArcSegment()
             {
-                Point path = Point.Unknown;
-
-                Assert.True(path.IsUnknown);
-            }
-
-            [Test]
-            public void DefaultSegmentsTest()
-            {
-                var path = new Path(m_Segment1.StartPoint);
-
-                Assert.AreEqual(0,
-                                path.Segments.Count(),
-                                "Count");
-                Assert.AreEqual(new Distance(0.0),
-                                path.Distance,
-                                "Distance");
-            }
-
-            [Test]
-            public void EndArcSegmentTest()
-            {
+                // Arrange
                 var path = new Path(m_StartArcSegment,
                                     m_Line,
                                     m_EndArcSegment);
 
+                // Act
                 IPolylineSegment[] segments = path.Segments.ToArray();
                 IPolylineSegment actual = segments [ 2 ];
 
+                // Assert
                 Assert.AreEqual(m_EndArcSegment,
                                 actual);
             }
 
             [Test]
-            public void LengthTest()
+            public void Constructor_AddsSegments_ForMiddleSegment()
             {
-                var path = new Path(m_Segment1.StartPoint);
-
-                path.AddSegment(m_Segment1);
-                path.AddSegment(m_Segment2);
-
-                Assert.AreEqual(3.0,
-                                path.Distance.Length);
-            }
-
-            [Test]
-            public void LineTest()
-            {
+                // Arrange
                 var path = new Path(m_StartArcSegment,
                                     m_Line,
                                     m_EndArcSegment);
 
+                // Act
                 IPolylineSegment[] segments = path.Segments.ToArray();
                 IPolylineSegment actual = segments [ 1 ];
 
+                // Assert
                 Assert.AreEqual(m_Line,
                                 actual);
             }
 
             [Test]
-            public void ReverseForEmptyTest()
+            public void Constructor_AddsSegments_ForStartArcSegment()
             {
+                // Arrange
+                var path = new Path(m_StartArcSegment,
+                                    m_Line,
+                                    m_EndArcSegment);
+
+                // Act
+                IPolylineSegment[] segments = path.Segments.ToArray();
+                IPolylineSegment actual = segments [ 0 ];
+
+                // Assert
+                Assert.AreEqual(m_StartArcSegment,
+                                actual);
+            }
+
+            [Test]
+            public void IsUnknown_ReturnsTrue_ByDefault()
+            {
+                // Arrange
+                // Act
+                Point path = Point.Unknown;
+
+                // Assert
+                Assert.True(path.IsUnknown);
+            }
+
+            [Test]
+            public void Length_ReturnsValue_ForSegments()
+            {
+                // Arrange
+                var path = new Path(m_Segment1.StartPoint);
+
+                // Act
+                path.AddSegment(m_Segment1);
+                path.AddSegment(m_Segment2);
+
+                // Assert
+                Assert.AreEqual(3.0,
+                                path.Distance.Length);
+            }
+
+            [Test]
+            public void Reverse_ReturnsPath_ForPoint()
+            {
+                // Arrange
                 var startPoint = new Point(-10.0,
                                            -10.0);
 
                 var path = new Path(startPoint);
 
+                // Act
                 IPath actual = path.Reverse();
 
+                // Assert
                 Assert.AreEqual(startPoint,
                                 actual.StartPoint,
                                 "StartPoint");
@@ -174,37 +206,43 @@ namespace Selkie.Racetrack.Tests.NUnit
             }
 
             [Test]
-            public void StartArcSegmentTest()
+            public void Segments_ReturnsEmpty_ByDefault()
             {
-                var path = new Path(m_StartArcSegment,
-                                    m_Line,
-                                    m_EndArcSegment);
+                // Arrange
+                // Act
+                var path = new Path(m_Segment1.StartPoint);
 
-                IPolylineSegment[] segments = path.Segments.ToArray();
-                IPolylineSegment actual = segments [ 0 ];
-
-                Assert.AreEqual(m_StartArcSegment,
-                                actual);
+                // Assert
+                Assert.AreEqual(0,
+                                path.Segments.Count(),
+                                "Count");
+                Assert.AreEqual(new Distance(0.0),
+                                path.Distance,
+                                "Distance");
             }
 
             [Test]
-            public void ToStringTest()
+            public void ToString_ReturnsString_ForInstance()
             {
+                // Arrange
+                const string expected = "Length: 29.28";
+
                 var line = new Line(-10.0,
                                     -10.0,
                                     10.0,
                                     10.0);
-                var polyline = new Polyline();
+                var polyline = new Polyline(DoNotCareId,
+                                            Constants.LineDirection.Forward);
 
                 polyline.AddSegment(line);
 
                 var path = new Path(polyline);
 
+                // Act
                 path.AddSegment(m_Segment1);
-
-                const string expected = "Length: 29.28";
                 string actual = path.ToString();
 
+                // Assert
                 Assert.AreEqual(expected,
                                 actual);
             }
@@ -238,43 +276,52 @@ namespace Selkie.Racetrack.Tests.NUnit
             private ITurnCircleArcSegment m_StartArcSegment;
 
             [Test]
-            public void EndArcSegmentTest()
+            public void Constructor_AddsSegments_ForEndArcSegment()
             {
+                // Arrange
                 var path = new Path(m_StartArcSegment,
                                     m_Line,
                                     m_EndArcSegment);
 
+                // Act
                 IPolylineSegment[] segments = path.Segments.ToArray();
                 IPolylineSegment actual = segments [ 2 ];
 
+                // Assert
                 Assert.AreEqual(m_EndArcSegment,
                                 actual);
             }
 
             [Test]
-            public void LineTest()
+            public void Constructor_AddsSegments_ForMiddleSegment()
             {
+                // Arrange
                 var path = new Path(m_StartArcSegment,
                                     m_Line,
                                     m_EndArcSegment);
 
+                // Act
                 IPolylineSegment[] segments = path.Segments.ToArray();
                 IPolylineSegment actual = segments [ 1 ];
 
+                // Assert
                 Assert.AreEqual(m_Line,
                                 actual);
             }
 
             [Test]
-            public void StartArcSegmentTest()
+            public void Constructor_AddsSegments_ForStartArcSegment()
             {
+                // Arrange
                 var path = new Path(m_StartArcSegment,
                                     m_Line,
                                     m_EndArcSegment);
 
+                // Act
                 IPolylineSegment[] segments = path.Segments.ToArray();
                 IPolylineSegment actual = segments [ 0 ];
 
+                // Assert
                 Assert.AreEqual(m_StartArcSegment,
                                 actual);
             }
@@ -308,43 +355,52 @@ namespace Selkie.Racetrack.Tests.NUnit
             private ITurnCircleArcSegment m_StartArcSegment;
 
             [Test]
-            public void EndArcSegmentTest()
+            public void Constructor_AddsSegments_ForEndArcSegment()
             {
+                // Arrange
                 var path = new Path(m_StartArcSegment,
                                     m_MiddleArcSegment,
                                     m_EndArcSegment);
 
+                // Act
                 IPolylineSegment[] segments = path.Segments.ToArray();
                 IPolylineSegment actual = segments [ 2 ];
 
+                // Assert
                 Assert.AreEqual(m_EndArcSegment,
                                 actual);
             }
 
             [Test]
-            public void MiddleArcSegmentTest()
+            public void Constructor_AddsSegments_ForMiddleSegmentt()
             {
+                // Arrange
                 var path = new Path(m_StartArcSegment,
                                     m_MiddleArcSegment,
                                     m_EndArcSegment);
 
+                // Act
                 IPolylineSegment[] segments = path.Segments.ToArray();
                 IPolylineSegment actual = segments [ 1 ];
 
+                // Assert
                 Assert.AreEqual(m_MiddleArcSegment,
                                 actual);
             }
 
             [Test]
-            public void StartArcSegmentTest()
+            public void Constructor_AddsSegments_ForStartArcSegment()
             {
+                // Arrange
                 var path = new Path(m_StartArcSegment,
                                     m_MiddleArcSegment,
                                     m_EndArcSegment);
 
+                // Act
                 IPolylineSegment[] segments = path.Segments.ToArray();
                 IPolylineSegment actual = segments [ 0 ];
 
+                // Assert
                 Assert.AreEqual(m_StartArcSegment,
                                 actual);
             }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+using Selkie.Geometry;
 using Selkie.Geometry.Primitives;
 using Selkie.Geometry.Shapes;
 using Selkie.Windsor;
@@ -11,8 +12,12 @@ namespace Selkie.Racetrack
     [ProjectComponent(Lifestyle.Transient)]
     public class Path : IPath
     {
+        private const int DoNotCareId = -1;
         public static readonly IPath Unknown = new Path(Point.Unknown);
-        private readonly IPolyline m_Polyline = new Polyline();
+
+        private readonly IPolyline m_Polyline = new Polyline(DoNotCareId,
+                                                             Constants.LineDirection.Forward);
+
         private readonly Point m_StartPoint;
         private Point m_EndPoint = Point.Unknown;
 

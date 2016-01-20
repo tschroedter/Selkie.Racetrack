@@ -126,7 +126,7 @@ namespace Selkie.Racetrack.Calculators
         {
             double slope = ( by - ay ) / ( bx - ax );
             double yIntercept = ay - ax * slope;
-            double cSolution = ( slope * cx ) + yIntercept;
+            double cSolution = slope * cx + yIntercept;
 
             if ( Math.Abs(slope - 0.0) > Constants.EpsilonDistance )
             {

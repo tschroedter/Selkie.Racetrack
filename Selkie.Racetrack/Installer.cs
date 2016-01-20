@@ -1,21 +1,18 @@
-﻿using Castle.Core;
+﻿using System.Diagnostics.CodeAnalysis;
+using Castle.Core;
 using Castle.Facilities.TypedFactory;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
+using Selkie.Common;
 using Selkie.Racetrack.Calculators;
 using Selkie.Racetrack.Converter;
-using Selkie.Windsor;
 
 namespace Selkie.Racetrack
 {
-    public class Installer : BaseInstaller <Installer>
+    [ExcludeFromCodeCoverage]
+    public class Installer : SelkieInstaller <Installer>
     {
-        public override string GetPrefixOfDllsToInstall()
-        {
-            return "Selkie.";
-        }
-
         protected override void InstallComponents(IWindsorContainer container,
                                                   IConfigurationStore store)
         {

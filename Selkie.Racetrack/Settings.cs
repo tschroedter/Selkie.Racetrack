@@ -102,9 +102,9 @@ namespace Selkie.Racetrack
         {
             unchecked
             {
-                int result = ( m_StartPoint != null
-                                   ? m_StartPoint.GetHashCode()
-                                   : 0 );
+                int result = m_StartPoint != null
+                                 ? m_StartPoint.GetHashCode()
+                                 : 0;
                 result = ( result * 397 ) ^ ( m_StartAzimuth != null
                                                   ? m_StartAzimuth.GetHashCode()
                                                   : 0 );

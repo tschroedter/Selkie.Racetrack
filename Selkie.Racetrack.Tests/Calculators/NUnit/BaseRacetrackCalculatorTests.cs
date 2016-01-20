@@ -66,7 +66,7 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
             IPath[] actual = m_Calculator.Paths;
 
             Assert.AreEqual(0,
-                            actual.Count());
+                            actual.Length);
         }
 
         [Test]
@@ -86,7 +86,7 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
             IPath[] actual = m_Calculator.Paths;
 
             Assert.AreEqual(1,
-                            actual.Count());
+                            actual.Length);
         }
 
         [Test]
@@ -126,7 +126,7 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
             IPath[] actual = m_Calculator.Paths;
 
             Assert.AreEqual(2,
-                            actual.Count());
+                            actual.Length);
         }
 
         [Test]
@@ -258,7 +258,7 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
         public void ToLinesDefaultTest()
         {
             Assert.AreEqual(0,
-                            m_Calculator.ToLines.Count());
+                            m_Calculator.ToLines.Length);
         }
     }
 }
