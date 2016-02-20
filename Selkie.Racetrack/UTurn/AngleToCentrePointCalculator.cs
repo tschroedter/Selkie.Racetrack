@@ -14,49 +14,61 @@ namespace Selkie.Racetrack.UTurn
     public class AngleToCentrePointCalculator : IAngleToCentrePointCalculator
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly Angle m_AngleForLeftTurnCircle;
-        private readonly Angle m_AngleForRightTurnCircle;
-        private readonly Point m_CentrePoint;
-        private readonly Point m_LeftIntersectionPoint;
-        private readonly ITurnCircle m_LeftTurnCircle;
-        private readonly Point m_RightIntersectionPoint;
-        private readonly ITurnCircle m_RightTurnCircle;
 
-        public AngleToCentrePointCalculator([NotNull] ITurnCirclePair pair)
+        public AngleToCentrePointCalculator()
         {
-            if ( !IsValid(pair) )
+            CentrePoint = Point.Unknown;
+            LeftIntersectionPoint = Point.Unknown;
+            RightIntersectionPoint = Point.Unknown;
+            LeftTurnCircle = TurnCircle.Unknown;
+            RightTurnCircle = TurnCircle.Unknown;
+            AngleForLeftTurnCircle = Angle.Unknown;
+            AngleForRightTurnCircle = Angle.Unknown;
+            Pair = TurnCirclePair.Unknown;
+        }
+
+        public ITurnCirclePair Pair { get; set; }
+
+        public void Calculate()
+        {
+            ValidatePair();
+
+            LeftTurnCircle = DetermineLeftTurnCircle(Pair);
+            RightTurnCircle = LeftTurnCircle.Equals(Pair.One)
+                                  ? Pair.Zero
+                                  : Pair.One;
+
+            AngleForLeftTurnCircle = CalculateRadiansRelativeToXAxisForLeftTurnCircle(LeftTurnCircle.CentrePoint,
+                                                                                      RightTurnCircle.CentrePoint,
+                                                                                      LeftTurnCircle.Radius.Length *
+                                                                                      2.0);
+
+            AngleForRightTurnCircle = CalculateRadiansRelativeToXAxisForRightTurnCircle(RightTurnCircle.CentrePoint,
+                                                                                        LeftTurnCircle.CentrePoint,
+                                                                                        RightTurnCircle.Radius
+                                                                                                       .Length * 2.0);
+
+            CentrePoint = CalculateCentrePoint(LeftTurnCircle,
+                                               AngleForLeftTurnCircle);
+
+            ICircle circleLeft = LeftTurnCircle.Circle;
+            ICircle circleRight = RightTurnCircle.Circle;
+
+            LeftIntersectionPoint = circleLeft.PointOnCircle(AngleForLeftTurnCircle);
+            RightIntersectionPoint = circleRight.PointOnCircle(AngleForRightTurnCircle);
+        }
+
+        private void ValidatePair()
+        {
+            if ( !IsValid(Pair) )
             {
-                string message = "TurnCirclePair is not valid! Pair.Zero: {0} Pair.One: {1}".Inject(pair.Zero,
-                                                                                                    pair.One);
+                string message = "TurnCirclePair is not valid! Pair.Zero: {0} Pair.One: {1}".Inject(Pair.Zero,
+                                                                                                    Pair.One);
 
                 Logger.Error(message);
 
                 throw new ArgumentException(message);
             }
-
-            m_LeftTurnCircle = DetermineLeftTurnCircle(pair);
-            m_RightTurnCircle = m_LeftTurnCircle.Equals(pair.One)
-                                    ? pair.Zero
-                                    : pair.One;
-
-            m_AngleForLeftTurnCircle = CalculateRadiansRelativeToXAxisForLeftTurnCircle(m_LeftTurnCircle.CentrePoint,
-                                                                                        m_RightTurnCircle.CentrePoint,
-                                                                                        m_LeftTurnCircle.Radius.Length *
-                                                                                        2.0);
-
-            m_AngleForRightTurnCircle = CalculateRadiansRelativeToXAxisForRightTurnCircle(m_RightTurnCircle.CentrePoint,
-                                                                                          m_LeftTurnCircle.CentrePoint,
-                                                                                          m_RightTurnCircle.Radius
-                                                                                                           .Length * 2.0);
-
-            m_CentrePoint = CalculateCentrePoint(m_LeftTurnCircle,
-                                                 m_AngleForLeftTurnCircle);
-
-            ICircle circleLeft = m_LeftTurnCircle.Circle;
-            ICircle circleRight = m_RightTurnCircle.Circle;
-
-            m_LeftIntersectionPoint = circleLeft.PointOnCircle(m_AngleForLeftTurnCircle);
-            m_RightIntersectionPoint = circleRight.PointOnCircle(m_AngleForRightTurnCircle);
         }
 
         internal bool IsValid([NotNull] ITurnCirclePair pair)
@@ -205,14 +217,14 @@ namespace Selkie.Racetrack.UTurn
 
         public Point IntersectionPointForTurnCircle(ITurnCircle turnCircle)
         {
-            if ( m_LeftTurnCircle.CentrePoint.Equals(turnCircle.CentrePoint) )
+            if ( LeftTurnCircle.CentrePoint.Equals(turnCircle.CentrePoint) )
             {
-                return m_LeftIntersectionPoint;
+                return LeftIntersectionPoint;
             }
 
-            if ( m_RightTurnCircle.CentrePoint.Equals(turnCircle.CentrePoint) )
+            if ( RightTurnCircle.CentrePoint.Equals(turnCircle.CentrePoint) )
             {
-                return m_RightIntersectionPoint;
+                return RightIntersectionPoint;
             }
 
             Logger.Error("Couldn't find TurnCircle {0}!".Inject(turnCircle));
@@ -220,61 +232,19 @@ namespace Selkie.Racetrack.UTurn
             return Point.Unknown;
         }
 
-        public Point CentrePoint
-        {
-            get
-            {
-                return m_CentrePoint;
-            }
-        }
+        public Point CentrePoint { get; private set; }
 
-        public Point LeftIntersectionPoint
-        {
-            get
-            {
-                return m_LeftIntersectionPoint;
-            }
-        }
+        public Point LeftIntersectionPoint { get; private set; }
 
-        public Point RightIntersectionPoint
-        {
-            get
-            {
-                return m_RightIntersectionPoint;
-            }
-        }
+        public Point RightIntersectionPoint { get; private set; }
 
-        public ITurnCircle LeftTurnCircle
-        {
-            get
-            {
-                return m_LeftTurnCircle;
-            }
-        }
+        public ITurnCircle LeftTurnCircle { get; private set; }
 
-        public ITurnCircle RightTurnCircle
-        {
-            get
-            {
-                return m_RightTurnCircle;
-            }
-        }
+        public ITurnCircle RightTurnCircle { get; private set; }
 
-        public Angle AngleForLeftTurnCircle
-        {
-            get
-            {
-                return m_AngleForLeftTurnCircle;
-            }
-        }
+        public Angle AngleForLeftTurnCircle { get; private set; }
 
-        public Angle AngleForRightTurnCircle
-        {
-            get
-            {
-                return m_AngleForRightTurnCircle;
-            }
-        }
+        public Angle AngleForRightTurnCircle { get; private set; }
 
         #endregion
     }

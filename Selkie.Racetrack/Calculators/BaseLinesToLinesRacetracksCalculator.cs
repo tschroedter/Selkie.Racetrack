@@ -9,76 +9,33 @@ namespace Selkie.Racetrack.Calculators
     public abstract class BaseLinesToLinesRacetracksCalculator : IBaseLinesToLinesRacetracksCalculator
     {
         private readonly IBaseRacetrackCalculator m_Calculator;
-        private bool m_IsPortTurnAllowed = true;
-        private bool m_IsStarboardTurnAllowed = true;
-        private IEnumerable <ILine> m_Lines = new ILine[0];
-        private IPath[][] m_Paths = new IPath[0][];
-        private Distance m_Radius = Distance.Unknown;
 
         protected BaseLinesToLinesRacetracksCalculator([NotNull] IBaseRacetrackCalculator calculator)
         {
+            TurnRadiusForStarboard = Distance.Unknown;
+            TurnRadiusForPort = Distance.Unknown;
+            Paths = new IPath[0][];
+            Lines = new ILine[0];
+            IsStarboardTurnAllowed = true;
+            IsPortTurnAllowed = true;
             m_Calculator = calculator;
         }
 
-        public bool IsPortTurnAllowed
-        {
-            get
-            {
-                return m_IsPortTurnAllowed;
-            }
-            set
-            {
-                m_IsPortTurnAllowed = value;
-            }
-        }
+        public bool IsPortTurnAllowed { get; set; }
 
-        public bool IsStarboardTurnAllowed
-        {
-            get
-            {
-                return m_IsStarboardTurnAllowed;
-            }
-            set
-            {
-                m_IsStarboardTurnAllowed = value;
-            }
-        }
+        public bool IsStarboardTurnAllowed { get; set; }
 
-        public IEnumerable <ILine> Lines
-        {
-            get
-            {
-                return m_Lines;
-            }
-            set
-            {
-                m_Lines = value;
-            }
-        }
+        public IEnumerable <ILine> Lines { get; set; }
 
-        public Distance Radius
-        {
-            get
-            {
-                return m_Radius;
-            }
-            set
-            {
-                m_Radius = value;
-            }
-        }
+        public IPath[][] Paths { get; private set; }
 
-        public IPath[][] Paths
-        {
-            get
-            {
-                return m_Paths;
-            }
-        }
+        public Distance TurnRadiusForPort { get; set; }
+
+        public Distance TurnRadiusForStarboard { get; set; }
 
         public void Calculate()
         {
-            ILine[] toLines = m_Lines.ToArray();
+            ILine[] toLines = Lines.ToArray();
 
             int size = toLines.Length;
 
@@ -94,7 +51,7 @@ namespace Selkie.Racetrack.Calculators
                 racetracks [ i ] = racetracksForLine;
             }
 
-            m_Paths = racetracks;
+            Paths = racetracks;
         }
 
         [NotNull]
@@ -106,9 +63,10 @@ namespace Selkie.Racetrack.Calculators
         {
             m_Calculator.ToLines = toLines;
             m_Calculator.FromLine = fromLine;
-            m_Calculator.Radius = m_Radius;
-            m_Calculator.IsPortTurnAllowed = m_IsPortTurnAllowed;
-            m_Calculator.IsStarboardTurnAllowed = m_IsStarboardTurnAllowed;
+            m_Calculator.TurnRadiusForPort = TurnRadiusForPort;
+            m_Calculator.TurnRadiusForStarboard = TurnRadiusForStarboard;
+            m_Calculator.IsPortTurnAllowed = IsPortTurnAllowed;
+            m_Calculator.IsStarboardTurnAllowed = IsStarboardTurnAllowed;
             m_Calculator.Calculate();
 
             return m_Calculator.Paths;

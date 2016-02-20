@@ -18,7 +18,8 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
             m_FromLine = Substitute.For <ILine>();
             m_ToLine = Substitute.For <ILine>();
             m_ToLine.Reverse().Returns(m_ToLineReversed);
-            m_Radius = new Distance(100.0);
+            m_RadiusForPortTurn = new Distance(123.0);
+            m_RadiusForStarboardTurn = new Distance(456.0);
 
             m_RacetrackCalculator = Substitute.For <ILinePairToRacetrackCalculator>();
 
@@ -28,16 +29,18 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
         private ReverseToReverseCalculator m_Calculator;
         private ILine m_FromLine;
         private ILinePairToRacetrackCalculator m_RacetrackCalculator;
-        private Distance m_Radius;
         private ILine m_ToLine;
         private ILine m_ToLineReversed;
+        private Distance m_RadiusForPortTurn;
+        private Distance m_RadiusForStarboardTurn;
 
         [Test]
         public void GetCalculatorCallsCalculateTest()
         {
             m_Calculator.GetCalculator(m_FromLine,
                                        m_ToLine,
-                                       m_Radius);
+                                       m_RadiusForPortTurn,
+                                       m_RadiusForStarboardTurn);
 
             m_RacetrackCalculator.Received().Calculate();
         }
@@ -47,7 +50,8 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
         {
             ILinePairToRacetrackCalculator actual = m_Calculator.GetCalculator(m_FromLine,
                                                                                m_ToLine,
-                                                                               m_Radius);
+                                                                               m_RadiusForPortTurn,
+                                                                               m_RadiusForStarboardTurn);
 
             Assert.AreEqual(m_RacetrackCalculator,
                             actual);
@@ -58,7 +62,8 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
         {
             m_Calculator.GetCalculator(m_FromLine,
                                        m_ToLine,
-                                       m_Radius);
+                                       m_RadiusForPortTurn,
+                                       m_RadiusForStarboardTurn);
 
             Assert.AreEqual(m_FromLine,
                             m_RacetrackCalculator.FromLine);
@@ -69,7 +74,8 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
         {
             m_Calculator.GetCalculator(m_FromLine,
                                        m_ToLine,
-                                       m_Radius);
+                                       m_RadiusForPortTurn,
+                                       m_RadiusForStarboardTurn);
 
             Assert.True(m_RacetrackCalculator.IsPortTurnAllowed);
         }
@@ -79,20 +85,34 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
         {
             m_Calculator.GetCalculator(m_FromLine,
                                        m_ToLine,
-                                       m_Radius);
+                                       m_RadiusForPortTurn,
+                                       m_RadiusForStarboardTurn);
 
             Assert.True(m_RacetrackCalculator.IsStarboardTurnAllowed);
         }
 
         [Test]
-        public void GetCalculatorSetsRadiusTest()
+        public void GetCalculatorSetsRadiusForPortTurnTest()
         {
             m_Calculator.GetCalculator(m_FromLine,
                                        m_ToLine,
-                                       m_Radius);
+                                       m_RadiusForPortTurn,
+                                       m_RadiusForStarboardTurn);
 
-            Assert.AreEqual(m_Radius,
-                            m_RacetrackCalculator.Radius);
+            Assert.AreEqual(m_RadiusForPortTurn,
+                            m_RacetrackCalculator.RadiusForPortTurn);
+        }
+
+        [Test]
+        public void GetCalculatorSetsRadiusForStarboardTurnTest()
+        {
+            m_Calculator.GetCalculator(m_FromLine,
+                                       m_ToLine,
+                                       m_RadiusForPortTurn,
+                                       m_RadiusForStarboardTurn);
+
+            Assert.AreEqual(m_RadiusForStarboardTurn,
+                            m_RacetrackCalculator.RadiusForStarboardTurn);
         }
 
         [Test]
@@ -103,7 +123,8 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
 
             m_Calculator.GetCalculator(m_FromLine,
                                        toLine,
-                                       m_Radius);
+                                       m_RadiusForPortTurn,
+                                       m_RadiusForStarboardTurn);
 
             Assert.AreEqual(toLine,
                             m_RacetrackCalculator.ToLine);
@@ -114,7 +135,8 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
         {
             m_Calculator.GetCalculator(m_FromLine,
                                        m_ToLine,
-                                       m_Radius);
+                                       m_RadiusForPortTurn,
+                                       m_RadiusForStarboardTurn);
 
             Assert.AreEqual(m_ToLineReversed,
                             m_RacetrackCalculator.ToLine);

@@ -17,8 +17,11 @@ namespace Selkie.Racetrack
         private readonly Point m_FinishPoint;
         private readonly bool m_IsPortTurnAllowed;
         private readonly bool m_IsStarboardTurnAllowed;
+
         private readonly bool m_IsUnknown;
-        private readonly Distance m_Radius;
+        private readonly Distance m_LargestRadiusForTurn;
+        private readonly Distance m_RadiusForPortTurn;
+        private readonly Distance m_RadiusForStarboardTurn;
         private readonly Angle m_StartAzimuth;
         private readonly Point m_StartPoint;
 
@@ -28,10 +31,12 @@ namespace Selkie.Racetrack
             m_StartAzimuth = Angle.Unknown;
             m_FinishPoint = Point.Unknown;
             m_FinishAzimuth = Angle.Unknown;
-            m_Radius = Distance.Unknown;
+            m_RadiusForPortTurn = Distance.Unknown;
+            m_RadiusForStarboardTurn = Distance.Unknown;
             m_IsPortTurnAllowed = true;
             m_IsStarboardTurnAllowed = true;
             m_IsUnknown = true;
+            m_LargestRadiusForTurn = Distance.Unknown;
         }
 
         // ReSharper disable once TooManyDependencies
@@ -39,7 +44,8 @@ namespace Selkie.Racetrack
                         [NotNull] Angle startAzimuth,
                         [NotNull] Point finishPoint,
                         [NotNull] Angle finishAzimuth,
-                        [NotNull] Distance radius,
+                        [NotNull] Distance radiusForPortTurn,
+                        [NotNull] Distance radiusForStarboardTurn,
                         bool isPortTurnAllowed,
                         bool isStarboardTurnAllowed)
         {
@@ -47,9 +53,13 @@ namespace Selkie.Racetrack
             m_StartAzimuth = startAzimuth;
             m_FinishPoint = finishPoint;
             m_FinishAzimuth = finishAzimuth;
-            m_Radius = radius;
+            m_RadiusForPortTurn = radiusForPortTurn;
+            m_RadiusForStarboardTurn = radiusForStarboardTurn;
             m_IsPortTurnAllowed = isPortTurnAllowed;
             m_IsStarboardTurnAllowed = isStarboardTurnAllowed;
+            m_LargestRadiusForTurn = RadiusForPortTurn >= RadiusForStarboardTurn
+                                         ? RadiusForPortTurn
+                                         : RadiusForStarboardTurn;
         }
 
         #region IEquatable<Settings> Members
@@ -67,13 +77,19 @@ namespace Selkie.Racetrack
             {
                 return true;
             }
-            return Equals(other.m_StartPoint,
-                          m_StartPoint) && Equals(other.m_StartAzimuth,
-                                                  m_StartAzimuth) && Equals(other.m_FinishPoint,
-                                                                            m_FinishPoint) &&
-                   Equals(other.m_FinishAzimuth,
-                          m_FinishAzimuth) && Equals(other.m_Radius,
-                                                     m_Radius);
+            return Equals(other.StartPoint,
+                          StartPoint) && Equals(other.StartAzimuth,
+                                                StartAzimuth) && Equals(other.FinishPoint,
+                                                                        FinishPoint) &&
+                   Equals(other.FinishAzimuth,
+                          FinishAzimuth) && Equals(other.FinishAzimuth,
+                                                   FinishAzimuth) &&
+                   Equals(other.RadiusForPortTurn,
+                          RadiusForPortTurn) && Equals(other.RadiusForPortTurn,
+                                                       RadiusForPortTurn) &&
+                   Equals(other.RadiusForStarboardTurn,
+                          RadiusForStarboardTurn) && Equals(other.RadiusForStarboardTurn,
+                                                            RadiusForStarboardTurn);
         }
 
         #endregion
@@ -102,21 +118,14 @@ namespace Selkie.Racetrack
         {
             unchecked
             {
-                int result = m_StartPoint != null
-                                 ? m_StartPoint.GetHashCode()
-                                 : 0;
-                result = ( result * 397 ) ^ ( m_StartAzimuth != null
-                                                  ? m_StartAzimuth.GetHashCode()
-                                                  : 0 );
-                result = ( result * 397 ) ^ ( m_FinishPoint != null
-                                                  ? m_FinishPoint.GetHashCode()
-                                                  : 0 );
-                result = ( result * 397 ) ^ ( m_FinishAzimuth != null
-                                                  ? m_FinishAzimuth.GetHashCode()
-                                                  : 0 );
-                result = ( result * 397 ) ^ ( m_Radius != null
-                                                  ? m_Radius.GetHashCode()
-                                                  : 0 );
+                int result = StartPoint.GetHashCode();
+
+                result = ( result * 397 ) ^ StartAzimuth.GetHashCode();
+                result = ( result * 397 ) ^ FinishPoint.GetHashCode();
+                result = ( result * 397 ) ^ FinishAzimuth.GetHashCode();
+                result = ( result * 397 ) ^ RadiusForPortTurn.GetHashCode();
+                result = ( result * 397 ) ^ RadiusForStarboardTurn.GetHashCode();
+
                 return result;
             }
         }
@@ -193,11 +202,27 @@ namespace Selkie.Racetrack
             }
         }
 
-        public Distance Radius
+        public Distance LargestRadiusForTurn
         {
             get
             {
-                return m_Radius;
+                return m_LargestRadiusForTurn;
+            }
+        }
+
+        public Distance RadiusForPortTurn
+        {
+            get
+            {
+                return m_RadiusForPortTurn;
+            }
+        }
+
+        public Distance RadiusForStarboardTurn
+        {
+            get
+            {
+                return m_RadiusForStarboardTurn;
             }
         }
 
@@ -205,7 +230,7 @@ namespace Selkie.Racetrack
         {
             get
             {
-                return m_IsPortTurnAllowed
+                return IsPortTurnAllowed
                            ? Constants.TurnDirection.Counterclockwise
                            : Constants.TurnDirection.Clockwise;
             }

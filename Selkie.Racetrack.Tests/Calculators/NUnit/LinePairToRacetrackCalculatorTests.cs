@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using NSubstitute;
 using NUnit.Framework;
-using Selkie.Common;
 using Selkie.Geometry.Primitives;
 using Selkie.Geometry.Shapes;
 using Selkie.Racetrack.Calculators;
@@ -16,25 +15,12 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
         [SetUp]
         public void Setup()
         {
-            m_Disposer = Substitute.For <IDisposer>();
-
             m_PathCalculator = Substitute.For <IPathCalculator>();
-            m_Factory = Substitute.For <ICalculatorFactory>();
-            m_Factory.Create <IPathCalculator>().Returns(m_PathCalculator);
 
-            m_Calculator = new LinePairToRacetrackCalculator(m_Disposer,
-                                                             m_Factory);
-        }
-
-        [TearDown]
-        public void Teardown()
-        {
-            m_Calculator.Dispose();
+            m_Calculator = new LinePairToRacetrackCalculator(m_PathCalculator);
         }
 
         private LinePairToRacetrackCalculator m_Calculator;
-        private IDisposer m_Disposer;
-        private ICalculatorFactory m_Factory;
         private IPathCalculator m_PathCalculator;
 
         [Test]
@@ -45,7 +31,6 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
 
             m_Calculator.FromLine = fromLine;
             m_Calculator.ToLine = line;
-            m_Calculator.Radius = new Distance(123.0);
             m_Calculator.IsPortTurnAllowed = true;
             m_Calculator.IsStarboardTurnAllowed = true;
 
@@ -63,7 +48,8 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
 
             m_Calculator.FromLine = fromLine;
             m_Calculator.ToLine = line;
-            m_Calculator.Radius = new Distance(123.0);
+            m_Calculator.RadiusForPortTurn = new Distance(123.0);
+            m_Calculator.RadiusForStarboardTurn = new Distance(456.0);
             m_Calculator.IsPortTurnAllowed = true;
             m_Calculator.IsStarboardTurnAllowed = true;
 
@@ -84,37 +70,15 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
                             actual.FinishAzimuth,
                             "FinishAzimuth");
             Assert.AreEqual(123.0,
-                            actual.Radius.Length,
-                            "Radius");
+                            actual.RadiusForPortTurn.Length,
+                            "RadiusForPortTurn");
+            Assert.AreEqual(456.0,
+                            actual.RadiusForStarboardTurn.Length,
+                            "RadiusForStarboardTurn");
             Assert.True(actual.IsPortTurnAllowed,
                         "IsPortTurnAllowed");
             Assert.True(actual.IsStarboardTurnAllowed,
                         "IsStarboardTurnAllowed");
-        }
-
-        [Test]
-        public void ConstructorAddsToDisposerTest()
-        {
-            m_Disposer.Received().AddResource(m_Calculator.ReleaseCalculator);
-        }
-
-        [Test]
-        public void ConstructorCallsCreateTest()
-        {
-            m_Factory.Received().Create <IPathCalculator>();
-        }
-
-        [Test]
-        public void DisposeCallsDisposeTest()
-        {
-            var disposer = Substitute.For <IDisposer>();
-
-            var calculator = new LinePairToRacetrackCalculator(disposer,
-                                                               m_Factory);
-
-            calculator.Dispose();
-
-            disposer.Received().Dispose();
         }
 
         [Test]
@@ -170,35 +134,41 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
         }
 
         [Test]
-        public void RadiusDefaultTest()
+        public void RadiusForPortTurnDefaultTest()
         {
             Assert.AreEqual(0.0,
-                            m_Calculator.Radius.Length,
+                            m_Calculator.RadiusForPortTurn.Length,
                             "Length");
-            Assert.True(m_Calculator.Radius.IsUnknown,
+            Assert.True(m_Calculator.RadiusForPortTurn.IsUnknown,
                         "IsUnknown");
         }
 
         [Test]
-        public void RadiusRoundtripTest()
+        public void RadiusForPortTurnRoundtripTest()
         {
-            m_Calculator.Radius = new Distance(123.0);
+            m_Calculator.RadiusForPortTurn = new Distance(123.0);
 
             Assert.AreEqual(123.0,
-                            m_Calculator.Radius.Length);
+                            m_Calculator.RadiusForPortTurn.Length);
         }
 
         [Test]
-        public void ReleaseCalculatorCallsReleaseTest()
+        public void RadiusForStarboardTurnDefaultTest()
         {
-            var disposer = Substitute.For <IDisposer>();
+            Assert.AreEqual(0.0,
+                            m_Calculator.RadiusForStarboardTurn.Length,
+                            "Length");
+            Assert.True(m_Calculator.RadiusForStarboardTurn.IsUnknown,
+                        "IsUnknown");
+        }
 
-            var calculator = new LinePairToRacetrackCalculator(disposer,
-                                                               m_Factory);
+        [Test]
+        public void RadiusForStarboardTurnForPortTurnRoundtripTest()
+        {
+            m_Calculator.RadiusForStarboardTurn = new Distance(123.0);
 
-            calculator.ReleaseCalculator();
-
-            m_Factory.Received().Release(m_PathCalculator);
+            Assert.AreEqual(123.0,
+                            m_Calculator.RadiusForStarboardTurn.Length);
         }
 
         [Test]

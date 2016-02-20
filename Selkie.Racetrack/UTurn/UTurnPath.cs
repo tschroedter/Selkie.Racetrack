@@ -9,46 +9,48 @@ namespace Selkie.Racetrack.UTurn
     public class UTurnPath : IUTurnPath
     {
         private readonly IDetermineTurnCircleCalculator m_Calculator;
-        private readonly IUTurnCircle m_UTurnCircle;
         private IPath m_Path = Racetrack.Path.Unknown;
-        private ISettings m_Settings = Racetrack.Settings.Unknown;
 
         public UTurnPath([NotNull] IUTurnCircle uTurnCircle,
                          [NotNull] IDetermineTurnCircleCalculator calculator)
         {
-            m_UTurnCircle = uTurnCircle;
+            Settings = Racetrack.Settings.Unknown;
+            UTrunCircleSettings = Racetrack.Settings.Unknown;
+            UTurnCircle = uTurnCircle;
             m_Calculator = calculator;
         }
 
         public void Calculate()
         {
-            m_UTurnCircle.Settings = m_Settings;
-            m_UTurnCircle.Calculate();
+            UTrunCircleSettings = CreateSettingsWithMaximumRadius(Settings);
 
-            m_Path = m_UTurnCircle.IsRequired
-                         ? CalculatePath(m_Settings,
-                                         m_UTurnCircle)
+            UTurnCircle.Settings = UTrunCircleSettings;
+            UTurnCircle.Calculate();
+
+            m_Path = UTurnCircle.IsRequired
+                         ? CalculatePath(UTrunCircleSettings,
+                                         UTurnCircle)
                          : Racetrack.Path.Unknown;
         }
 
-        public ISettings Settings
-        {
-            get
-            {
-                return m_Settings;
-            }
-            set
-            {
-                m_Settings = value;
-            }
-        }
+        public ISettings UTrunCircleSettings { get; private set; }
 
-        public IUTurnCircle UTurnCircle
+        public ISettings Settings { get; set; }
+
+        public IUTurnCircle UTurnCircle { get; private set; }
+
+        private ISettings CreateSettingsWithMaximumRadius(ISettings settings)
         {
-            get
-            {
-                return m_UTurnCircle;
-            }
+            var maxRadiusSettings = new Settings(settings.StartPoint,
+                                                 settings.StartAzimuth,
+                                                 settings.FinishPoint,
+                                                 settings.FinishAzimuth,
+                                                 settings.LargestRadiusForTurn,
+                                                 settings.LargestRadiusForTurn,
+                                                 settings.IsPortTurnAllowed,
+                                                 settings.IsStarboardTurnAllowed);
+
+            return maxRadiusSettings;
         }
 
         [NotNull]
@@ -88,8 +90,8 @@ namespace Selkie.Racetrack.UTurn
 
         internal void DetermineTurnCircles()
         {
-            m_Calculator.Settings = m_Settings;
-            m_Calculator.UTurnCircle = m_UTurnCircle;
+            m_Calculator.Settings = UTrunCircleSettings;
+            m_Calculator.UTurnCircle = UTurnCircle;
             m_Calculator.Calculate();
         }
 
@@ -190,7 +192,7 @@ namespace Selkie.Racetrack.UTurn
         {
             get
             {
-                return m_UTurnCircle.IsRequired;
+                return UTurnCircle.IsRequired;
             }
         }
 

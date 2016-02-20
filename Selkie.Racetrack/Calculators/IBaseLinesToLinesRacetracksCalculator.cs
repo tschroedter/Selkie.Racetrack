@@ -14,9 +14,12 @@ namespace Selkie.Racetrack.Calculators
         IEnumerable <ILine> Lines { get; set; }
 
         [NotNull]
-        Distance Radius { get; set; }
+        IPath[][] Paths { get; }
 
         [NotNull]
-        IPath[][] Paths { get; }
+        Distance TurnRadiusForPort { get; set; }
+
+        [NotNull]
+        Distance TurnRadiusForStarboard { get; set; }
     }
 }

@@ -1,19 +1,20 @@
 ﻿using System.Collections.Generic;
 using JetBrains.Annotations;
+using Selkie.Windsor;
 
 namespace Selkie.Racetrack.Calculators
 {
+    [ProjectComponent(Lifestyle.Transient)]
     public class PathCalculator : IPathCalculator
     {
-        private readonly IPathShortestFinder m_PathShortestFinder;
         private readonly IPathSelectorCalculator m_Selector;
-        private ISettings m_Settings = Racetrack.Settings.Unknown;
 
         public PathCalculator([NotNull] IPathSelectorCalculator selector,
                               [NotNull] IPathShortestFinder pathShortestFinder)
         {
+            Settings = Racetrack.Settings.Unknown;
             m_Selector = selector;
-            m_PathShortestFinder = pathShortestFinder;
+            PathShortestFinder = pathShortestFinder;
         }
 
         public void Calculate()
@@ -21,26 +22,20 @@ namespace Selkie.Racetrack.Calculators
             m_Selector.Settings = Settings;
             m_Selector.Calculate();
 
-            m_PathShortestFinder.Paths = m_Selector.Paths;
-            m_PathShortestFinder.Find();
+            PathShortestFinder.Paths = m_Selector.Paths;
+            PathShortestFinder.Find();
         }
 
         #region ICalculator Members
 
         [NotNull]
-        internal IPathShortestFinder PathShortestFinder
-        {
-            get
-            {
-                return m_PathShortestFinder;
-            }
-        }
+        internal IPathShortestFinder PathShortestFinder { get; private set; }
 
         public IPath Path
         {
             get
             {
-                return m_PathShortestFinder.ShortestPath;
+                return PathShortestFinder.ShortestPath;
             }
         }
 
@@ -52,17 +47,7 @@ namespace Selkie.Racetrack.Calculators
             }
         }
 
-        public ISettings Settings
-        {
-            get
-            {
-                return m_Settings;
-            }
-            set
-            {
-                m_Settings = value;
-            }
-        }
+        public ISettings Settings { get; set; }
 
         #endregion
     }

@@ -7,9 +7,6 @@ namespace Selkie.Racetrack.Calculators
     public interface ILinePairToRacetrackCalculator : ICalculator
     {
         [NotNull]
-        Distance Radius { get; set; }
-
-        [NotNull]
         ILine FromLine { get; set; }
 
         [NotNull]
@@ -23,5 +20,11 @@ namespace Selkie.Racetrack.Calculators
 
         bool IsPortTurnAllowed { get; set; }
         bool IsStarboardTurnAllowed { get; set; }
+
+        [NotNull]
+        Distance RadiusForPortTurn { get; set; }
+
+        [NotNull]
+        Distance RadiusForStarboardTurn { get; set; }
     }
 }

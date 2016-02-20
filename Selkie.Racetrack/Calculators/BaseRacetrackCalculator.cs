@@ -6,111 +6,48 @@ namespace Selkie.Racetrack.Calculators
 {
     public abstract class BaseRacetrackCalculator : IBaseRacetrackCalculator
     {
-        private readonly ILinePairToRacetrackCalculator m_Calculator;
-        private ILine m_FromLine = Line.Unknown;
-        private bool m_IsPortTurnAllowed = true;
-        private bool m_IsStarboardTurnAllowed = true;
-
-        private IPath[] m_Paths =
-        {
-        };
-
-        private Distance m_Radius = Distance.Unknown;
-
-        private ILine[] m_ToLines =
-        {
-        };
-
         protected BaseRacetrackCalculator([NotNull] ILinePairToRacetrackCalculator calculator)
         {
-            m_Calculator = calculator;
+            IsPortTurnAllowed = true;
+            IsStarboardTurnAllowed = true;
+            Paths = new IPath[]
+                    {
+                    };
+            FromLine = Line.Unknown;
+            ToLines = new ILine[]
+                      {
+                      };
+            TurnRadiusForPort = Distance.Unknown;
+            TurnRadiusForStarboard = Distance.Unknown;
+            Calculator = calculator;
         }
 
-        public ILinePairToRacetrackCalculator Calculator
-        {
-            get
-            {
-                return m_Calculator;
-            }
-        }
+        public ILinePairToRacetrackCalculator Calculator { get; private set; }
 
-        public bool IsPortTurnAllowed
-        {
-            get
-            {
-                return m_IsPortTurnAllowed;
-            }
-            set
-            {
-                m_IsPortTurnAllowed = value;
-            }
-        }
+        public bool IsPortTurnAllowed { get; set; }
 
-        public bool IsStarboardTurnAllowed
-        {
-            get
-            {
-                return m_IsStarboardTurnAllowed;
-            }
-            set
-            {
-                m_IsStarboardTurnAllowed = value;
-            }
-        }
+        public bool IsStarboardTurnAllowed { get; set; }
 
-        public IPath[] Paths
-        {
-            get
-            {
-                return m_Paths;
-            }
-        }
+        public IPath[] Paths { get; private set; }
 
-        public ILine FromLine
-        {
-            get
-            {
-                return m_FromLine;
-            }
-            set
-            {
-                m_FromLine = value;
-            }
-        }
+        public ILine FromLine { get; set; }
 
-        public ILine[] ToLines
-        {
-            get
-            {
-                return m_ToLines;
-            }
-            set
-            {
-                m_ToLines = value;
-            }
-        }
+        public ILine[] ToLines { get; set; }
 
-        public Distance Radius
-        {
-            get
-            {
-                return m_Radius;
-            }
-            set
-            {
-                m_Radius = value;
-            }
-        }
+        public Distance TurnRadiusForPort { get; set; }
+
+        public Distance TurnRadiusForStarboard { get; set; }
 
         public void Calculate()
         {
-            m_Paths = CalculateRacetracks();
+            Paths = CalculateRacetracks();
         }
 
         [NotNull]
         internal abstract ILinePairToRacetrackCalculator GetCalculator([NotNull] ILine fromLine,
                                                                        [NotNull] ILine toLine,
-                                                                       [NotNull] Distance radius);
+                                                                       [NotNull] Distance radiusForPortTurn,
+                                                                       [NotNull] Distance radiusForStarboardTurn);
 
         [NotNull]
         private IPath[] CalculateRacetracks()
@@ -130,7 +67,8 @@ namespace Selkie.Racetrack.Calculators
                 {
                     ILinePairToRacetrackCalculator linePairToRacetrackCalculator = GetCalculator(FromLine,
                                                                                                  toLine,
-                                                                                                 Radius);
+                                                                                                 TurnRadiusForPort,
+                                                                                                 TurnRadiusForStarboard);
 
                     racetrack = linePairToRacetrackCalculator.Racetrack;
                 }

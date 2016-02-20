@@ -15,11 +15,13 @@ namespace Selkie.Racetrack.Calculators
 
         internal override ILinePairToRacetrackCalculator GetCalculator(ILine fromLine,
                                                                        ILine toLine,
-                                                                       Distance radius)
+                                                                       Distance radiusForPortTurn,
+                                                                       Distance radiusForStarboardTurn)
         {
             Calculator.FromLine = fromLine;
             Calculator.ToLine = toLine;
-            Calculator.Radius = radius;
+            Calculator.RadiusForPortTurn = radiusForPortTurn;
+            Calculator.RadiusForStarboardTurn = radiusForStarboardTurn;
             Calculator.IsPortTurnAllowed = IsPortTurnAllowed;
             Calculator.IsStarboardTurnAllowed = IsStarboardTurnAllowed;
             Calculator.Calculate();

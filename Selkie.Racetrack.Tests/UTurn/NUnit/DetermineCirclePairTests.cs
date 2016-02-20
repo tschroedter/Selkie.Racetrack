@@ -24,6 +24,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                                   0.0),
                                         Angle.FromDegrees(180.0),
                                         new Distance(100.0),
+                                        new Distance(100.0),
                                         true,
                                         true);
 
@@ -63,6 +64,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                                   50.0),
                                         Angle.FromDegrees(180.0),
                                         new Distance(100.0),
+                                        new Distance(100.0),
                                         true,
                                         true);
 
@@ -92,6 +94,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                         new Point(0.0,
                                                   -55.0),
                                         Angle.FromDegrees(180.0),
+                                        new Distance(100.0),
                                         new Distance(100.0),
                                         true,
                                         true);
@@ -123,6 +126,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                                   0.0),
                                         Angle.FromDegrees(270.0),
                                         new Distance(100.0),
+                                        new Distance(100.0),
                                         true,
                                         true);
 
@@ -152,6 +156,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                         new Point(0.0,
                                                   0.0),
                                         Angle.FromDegrees(270.0),
+                                        new Distance(100.0),
                                         new Distance(100.0),
                                         true,
                                         true);
@@ -183,6 +188,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                                   0.0),
                                         Angle.FromDegrees(180.0),
                                         new Distance(100.0),
+                                        new Distance(100.0),
                                         true,
                                         true);
 
@@ -212,6 +218,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                         new Point(0.0,
                                                   0.0),
                                         Angle.FromDegrees(180.0),
+                                        new Distance(100.0),
                                         new Distance(100.0),
                                         true,
                                         true);
@@ -243,6 +250,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                                   0.0),
                                         Angle.FromDegrees(180.0),
                                         new Distance(100.0),
+                                        new Distance(100.0),
                                         true,
                                         true);
 
@@ -272,6 +280,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                         new Point(0.0,
                                                   0.0),
                                         Angle.FromDegrees(180.0),
+                                        new Distance(100.0),
                                         new Distance(100.0),
                                         true,
                                         true);
@@ -303,6 +312,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                                   0.0),
                                         Angle.FromDegrees(180.0),
                                         new Distance(100.0),
+                                        new Distance(100.0),
                                         true,
                                         true);
 
@@ -332,6 +342,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                         new Point(25.0,
                                                   25.0),
                                         Angle.FromDegrees(180.0),
+                                        new Distance(100.0),
                                         new Distance(100.0),
                                         true,
                                         true);
@@ -363,6 +374,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                                   0.0),
                                         Angle.FromDegrees(180.0),
                                         new Distance(100.0),
+                                        new Distance(100.0),
                                         true,
                                         true);
 
@@ -392,6 +404,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                         new Point(-50.0,
                                                   -50.0),
                                         Angle.FromDegrees(180.0),
+                                        new Distance(100.0),
                                         new Distance(100.0),
                                         true,
                                         true);
@@ -423,6 +436,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                                   -50.0),
                                         Angle.FromDegrees(180.0),
                                         new Distance(100.0),
+                                        new Distance(100.0),
                                         true,
                                         true);
 
@@ -430,6 +444,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                       {
                                           Settings = settings
                                       };
+
             possibleTurnCircles.Calculate();
 
             ITurnCirclePair actual = m_PairsCalculator.Determine(settings,
@@ -452,6 +467,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                         new Point(50.0,
                                                   50.0),
                                         Angle.FromDegrees(180.0),
+                                        new Distance(100.0),
                                         new Distance(100.0),
                                         true,
                                         true);
@@ -483,6 +499,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                                   25.0),
                                         Angle.FromDegrees(180.0),
                                         new Distance(100.0),
+                                        new Distance(100.0),
                                         true,
                                         true);
 
@@ -512,6 +529,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                         new Point(-100.0,
                                                   -100.0),
                                         Angle.FromDegrees(180.0),
+                                        new Distance(100.0),
                                         new Distance(100.0),
                                         true,
                                         true);
@@ -543,6 +561,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                                   -75.0),
                                         Angle.FromDegrees(180.0),
                                         new Distance(100.0),
+                                        new Distance(100.0),
                                         true,
                                         true);
 
@@ -573,6 +592,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                                   0.0),
                                         Angle.FromDegrees(180.0),
                                         new Distance(100.0),
+                                        new Distance(100.0),
                                         true,
                                         true);
 
@@ -602,6 +622,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                         new Point(0.0,
                                                   100.0),
                                         Angle.FromDegrees(180.0),
+                                        new Distance(100.0),
                                         new Distance(100.0),
                                         true,
                                         true);

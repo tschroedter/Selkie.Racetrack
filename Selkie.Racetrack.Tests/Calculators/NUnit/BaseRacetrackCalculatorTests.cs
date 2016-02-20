@@ -40,7 +40,8 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
 
             internal override ILinePairToRacetrackCalculator GetCalculator(ILine fromLine,
                                                                            ILine toLine,
-                                                                           Distance radius)
+                                                                           Distance radiusForPortTurn,
+                                                                           Distance radiusForStarboardTurn)
             {
                 return Calculator;
             }
@@ -61,7 +62,8 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
 
             m_Calculator.ToLines = lines;
             m_Calculator.FromLine = m_LineOne;
-            m_Calculator.Radius = new Distance(30.0);
+            m_Calculator.TurnRadiusForPort = new Distance(30.0);
+            m_Calculator.TurnRadiusForStarboard = new Distance(30.0);
 
             IPath[] actual = m_Calculator.Paths;
 
@@ -79,7 +81,8 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
 
             m_Calculator.ToLines = lines;
             m_Calculator.FromLine = m_LineOne;
-            m_Calculator.Radius = new Distance(30.0);
+            m_Calculator.TurnRadiusForPort = new Distance(30.0);
+            m_Calculator.TurnRadiusForStarboard = new Distance(30.0);
 
             m_Calculator.Calculate();
 
@@ -99,7 +102,8 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
 
             m_Calculator.ToLines = lines;
             m_Calculator.FromLine = m_LineOne;
-            m_Calculator.Radius = new Distance(30.0);
+            m_Calculator.TurnRadiusForPort = new Distance(30.0);
+            m_Calculator.TurnRadiusForStarboard = new Distance(30.0);
 
             m_Calculator.Calculate();
 
@@ -119,7 +123,8 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
 
             m_Calculator.ToLines = lines;
             m_Calculator.FromLine = m_LineOne;
-            m_Calculator.Radius = new Distance(30.0);
+            m_Calculator.TurnRadiusForPort = new Distance(30.0);
+            m_Calculator.TurnRadiusForStarboard = new Distance(30.0);
 
             m_Calculator.Calculate();
 
@@ -140,7 +145,8 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
 
             m_Calculator.ToLines = lines;
             m_Calculator.FromLine = m_LineOne;
-            m_Calculator.Radius = new Distance(30.0);
+            m_Calculator.TurnRadiusForPort = new Distance(30.0);
+            m_Calculator.TurnRadiusForStarboard = new Distance(30.0);
 
             m_Calculator.Calculate();
 
@@ -160,7 +166,8 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
 
             m_Calculator.ToLines = lines;
             m_Calculator.FromLine = m_LineOne;
-            m_Calculator.Radius = new Distance(30.0);
+            m_Calculator.TurnRadiusForPort = new Distance(30.0);
+            m_Calculator.TurnRadiusForStarboard = new Distance(30.0);
 
             m_Calculator.Calculate();
 
@@ -223,20 +230,37 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
         }
 
         [Test]
-        public void RadiusDefaultTest()
+        public void TurnRadiusForPortDefaultTest()
         {
-            Assert.True(m_Calculator.Radius.IsUnknown);
+            Assert.True(m_Calculator.TurnRadiusForPort.IsUnknown);
         }
 
         [Test]
-        public void RadiusRoundtripTest()
+        public void TurnRadiusForStarboardDefaultTest()
+        {
+            Assert.True(m_Calculator.TurnRadiusForStarboard.IsUnknown);
+        }
+
+        [Test]
+        public void TurnRadiusForPortRoundtripTest()
         {
             var radius = new Distance(123.0);
 
-            m_Calculator.Radius = radius;
+            m_Calculator.TurnRadiusForPort = radius;
 
             Assert.AreEqual(radius,
-                            m_Calculator.Radius);
+                            m_Calculator.TurnRadiusForPort);
+        }
+
+        [Test]
+        public void TurnRadiusForStarboardRoundtripTest()
+        {
+            var radius = new Distance(123.0);
+
+            m_Calculator.TurnRadiusForStarboard = radius;
+
+            Assert.AreEqual(radius,
+                            m_Calculator.TurnRadiusForStarboard);
         }
 
         [Test]

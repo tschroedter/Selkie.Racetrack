@@ -36,7 +36,8 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
                       };
 
             m_Lines = new ILine[0];
-            m_Radius = new Distance(100.0);
+            m_TurnRadiusForPort = new Distance(30.0);
+            m_TurnRadiusForStarboard = new Distance(30.0);
             m_BaseRacetracksCalculator = Substitute.For <IBaseLinesToLinesRacetracksCalculator>();
             m_BaseRacetracksCalculator.Paths.Returns(m_Paths);
 
@@ -50,28 +51,30 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
             m_ReverseToForward.Paths.Returns(m_Paths);
             m_ReverseToReverse.Paths.Returns(m_Paths);
 
-            m_Calculator = new RacetracksCalculator(m_ForwardToForward,
-                                                    m_ForwardToReverse,
-                                                    m_ReverseToForward,
-                                                    m_ReverseToReverse);
+            m_Sut = new RacetracksCalculator(m_ForwardToForward,
+                                             m_ForwardToReverse,
+                                             m_ReverseToForward,
+                                             m_ReverseToReverse);
         }
 
         private IBaseLinesToLinesRacetracksCalculator m_BaseRacetracksCalculator;
-        private RacetracksCalculator m_Calculator;
+        private RacetracksCalculator m_Sut;
         private ILinesToLinesForwardToForwardRacetrackCalculator m_ForwardToForward;
         private ILinesToLinesForwardToReverseRacetrackCalculator m_ForwardToReverse;
         private ILine[] m_Lines;
         private IPath[][] m_Paths;
-        private Distance m_Radius;
+        private Distance m_TurnRadiusForPort;
         private ILinesToLinesReverseToForwardRacetrackCalculator m_ReverseToForward;
         private ILinesToLinesReverseToReverseRacetrackCalculator m_ReverseToReverse;
+        private Distance m_TurnRadiusForStarboard;
 
         [Test]
         public void CalculateGeneralCallsCalculateTest()
         {
-            m_Calculator.CalculateGeneral(m_BaseRacetracksCalculator,
-                                          m_Lines,
-                                          m_Radius);
+            m_Sut.CalculateGeneral(m_BaseRacetracksCalculator,
+                                   m_Lines,
+                                   m_TurnRadiusForPort,
+                                   m_TurnRadiusForStarboard);
 
             m_BaseRacetracksCalculator.Received().Calculate();
         }
@@ -79,9 +82,10 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
         [Test]
         public void CalculateGeneralReturnsPathsTest()
         {
-            IPath[][] actual = m_Calculator.CalculateGeneral(m_BaseRacetracksCalculator,
-                                                             m_Lines,
-                                                             m_Radius);
+            IPath[][] actual = m_Sut.CalculateGeneral(m_BaseRacetracksCalculator,
+                                                      m_Lines,
+                                                      m_TurnRadiusForPort,
+                                                      m_TurnRadiusForStarboard);
 
             Assert.AreEqual(m_Paths,
                             actual);
@@ -90,136 +94,152 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
         [Test]
         public void CalculateGeneralSetsIsPortTurnAllowedTest()
         {
-            m_Calculator.CalculateGeneral(m_BaseRacetracksCalculator,
-                                          m_Lines,
-                                          m_Radius);
+            m_Sut.CalculateGeneral(m_BaseRacetracksCalculator,
+                                   m_Lines,
+                                   m_TurnRadiusForPort,
+                                   m_TurnRadiusForStarboard);
 
-            Assert.AreEqual(m_Calculator.IsPortTurnAllowed,
+            Assert.AreEqual(m_Sut.IsPortTurnAllowed,
                             m_BaseRacetracksCalculator.IsPortTurnAllowed);
         }
 
         [Test]
         public void CalculateGeneralSetsIsStarboardTurnAllowedTest()
         {
-            m_Calculator.CalculateGeneral(m_BaseRacetracksCalculator,
-                                          m_Lines,
-                                          m_Radius);
+            m_Sut.CalculateGeneral(m_BaseRacetracksCalculator,
+                                   m_Lines,
+                                   m_TurnRadiusForPort,
+                                   m_TurnRadiusForStarboard);
 
-            Assert.AreEqual(m_Calculator.IsStarboardTurnAllowed,
+            Assert.AreEqual(m_Sut.IsStarboardTurnAllowed,
                             m_BaseRacetracksCalculator.IsStarboardTurnAllowed);
         }
 
         [Test]
         public void CalculateGeneralSetsLinesTest()
         {
-            m_Calculator.CalculateGeneral(m_BaseRacetracksCalculator,
-                                          m_Lines,
-                                          m_Radius);
+            m_Sut.CalculateGeneral(m_BaseRacetracksCalculator,
+                                   m_Lines,
+                                   m_TurnRadiusForPort,
+                                   m_TurnRadiusForStarboard);
 
             Assert.AreEqual(m_Lines,
                             m_BaseRacetracksCalculator.Lines);
         }
 
         [Test]
-        public void CalculateGeneralSetsRadiusTest()
+        public void CalculateGeneralSetsTurnRadiusForPortTurnTest()
         {
-            m_Calculator.CalculateGeneral(m_BaseRacetracksCalculator,
-                                          m_Lines,
-                                          m_Radius);
+            m_Sut.CalculateGeneral(m_BaseRacetracksCalculator,
+                                   m_Lines,
+                                   m_TurnRadiusForPort,
+                                   m_TurnRadiusForStarboard);
 
-            Assert.AreEqual(m_Radius,
-                            m_BaseRacetracksCalculator.Radius);
+            Assert.AreEqual(m_TurnRadiusForPort,
+                            m_BaseRacetracksCalculator.TurnRadiusForPort);
+        }
+
+        [Test]
+        public void CalculateGeneralSetsTurnRadiusForStarboardTurnTest()
+        {
+            m_Sut.CalculateGeneral(m_BaseRacetracksCalculator,
+                                   m_Lines,
+                                   m_TurnRadiusForPort,
+                                   m_TurnRadiusForStarboard);
+
+            Assert.AreEqual(m_TurnRadiusForPort,
+                            m_BaseRacetracksCalculator.TurnRadiusForStarboard);
         }
 
         [Test]
         public void CalculateSetsForwardToForwardTest()
         {
-            m_Calculator.Calculate();
+            m_Sut.Calculate();
 
             Assert.AreEqual(m_Paths,
-                            m_Calculator.ForwardToForward);
+                            m_Sut.ForwardToForward);
         }
 
         [Test]
         public void CalculateSetsForwardToReverseTest()
         {
-            m_Calculator.Calculate();
+            m_Sut.Calculate();
 
             Assert.AreEqual(m_Paths,
-                            m_Calculator.ForwardToReverse);
+                            m_Sut.ForwardToReverse);
         }
 
         [Test]
         public void CalculateSetsReverseToForwardTest()
         {
-            m_Calculator.Calculate();
+            m_Sut.Calculate();
 
             Assert.AreEqual(m_Paths,
-                            m_Calculator.ReverseToForward);
+                            m_Sut.ReverseToForward);
         }
 
         [Test]
         public void CalculateSetsReverseToReverseTest()
         {
-            m_Calculator.Calculate();
+            m_Sut.Calculate();
 
             Assert.AreEqual(m_Paths,
-                            m_Calculator.ReverseToReverse);
+                            m_Sut.ReverseToReverse);
         }
 
         [Test]
         public void ForwardToForwardDefaultTest()
         {
             Assert.AreEqual(0,
-                            m_Calculator.ForwardToForward.Length);
+                            m_Sut.ForwardToForward.Length);
         }
 
         [Test]
         public void ForwardToReverseDefaultTest()
         {
             Assert.AreEqual(0,
-                            m_Calculator.ForwardToReverse.Length);
+                            m_Sut.ForwardToReverse.Length);
         }
 
         [Test]
         public void IsPortTurnAllowedDefaultTest()
         {
-            Assert.True(m_Calculator.IsPortTurnAllowed);
+            Assert.True(m_Sut.IsPortTurnAllowed);
         }
 
         [Test]
         public void IsPortTurnAllowedRoundtripTest()
         {
-            m_Calculator.IsPortTurnAllowed = false;
+            m_Sut.IsPortTurnAllowed = false;
 
-            Assert.False(m_Calculator.IsPortTurnAllowed);
+            Assert.False(m_Sut.IsPortTurnAllowed);
         }
 
         [Test]
         public void IsStarboardTurnAllowedDefaultTest()
         {
-            Assert.True(m_Calculator.IsStarboardTurnAllowed);
+            Assert.True(m_Sut.IsStarboardTurnAllowed);
         }
 
         [Test]
         public void IsStarboardTurnAllowedRoundtripTest()
         {
-            m_Calculator.IsStarboardTurnAllowed = false;
+            m_Sut.IsStarboardTurnAllowed = false;
 
-            Assert.False(m_Calculator.IsStarboardTurnAllowed);
+            Assert.False(m_Sut.IsStarboardTurnAllowed);
         }
 
         [Test]
         public void IsUnknownTest()
         {
-            Assert.False(m_Calculator.IsUnknown);
+            Assert.False(m_Sut.IsUnknown);
         }
 
         [Test]
         public void LinesDefaultTest()
         {
             Assert.AreEqual(0,
-                            m_Calculator.Lines.Count());
+                            m_Sut.Lines.Count());
         }
 
         [Test]
@@ -227,42 +247,60 @@ namespace Selkie.Racetrack.Tests.Calculators.NUnit
         {
             var lines = new ILine[0];
 
-            m_Calculator.Lines = lines;
+            m_Sut.Lines = lines;
 
             Assert.AreEqual(lines,
-                            m_Calculator.Lines);
-        }
-
-        [Test]
-        public void RadiusDefaultTest()
-        {
-            NUnitHelper.AssertIsEquivalent(30.0,
-                                           m_Calculator.Radius.Length);
-        }
-
-        [Test]
-        public void RadiusRoundtripTest()
-        {
-            var radius = new Distance(123.0);
-
-            m_Calculator.Radius = radius;
-
-            Assert.AreEqual(radius,
-                            m_Calculator.Radius);
+                            m_Sut.Lines);
         }
 
         [Test]
         public void ReverseToForwardDefaultTest()
         {
             Assert.AreEqual(0,
-                            m_Calculator.ReverseToForward.Length);
+                            m_Sut.ReverseToForward.Length);
         }
 
         [Test]
         public void ReverseToReverseDefaultTest()
         {
             Assert.AreEqual(0,
-                            m_Calculator.ReverseToReverse.Length);
+                            m_Sut.ReverseToReverse.Length);
+        }
+
+        [Test]
+        public void TurnRadiusForPortTurnDefaultTest()
+        {
+            NUnitHelper.AssertIsEquivalent(RacetracksCalculator.DefaultTurnRadius.Length,
+                                           m_Sut.TurnRadiusForPort.Length);
+        }
+
+        [Test]
+        public void TurnRadiusForPortTurnRoundtripTest()
+        {
+            var radius = new Distance(123.0);
+
+            m_Sut.TurnRadiusForPort = radius;
+
+            Assert.AreEqual(radius,
+                            m_Sut.TurnRadiusForPort);
+        }
+
+        [Test]
+        public void TurnRadiusForStarboardTurnDefaultTest()
+        {
+            NUnitHelper.AssertIsEquivalent(RacetracksCalculator.DefaultTurnRadius.Length,
+                                           m_Sut.TurnRadiusForStarboard.Length);
+        }
+
+        [Test]
+        public void TurnRadiusForStarboardTurnRoundtripTest()
+        {
+            var radius = new Distance(123.0);
+
+            m_Sut.TurnRadiusForStarboard = radius;
+
+            Assert.AreEqual(radius,
+                            m_Sut.TurnRadiusForStarboard);
         }
     }
 }

@@ -10,18 +10,13 @@ namespace Selkie.Racetrack.Calculators
     [ProjectComponent(Lifestyle.Transient)]
     public class RacetracksCalculator : IRacetracksCalculator
     {
+        public static readonly Distance DefaultTurnRadius = new Distance(60.0);
+
         private readonly ILinesToLinesForwardToForwardRacetrackCalculator m_LinesToLinesForwardToForwardCalculator;
         private readonly ILinesToLinesForwardToReverseRacetrackCalculator m_LinesToLinesForwardToReverseCalculator;
         private readonly ILinesToLinesReverseToForwardRacetrackCalculator m_LinesToLinesReverseToForwardCalculator;
         private readonly ILinesToLinesReverseToReverseRacetrackCalculator m_LinesToLinesReverseToReverseCalculator;
-        private IPath[][] m_ForwardToForward = new IPath[0][];
-        private IPath[][] m_ForwardToReverse = new IPath[0][];
-        private bool m_IsPortTurnAllowed = true;
-        private bool m_IsStarboardTurnAllowed = true;
         private IEnumerable <ILine> m_Lines = new List <ILine>();
-        private Distance m_Radius = new Distance(30.0);
-        private IPath[][] m_ReverseToForward = new IPath[0][];
-        private IPath[][] m_ReverseToReverse = new IPath[0][];
 
         public RacetracksCalculator(
             [NotNull] ILinesToLinesForwardToForwardRacetrackCalculator linesToLinesForwardToForwardCalculator,
@@ -29,6 +24,15 @@ namespace Selkie.Racetrack.Calculators
             [NotNull] ILinesToLinesReverseToForwardRacetrackCalculator linesToLinesReverseToForwardCalculator,
             [NotNull] ILinesToLinesReverseToReverseRacetrackCalculator linesToLinesReverseToReverseCalculator)
         {
+            ReverseToReverse = new IPath[0][];
+            ReverseToForward = new IPath[0][];
+            ForwardToReverse = new IPath[0][];
+            ForwardToForward = new IPath[0][];
+            IsUnknown = false;
+            IsStarboardTurnAllowed = true;
+            IsPortTurnAllowed = true;
+            TurnRadiusForPort = DefaultTurnRadius;
+            TurnRadiusForStarboard = DefaultTurnRadius;
             m_LinesToLinesForwardToForwardCalculator = linesToLinesForwardToForwardCalculator;
             m_LinesToLinesForwardToReverseCalculator = linesToLinesForwardToReverseCalculator;
             m_LinesToLinesReverseToForwardCalculator = linesToLinesReverseToForwardCalculator;
@@ -37,58 +41,32 @@ namespace Selkie.Racetrack.Calculators
 
         public void Calculate()
         {
-            m_ForwardToForward = CalculateGeneral(m_LinesToLinesForwardToForwardCalculator,
-                                                  m_Lines,
-                                                  m_Radius);
+            ForwardToForward = CalculateGeneral(m_LinesToLinesForwardToForwardCalculator,
+                                                m_Lines,
+                                                TurnRadiusForPort,
+                                                TurnRadiusForStarboard);
 
-            m_ForwardToReverse = CalculateGeneral(m_LinesToLinesForwardToReverseCalculator,
-                                                  m_Lines,
-                                                  m_Radius);
+            ForwardToReverse = CalculateGeneral(m_LinesToLinesForwardToReverseCalculator,
+                                                m_Lines,
+                                                TurnRadiusForPort,
+                                                TurnRadiusForStarboard);
 
-            m_ReverseToForward = CalculateGeneral(m_LinesToLinesReverseToForwardCalculator,
-                                                  m_Lines,
-                                                  m_Radius);
+            ReverseToForward = CalculateGeneral(m_LinesToLinesReverseToForwardCalculator,
+                                                m_Lines,
+                                                TurnRadiusForPort,
+                                                TurnRadiusForStarboard);
 
-            m_ReverseToReverse = CalculateGeneral(m_LinesToLinesReverseToReverseCalculator,
-                                                  m_Lines,
-                                                  m_Radius);
+            ReverseToReverse = CalculateGeneral(m_LinesToLinesReverseToReverseCalculator,
+                                                m_Lines,
+                                                TurnRadiusForPort,
+                                                TurnRadiusForStarboard);
         }
 
-        public bool IsPortTurnAllowed
-        {
-            get
-            {
-                return m_IsPortTurnAllowed;
-            }
-            set
-            {
-                m_IsPortTurnAllowed = value;
-            }
-        }
+        public Distance TurnRadiusForStarboard { get; set; }
 
-        public bool IsStarboardTurnAllowed
-        {
-            get
-            {
-                return m_IsStarboardTurnAllowed;
-            }
-            set
-            {
-                m_IsStarboardTurnAllowed = value;
-            }
-        }
+        public bool IsPortTurnAllowed { get; set; }
 
-        public Distance Radius
-        {
-            get
-            {
-                return m_Radius;
-            }
-            set
-            {
-                m_Radius = value;
-            }
-        }
+        public bool IsStarboardTurnAllowed { get; set; }
 
         public IEnumerable <ILine> Lines
         {
@@ -102,55 +80,29 @@ namespace Selkie.Racetrack.Calculators
             }
         }
 
-        public bool IsUnknown
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public Distance TurnRadiusForPort { get; set; }
 
-        public IPath[][] ForwardToForward
-        {
-            get
-            {
-                return m_ForwardToForward;
-            }
-        }
+        public bool IsUnknown { get; private set; }
 
-        public IPath[][] ForwardToReverse
-        {
-            get
-            {
-                return m_ForwardToReverse;
-            }
-        }
+        public IPath[][] ForwardToForward { get; private set; }
 
-        public IPath[][] ReverseToForward
-        {
-            get
-            {
-                return m_ReverseToForward;
-            }
-        }
+        public IPath[][] ForwardToReverse { get; private set; }
 
-        public IPath[][] ReverseToReverse
-        {
-            get
-            {
-                return m_ReverseToReverse;
-            }
-        }
+        public IPath[][] ReverseToForward { get; private set; }
+
+        public IPath[][] ReverseToReverse { get; private set; }
 
         [NotNull]
         internal IPath[][] CalculateGeneral([NotNull] IBaseLinesToLinesRacetracksCalculator calculator,
                                             [NotNull] IEnumerable <ILine> lines,
-                                            [NotNull] Distance radius)
+                                            [NotNull] Distance turnRadiusForPort,
+                                            [NotNull] Distance turnRadiusForStarboard)
         {
             calculator.Lines = lines;
-            calculator.Radius = radius;
-            calculator.IsPortTurnAllowed = m_IsPortTurnAllowed;
-            calculator.IsStarboardTurnAllowed = m_IsStarboardTurnAllowed;
+            calculator.TurnRadiusForPort = turnRadiusForPort;
+            calculator.TurnRadiusForStarboard = turnRadiusForStarboard;
+            calculator.IsPortTurnAllowed = IsPortTurnAllowed;
+            calculator.IsStarboardTurnAllowed = IsStarboardTurnAllowed;
             calculator.Calculate();
 
             return calculator.Paths;

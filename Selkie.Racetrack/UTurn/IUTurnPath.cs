@@ -15,5 +15,7 @@ namespace Selkie.Racetrack.UTurn
 
         [NotNull]
         IUTurnCircle UTurnCircle { get; }
+
+        ISettings UTrunCircleSettings { get; }
     }
 }

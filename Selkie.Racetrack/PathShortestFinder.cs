@@ -6,35 +6,22 @@ namespace Selkie.Racetrack
     [ProjectComponent(Lifestyle.Transient)]
     public class PathShortestFinder : IPathShortestFinder
     {
-        private IEnumerable <IPath> m_Paths = new IPath[0];
-        private IPath m_ShortestPath = Path.Unknown;
-
-        public IEnumerable <IPath> Paths
+        public PathShortestFinder()
         {
-            get
-            {
-                return m_Paths;
-            }
-            set
-            {
-                m_Paths = value;
-            }
+            ShortestPath = Path.Unknown;
+            Paths = new IPath[0];
         }
 
-        public IPath ShortestPath
-        {
-            get
-            {
-                return m_ShortestPath;
-            }
-        }
+        public IEnumerable <IPath> Paths { get; set; }
+
+        public IPath ShortestPath { get; private set; }
 
         public void Find()
         {
             IPath shortest = Path.Unknown;
             double minLength = double.MaxValue;
 
-            foreach ( IPath path in m_Paths )
+            foreach ( IPath path in Paths )
             {
                 if ( minLength > path.Distance.Length )
                 {
@@ -43,7 +30,7 @@ namespace Selkie.Racetrack
                 }
             }
 
-            m_ShortestPath = shortest;
+            ShortestPath = shortest;
         }
     }
 }

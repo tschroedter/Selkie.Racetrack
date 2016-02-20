@@ -46,7 +46,12 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                               m_Zero,
                                               m_One);
 
-                m_Calculator = new AngleToCentrePointCalculator(pair);
+                m_Calculator = new AngleToCentrePointCalculator
+                               {
+                                   Pair = pair
+                               };
+
+                m_Calculator.Calculate();
             }
 
             private AngleToCentrePointCalculator m_Calculator;
@@ -184,7 +189,12 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                               m_Zero,
                                               m_One);
 
-                m_Calculator = new AngleToCentrePointCalculator(pair);
+                m_Calculator = new AngleToCentrePointCalculator
+                               {
+                                   Pair = pair
+                               };
+
+                m_Calculator.Calculate();
             }
 
             private readonly Angle m_FixedAngle = Angle.FromRadians(0.9272952180016123d);
@@ -594,6 +604,32 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
             }
 
             [Test]
+            public void FunctionUnderTest_ExpectedResult_UnderCondition()
+            {
+                // Arrange
+                // Act
+                var sut = new AngleToCentrePointCalculator();
+
+                // Assert
+                Assert.True(sut.CentrePoint.IsUnknown,
+                            "CentrePoint");
+                Assert.True(sut.LeftIntersectionPoint.IsUnknown,
+                            "LeftIntersectionPoint");
+                Assert.True(sut.RightIntersectionPoint.IsUnknown,
+                            "RightIntersectionPoint");
+                Assert.True(sut.LeftTurnCircle.IsUnknown,
+                            "LeftTurnCircle");
+                Assert.True(sut.RightTurnCircle.IsUnknown,
+                            "RightTurnCircle");
+                Assert.True(Angle.Unknown.Equals(sut.AngleForLeftTurnCircle),
+                            "AngleForLeftTurnCircle");
+                Assert.True(Angle.Unknown.Equals(sut.AngleForRightTurnCircle),
+                            "AngleForRightTurnCircle");
+                Assert.True(sut.Pair.IsUnknown,
+                            "Pair");
+            }
+
+            [Test]
             public void IsValidReturnsFalseForDifferentSidesTest()
             {
                 var pair = Substitute.For <ITurnCirclePair>();
@@ -660,7 +696,10 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                               one);
 
                 // ReSharper disable once ObjectCreationAsStatement
-                Assert.Throws <ArgumentException>(() => new AngleToCentrePointCalculator(pair));
+                Assert.Throws <ArgumentException>(() => new AngleToCentrePointCalculator
+                                                        {
+                                                            Pair = pair
+                                                        }.Calculate());
             }
         }
 

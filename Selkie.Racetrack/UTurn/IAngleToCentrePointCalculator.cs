@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using Selkie.Geometry.Primitives;
 using Selkie.Geometry.Shapes;
+using Selkie.Racetrack.Turn;
 
 namespace Selkie.Racetrack.UTurn
 {
@@ -28,6 +29,11 @@ namespace Selkie.Racetrack.UTurn
         Angle AngleForRightTurnCircle { get; }
 
         [NotNull]
+        ITurnCirclePair Pair { get; set; }
+
+        [NotNull]
         Point IntersectionPointForTurnCircle([NotNull] ITurnCircle turnCircle);
+
+        void Calculate();
     }
 }

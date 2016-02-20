@@ -19,12 +19,18 @@ namespace Selkie.Racetrack
         [NotNull]
         Angle FinishAzimuth { get; }
 
-        [NotNull]
-        Distance Radius { get; }
-
         bool IsPortTurnAllowed { get; }
         bool IsStarboardTurnAllowed { get; }
         Constants.TurnDirection DefaultTurnDirection { get; }
         bool IsUnknown { get; }
+
+        [NotNull]
+        Distance RadiusForPortTurn { get; }
+
+        [NotNull]
+        Distance RadiusForStarboardTurn { get; }
+
+        [NotNull]
+        Distance LargestRadiusForTurn { get; }
     }
 }

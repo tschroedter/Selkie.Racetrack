@@ -11,42 +11,26 @@ namespace Selkie.Racetrack.UTurn
     public class UTurnCircle : IUTurnCircle
     {
         public static IUTurnCircle Unknown = new UTurnCircle(true);
-        private readonly bool m_IsUnknown;
         private readonly IPossibleTurnCircles m_PossibleTurnCircles;
         private readonly IUTurnCircleCalculator m_UTurnCircleCalculator;
-        private ISettings m_Settings = Racetrack.Settings.Unknown;
 
         private UTurnCircle(bool isUnknown = false)
         {
-            m_IsUnknown = isUnknown;
+            Settings = Racetrack.Settings.Unknown;
+            IsUnknown = isUnknown;
         }
 
         public UTurnCircle([NotNull] IPossibleTurnCircles possibleTurnCircles,
                            [NotNull] IUTurnCircleCalculator uTurnCircleCalculator)
         {
+            Settings = Racetrack.Settings.Unknown;
             m_PossibleTurnCircles = possibleTurnCircles;
             m_UTurnCircleCalculator = uTurnCircleCalculator;
         }
 
-        public bool IsUnknown
-        {
-            get
-            {
-                return m_IsUnknown;
-            }
-        }
+        public bool IsUnknown { get; private set; }
 
-        public ISettings Settings
-        {
-            get
-            {
-                return m_Settings;
-            }
-            set
-            {
-                m_Settings = value;
-            }
-        }
+        public ISettings Settings { get; set; }
 
         public void Calculate()
         {

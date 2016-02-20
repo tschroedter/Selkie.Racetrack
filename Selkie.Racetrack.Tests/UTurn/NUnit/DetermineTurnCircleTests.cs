@@ -9,222 +9,390 @@ using Selkie.Racetrack.UTurn;
 
 namespace Selkie.Racetrack.Tests.UTurn.NUnit
 {
-    [TestFixture]
     [ExcludeFromCodeCoverage]
     internal sealed class DetermineTurnCircleCalculatorTests
     {
-        [SetUp]
-        public void Setup()
+        [TestFixture]
+        internal sealed class DetermineTurnCircleCalculatorForPortAndStarboardRadiusSameTests
         {
-            m_StartPoint = new Point(-50.0,
-                                     0.0);
-            m_StartAzimuth = Angle.FromDegrees(90.0);
-            m_FinishPoint = new Point(0.0,
-                                      0.0);
-            m_FinishAzimuth = Angle.FromDegrees(270.0);
-            m_Radius = new Distance(100.0);
+            [SetUp]
+            public void Setup()
+            {
+                m_StartPoint = new Point(-50.0,
+                                         0.0);
+                m_StartAzimuth = Angle.FromDegrees(90.0);
+                m_FinishPoint = new Point(0.0,
+                                          0.0);
+                m_FinishAzimuth = Angle.FromDegrees(270.0);
+                m_RadiusForPortTurn = new Distance(100.0);
+                m_RadiusForStarboardTurn = new Distance(100.0);
 
-            m_Settings = new Settings(m_StartPoint,
-                                      m_StartAzimuth,
-                                      m_FinishPoint,
-                                      m_FinishAzimuth,
-                                      m_Radius,
-                                      true,
-                                      true);
+                m_Settings = new Settings(m_StartPoint,
+                                          m_StartAzimuth,
+                                          m_FinishPoint,
+                                          m_FinishAzimuth,
+                                          m_RadiusForPortTurn,
+                                          m_RadiusForStarboardTurn,
+                                          true,
+                                          true);
 
-            var possibleTurnCircles = new PossibleTurnCircles
-                                      {
-                                          Settings = m_Settings
-                                      };
+                var possibleTurnCircles = new PossibleTurnCircles
+                                          {
+                                              Settings = m_Settings
+                                          };
 
-            var determineCirclePair = new DetermineCirclePairCalculator(possibleTurnCircles)
-                                      {
-                                          Settings = m_Settings
-                                      };
-            determineCirclePair.Calculate();
+                possibleTurnCircles.Calculate();
 
-            var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair);
+                var determineCirclePair = new DetermineCirclePairCalculator(possibleTurnCircles)
+                                          {
+                                              Settings = m_Settings
+                                          };
+                determineCirclePair.Calculate();
 
-            m_UTurnCircle = new UTurnCircle(possibleTurnCircles,
-                                            uTurnCircleCalculator)
-                            {
-                                Settings = m_Settings
-                            };
-            m_UTurnCircle.Calculate();
+                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair,
+                                                                      possibleTurnCircles,
+                                                                      new AngleToCentrePointCalculator());
 
-            m_Calculator = new DetermineTurnCircleCalculator
-                           {
-                               Settings = m_Settings,
-                               UTurnCircle = m_UTurnCircle
-                           };
+                m_UTurnCircle = new UTurnCircle(possibleTurnCircles,
+                                                uTurnCircleCalculator)
+                                {
+                                    Settings = m_Settings
+                                };
+                m_UTurnCircle.Calculate();
 
-            m_Calculator.Calculate();
+                m_Calculator = new DetermineTurnCircleCalculator
+                               {
+                                   Settings = m_Settings,
+                                   UTurnCircle = m_UTurnCircle
+                               };
+
+                m_Calculator.Calculate();
+            }
+
+            private DetermineTurnCircleCalculator m_Calculator;
+            private Angle m_FinishAzimuth;
+            private Point m_FinishPoint;
+            private ISettings m_Settings;
+            private Angle m_StartAzimuth;
+            private Point m_StartPoint;
+            private IUTurnCircle m_UTurnCircle;
+            private Distance m_RadiusForPortTurn;
+            private Distance m_RadiusForStarboardTurn;
+
+            [Test]
+            public void DetermineFinishTurnCircleReturnsOneForFinishPointIsOnOneCircleTest()
+            {
+                var zeroTurnCircle = Substitute.For <ITurnCircle>();
+                // ReSharper disable once MaximumChainedReferences
+                zeroTurnCircle.IsPointOnCircle(Arg.Any <Point>()).ReturnsForAnyArgs(false);
+
+                var oneTurnCircle = Substitute.For <ITurnCircle>();
+
+                var uTurnCircle = Substitute.For <IUTurnCircle>();
+                uTurnCircle.Zero.Returns(zeroTurnCircle);
+                uTurnCircle.One.Returns(oneTurnCircle);
+
+                ITurnCircle actual = m_Calculator.DetermineFinishTurnCircle(m_Settings,
+                                                                            uTurnCircle);
+
+                Assert.AreEqual(oneTurnCircle,
+                                actual);
+            }
+
+            [Test]
+            public void DetermineFinishTurnCircleReturnsZeroForFinishPointIsOnZeroCircleTest()
+            {
+                var zeroTurnCircle = Substitute.For <ITurnCircle>();
+                // ReSharper disable once MaximumChainedReferences
+                zeroTurnCircle.IsPointOnCircle(Arg.Any <Point>()).ReturnsForAnyArgs(true);
+
+                var uTurnCircle = Substitute.For <IUTurnCircle>();
+                uTurnCircle.Zero.Returns(zeroTurnCircle);
+
+                ITurnCircle actual = m_Calculator.DetermineFinishTurnCircle(m_Settings,
+                                                                            uTurnCircle);
+
+                Assert.AreEqual(zeroTurnCircle,
+                                actual);
+            }
+
+            [Test]
+            public void DetermineStartTurnCircleReturnsOneForStartPointIsOnOneCircleTest()
+            {
+                var zeroTurnCircle = Substitute.For <ITurnCircle>();
+                // ReSharper disable once MaximumChainedReferences
+                zeroTurnCircle.IsPointOnCircle(Arg.Any <Point>()).ReturnsForAnyArgs(false);
+
+                var oneTurnCircle = Substitute.For <ITurnCircle>();
+
+                var uTurnCircle = Substitute.For <IUTurnCircle>();
+                uTurnCircle.Zero.Returns(zeroTurnCircle);
+                uTurnCircle.One.Returns(oneTurnCircle);
+
+                ITurnCircle actual = m_Calculator.DetermineStartTurnCircle(m_Settings,
+                                                                           uTurnCircle);
+
+                Assert.AreEqual(oneTurnCircle,
+                                actual);
+            }
+
+            [Test]
+            public void DetermineStartTurnCircleReturnsZeroForFinishPointIsOnZeroCircleTest()
+            {
+                var zeroTurnCircle = Substitute.For <ITurnCircle>();
+                // ReSharper disable once MaximumChainedReferences
+                zeroTurnCircle.IsPointOnCircle(Arg.Any <Point>()).ReturnsForAnyArgs(true);
+
+                var uTurnCircle = Substitute.For <IUTurnCircle>();
+                uTurnCircle.Zero.Returns(zeroTurnCircle);
+
+                ITurnCircle actual = m_Calculator.DetermineStartTurnCircle(m_Settings,
+                                                                           uTurnCircle);
+
+                Assert.AreEqual(zeroTurnCircle,
+                                actual);
+            }
+
+            [Test]
+            public void FinishTurnCircleDefaultTest()
+            {
+                var calculator = new DetermineTurnCircleCalculator();
+
+                Assert.True(calculator.FinishTurnCircle.IsUnknown);
+            }
+
+            [Test]
+            public void FinishTurnCircleTest()
+            {
+                Assert.AreEqual(new Point(100.0,
+                                          0.0),
+                                m_Calculator.FinishTurnCircle.CentrePoint);
+                Assert.AreEqual(Constants.CircleOrigin.Finish,
+                                m_Calculator.FinishTurnCircle.Origin,
+                                "Origin");
+                Assert.AreEqual(Constants.CircleSide.Port,
+                                m_Calculator.FinishTurnCircle.Side,
+                                "Side");
+                Assert.AreEqual(m_RadiusForPortTurn,
+                                m_Calculator.FinishTurnCircle.Radius,
+                                "Radius");
+            }
+
+            [Test]
+            public void SettingsDefaultTest()
+            {
+                var calculator = new DetermineTurnCircleCalculator();
+
+                Assert.True(calculator.Settings.IsUnknown);
+            }
+
+            [Test]
+            public void SettingsRoundtripTest()
+            {
+                var settings = Substitute.For <ISettings>();
+
+                m_Calculator.Settings = settings;
+
+                Assert.AreEqual(settings,
+                                m_Calculator.Settings);
+            }
+
+            [Test]
+            public void StartTurnCircleDefaultTest()
+            {
+                var calculator = new DetermineTurnCircleCalculator();
+
+                Assert.True(calculator.StartTurnCircle.IsUnknown);
+            }
+
+            [Test]
+            public void StartTurnCircleTest()
+            {
+                Assert.AreEqual(new Point(-150.0,
+                                          0.0),
+                                m_Calculator.StartTurnCircle.CentrePoint,
+                                "CentrePoint");
+                Assert.AreEqual(Constants.CircleOrigin.Start,
+                                m_Calculator.StartTurnCircle.Origin,
+                                "Origin");
+                Assert.AreEqual(Constants.CircleSide.Port,
+                                m_Calculator.StartTurnCircle.Side,
+                                "Side");
+                Assert.AreEqual(m_RadiusForPortTurn,
+                                m_Calculator.StartTurnCircle.Radius,
+                                "Radius");
+            }
+
+            [Test]
+            public void UTurnCircleDefaultTest()
+            {
+                var calculator = new DetermineTurnCircleCalculator();
+
+                Assert.True(calculator.UTurnCircle.IsUnknown);
+            }
+
+            [Test]
+            public void UTurnCircleRoundtripTest()
+            {
+                var uTurnCircle = Substitute.For <IUTurnCircle>();
+
+                m_Calculator.UTurnCircle = uTurnCircle;
+
+                Assert.AreEqual(uTurnCircle,
+                                m_Calculator.UTurnCircle);
+            }
         }
 
-        private DetermineTurnCircleCalculator m_Calculator;
-        private Angle m_FinishAzimuth;
-        private Point m_FinishPoint;
-        private Distance m_Radius;
-        private ISettings m_Settings;
-        private Angle m_StartAzimuth;
-        private Point m_StartPoint;
-        private IUTurnCircle m_UTurnCircle;
-
-        [Test]
-        public void DetermineFinishTurnCircleReturnsOneForFinishPointIsOnOneCircleTest()
+        [TestFixture]
+        internal sealed class DetermineTurnCircleCalculatorForPortAndStarboardRadiusDifferentTests
         {
-            var zeroTurnCircle = Substitute.For <ITurnCircle>();
-            // ReSharper disable once MaximumChainedReferences
-            zeroTurnCircle.IsPointOnCircle(Arg.Any <Point>()).ReturnsForAnyArgs(false);
+            [SetUp]
+            public void Setup()
+            {
+                m_StartPoint = new Point(-50.0,
+                                         0.0);
+                m_StartAzimuth = Angle.FromDegrees(90.0);
+                m_FinishPoint = new Point(0.0,
+                                          0.0);
+                m_FinishAzimuth = Angle.FromDegrees(270.0);
+                m_RadiusForPortTurn = new Distance(100.0);
+                m_RadiusForStarboardTurn = new Distance(10.0);
 
-            var oneTurnCircle = Substitute.For <ITurnCircle>();
+                m_Settings = new Settings(m_StartPoint,
+                                          m_StartAzimuth,
+                                          m_FinishPoint,
+                                          m_FinishAzimuth,
+                                          m_RadiusForPortTurn,
+                                          m_RadiusForStarboardTurn,
+                                          true,
+                                          true);
 
-            var uTurnCircle = Substitute.For <IUTurnCircle>();
-            uTurnCircle.Zero.Returns(zeroTurnCircle);
-            uTurnCircle.One.Returns(oneTurnCircle);
+                var possibleTurnCircles = new PossibleTurnCircles
+                                          {
+                                              Settings = m_Settings
+                                          };
 
-            ITurnCircle actual = m_Calculator.DetermineFinishTurnCircle(m_Settings,
-                                                                        uTurnCircle);
+                possibleTurnCircles.Calculate();
 
-            Assert.AreEqual(oneTurnCircle,
-                            actual);
-        }
+                var determineCirclePair = new DetermineCirclePairCalculator(possibleTurnCircles)
+                                          {
+                                              Settings = m_Settings
+                                          };
 
-        [Test]
-        public void DetermineFinishTurnCircleReturnsZeroForFinishPointIsOnZeroCircleTest()
-        {
-            var zeroTurnCircle = Substitute.For <ITurnCircle>();
-            // ReSharper disable once MaximumChainedReferences
-            zeroTurnCircle.IsPointOnCircle(Arg.Any <Point>()).ReturnsForAnyArgs(true);
+                determineCirclePair.Calculate();
 
-            var uTurnCircle = Substitute.For <IUTurnCircle>();
-            uTurnCircle.Zero.Returns(zeroTurnCircle);
+                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair,
+                                                                      possibleTurnCircles,
+                                                                      new AngleToCentrePointCalculator());
 
-            ITurnCircle actual = m_Calculator.DetermineFinishTurnCircle(m_Settings,
-                                                                        uTurnCircle);
+                m_UTurnCircle = new UTurnCircle(possibleTurnCircles,
+                                                uTurnCircleCalculator)
+                                {
+                                    Settings = m_Settings
+                                };
+                m_UTurnCircle.Calculate();
 
-            Assert.AreEqual(zeroTurnCircle,
-                            actual);
-        }
+                m_Calculator = new DetermineTurnCircleCalculator
+                               {
+                                   Settings = m_Settings,
+                                   UTurnCircle = m_UTurnCircle
+                               };
 
-        [Test]
-        public void DetermineStartTurnCircleReturnsOneForStartPointIsOnOneCircleTest()
-        {
-            var zeroTurnCircle = Substitute.For <ITurnCircle>();
-            // ReSharper disable once MaximumChainedReferences
-            zeroTurnCircle.IsPointOnCircle(Arg.Any <Point>()).ReturnsForAnyArgs(false);
+                m_Calculator.Calculate();
+            }
 
-            var oneTurnCircle = Substitute.For <ITurnCircle>();
+            private DetermineTurnCircleCalculator m_Calculator;
+            private Angle m_FinishAzimuth;
+            private Point m_FinishPoint;
+            private ISettings m_Settings;
+            private Angle m_StartAzimuth;
+            private Point m_StartPoint;
+            private IUTurnCircle m_UTurnCircle;
+            private Distance m_RadiusForPortTurn;
+            private Distance m_RadiusForStarboardTurn;
 
-            var uTurnCircle = Substitute.For <IUTurnCircle>();
-            uTurnCircle.Zero.Returns(zeroTurnCircle);
-            uTurnCircle.One.Returns(oneTurnCircle);
+            [Test]
+            public void FinishTurn_CenterPointReturnsPoint__WhenCalculated()
+            {
+                // Arrange
+                // Act
+                // Assert
+                Assert.AreEqual(new Point(100.0,
+                                          0.0),
+                                m_Calculator.FinishTurnCircle.CentrePoint);
+            }
 
-            ITurnCircle actual = m_Calculator.DetermineStartTurnCircle(m_Settings,
-                                                                       uTurnCircle);
+            [Test]
+            public void FinishTurn_OriginReturnsFinish_WhenCalculated()
+            {
+                // Arrange
+                // Act
+                // Assert
+                Assert.AreEqual(Constants.CircleOrigin.Finish,
+                                m_Calculator.FinishTurnCircle.Origin);
+            }
 
-            Assert.AreEqual(oneTurnCircle,
-                            actual);
-        }
+            [Test]
+            public void FinishTurn_RadiusIsSetToTheBiggerRadius_WhenCalculated()
+            {
+                // Arrange
+                // Act
+                // Assert
+                Assert.AreEqual(m_RadiusForPortTurn,
+                                m_Calculator.FinishTurnCircle.Radius,
+                                "Radius");
+            }
 
-        [Test]
-        public void DetermineStartTurnCircleReturnsZeroForFinishPointIsOnZeroCircleTest()
-        {
-            var zeroTurnCircle = Substitute.For <ITurnCircle>();
-            // ReSharper disable once MaximumChainedReferences
-            zeroTurnCircle.IsPointOnCircle(Arg.Any <Point>()).ReturnsForAnyArgs(true);
+            [Test]
+            public void FinishTurn_SideReturnsPort_WhenCalculated()
+            {
+                // Arrange
+                // Act
+                // Assert
+                Assert.AreEqual(Constants.CircleSide.Port,
+                                m_Calculator.FinishTurnCircle.Side);
+            }
 
-            var uTurnCircle = Substitute.For <IUTurnCircle>();
-            uTurnCircle.Zero.Returns(zeroTurnCircle);
+            [Test]
+            public void StartTurnCircle_CenterPointReturnsPoint__WhenCalculated()
+            {
+                // Arrange
+                // Act
+                // Assert
+                Assert.AreEqual(new Point(-150.0,
+                                          0.0),
+                                m_Calculator.StartTurnCircle.CentrePoint);
+            }
 
-            ITurnCircle actual = m_Calculator.DetermineStartTurnCircle(m_Settings,
-                                                                       uTurnCircle);
+            [Test]
+            public void StartTurnCircle_OriginReturnsStart_WhenCalculated()
+            {
+                // Arrange
+                // Act
+                // Assert
+                Assert.AreEqual(Constants.CircleOrigin.Start,
+                                m_Calculator.StartTurnCircle.Origin);
+            }
 
-            Assert.AreEqual(zeroTurnCircle,
-                            actual);
-        }
+            [Test]
+            public void StartTurnCircle_RadiusIsSetToTheBiggerRadius_WhenCalculated()
+            {
+                // Arrange
+                // Act
+                // Assert
+                Assert.AreEqual(m_RadiusForPortTurn,
+                                m_Calculator.StartTurnCircle.Radius);
+            }
 
-        [Test]
-        public void FinishTurnCircleDefaultTest()
-        {
-            var calculator = new DetermineTurnCircleCalculator();
-
-            Assert.True(calculator.FinishTurnCircle.IsUnknown);
-        }
-
-        [Test]
-        public void FinishTurnCircleTest()
-        {
-            Assert.AreEqual(new Point(100.0,
-                                      0.0),
-                            m_Calculator.FinishTurnCircle.CentrePoint);
-            Assert.AreEqual(Constants.CircleOrigin.Finish,
-                            m_Calculator.FinishTurnCircle.Origin,
-                            "Origin");
-            Assert.AreEqual(Constants.CircleSide.Port,
-                            m_Calculator.FinishTurnCircle.Side,
-                            "Side");
-        }
-
-        [Test]
-        public void SettingsDefaultTest()
-        {
-            var calculator = new DetermineTurnCircleCalculator();
-
-            Assert.True(calculator.Settings.IsUnknown);
-        }
-
-        [Test]
-        public void SettingsRoundtripTest()
-        {
-            var settings = Substitute.For <ISettings>();
-
-            m_Calculator.Settings = settings;
-
-            Assert.AreEqual(settings,
-                            m_Calculator.Settings);
-        }
-
-        [Test]
-        public void StartTurnCircleDefaultTest()
-        {
-            var calculator = new DetermineTurnCircleCalculator();
-
-            Assert.True(calculator.StartTurnCircle.IsUnknown);
-        }
-
-        [Test]
-        public void StartTurnCircleTest()
-        {
-            Assert.AreEqual(new Point(-150.0,
-                                      0.0),
-                            m_Calculator.StartTurnCircle.CentrePoint,
-                            "CentrePoint");
-            Assert.AreEqual(Constants.CircleOrigin.Start,
-                            m_Calculator.StartTurnCircle.Origin,
-                            "Origin");
-            Assert.AreEqual(Constants.CircleSide.Port,
-                            m_Calculator.StartTurnCircle.Side,
-                            "Side");
-        }
-
-        [Test]
-        public void UTurnCircleDefaultTest()
-        {
-            var calculator = new DetermineTurnCircleCalculator();
-
-            Assert.True(calculator.UTurnCircle.IsUnknown);
-        }
-
-        [Test]
-        public void UTurnCircleRoundtripTest()
-        {
-            var uTurnCircle = Substitute.For <IUTurnCircle>();
-
-            m_Calculator.UTurnCircle = uTurnCircle;
-
-            Assert.AreEqual(uTurnCircle,
-                            m_Calculator.UTurnCircle);
+            [Test]
+            public void StartTurnCircle_SideReturnsPort_WhenCalculated()
+            {
+                // Arrange
+                // Act
+                // Assert
+                Assert.AreEqual(Constants.CircleSide.Port,
+                                m_Calculator.StartTurnCircle.Side);
+            }
         }
     }
 }

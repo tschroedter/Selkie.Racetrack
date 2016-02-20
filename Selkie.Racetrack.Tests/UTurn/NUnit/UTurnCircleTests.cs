@@ -29,13 +29,15 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                           80.0);
                 m_FinishAzimuth = Angle.FromDegrees(180.0);
 
-                m_Radius = new Distance(30);
+                m_RadiusForPortTurn = new Distance(30);
+                m_RadiusForStarboardTurn = new Distance(30);
 
                 m_Settings = new Settings(m_StartPoint,
                                           m_StartAzimuth,
                                           m_FinishPoint,
                                           m_FinishAzimuth,
-                                          m_Radius,
+                                          m_RadiusForPortTurn,
+                                          m_RadiusForStarboardTurn,
                                           true,
                                           true);
 
@@ -50,7 +52,9 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                           };
                 determineCirclePair.Calculate();
 
-                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair);
+                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair,
+                                                                      possibleTurnCircles,
+                                                                      new AngleToCentrePointCalculator());
 
                 m_Circle = new UTurnCircle(possibleTurnCircles,
                                            uTurnCircleCalculator)
@@ -64,10 +68,11 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
             private UTurnCircle m_Circle;
             private Angle m_FinishAzimuth;
             private Point m_FinishPoint;
-            private Distance m_Radius;
+            private Distance m_RadiusForPortTurn;
             private ISettings m_Settings;
             private Angle m_StartAzimuth;
             private Point m_StartPoint;
+            private Distance m_RadiusForStarboardTurn;
 
             [Test]
             public void IsUnknownReturnsFalseForKnownTest()
@@ -99,13 +104,15 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                           80.0);
                 m_FinishAzimuth = Angle.FromDegrees(180.0);
 
-                m_Radius = new Distance(30);
+                m_RadiusForPortTurn = new Distance(30.0);
+                m_RadiusForStarboardTurn = new Distance(30.0);
 
                 m_Settings = new Settings(m_StartPoint,
                                           m_StartAzimuth,
                                           m_FinishPoint,
                                           m_FinishAzimuth,
-                                          m_Radius,
+                                          m_RadiusForPortTurn,
+                                          m_RadiusForStarboardTurn,
                                           true,
                                           true);
 
@@ -120,7 +127,9 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                           };
                 determineCirclePair.Calculate();
 
-                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair);
+                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair,
+                                                                      possibleTurnCircles,
+                                                                      new AngleToCentrePointCalculator());
 
                 m_Circle = new UTurnCircle(possibleTurnCircles,
                                            uTurnCircleCalculator)
@@ -134,10 +143,11 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
             private UTurnCircle m_Circle;
             private Angle m_FinishAzimuth;
             private Point m_FinishPoint;
-            private Distance m_Radius;
             private ISettings m_Settings;
             private Angle m_StartAzimuth;
             private Point m_StartPoint;
+            private Distance m_RadiusForPortTurn;
+            private Distance m_RadiusForStarboardTurn;
 
             [Test]
             public void CentrePointTest()
@@ -201,13 +211,16 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                 m_FinishPoint = new Point(7.5,
                                           0.0);
                 m_FinishAzimuth = Angle.FromDegrees(0.0 + 90.0);
-                m_Radius = new Distance(2.5);
+
+                m_RadiusForPortTurn = new Distance(2.5);
+                m_RadiusForStarboardTurn = new Distance(2.5);
 
                 m_Settings = new Settings(m_StartPoint,
                                           m_StartAzimuth,
                                           m_FinishPoint,
                                           m_FinishAzimuth,
-                                          m_Radius,
+                                          m_RadiusForPortTurn,
+                                          m_RadiusForStarboardTurn,
                                           true,
                                           true);
 
@@ -222,7 +235,9 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                           };
                 determineCirclePair.Calculate();
 
-                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair);
+                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair,
+                                                                      possibleTurnCircles,
+                                                                      new AngleToCentrePointCalculator());
 
                 m_Circle = new UTurnCircle(possibleTurnCircles,
                                            uTurnCircleCalculator)
@@ -236,10 +251,11 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
             private UTurnCircle m_Circle;
             private Angle m_FinishAzimuth;
             private Point m_FinishPoint;
-            private Distance m_Radius;
             private ISettings m_Settings;
             private Angle m_StartAzimuth;
             private Point m_StartPoint;
+            private Distance m_RadiusForPortTurn;
+            private Distance m_RadiusForStarboardTurn;
 
             [Test]
             public void CentrePointTest()
@@ -308,13 +324,15 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                     new Point(2.0,
                                               4.5));
 
-                m_Radius = new Distance(line.Length);
+                m_RadiusForPortTurn = new Distance(line.Length);
+                m_RadiusForStarboardTurn = new Distance(line.Length);
 
                 m_Settings = new Settings(m_StartPoint,
                                           m_StartAzimuth,
                                           m_FinishPoint,
                                           m_FinishAzimuth,
-                                          m_Radius,
+                                          m_RadiusForPortTurn,
+                                          m_RadiusForStarboardTurn,
                                           true,
                                           true);
 
@@ -329,7 +347,9 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                           };
                 determineCirclePair.Calculate();
 
-                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair);
+                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair,
+                                                                      possibleTurnCircles,
+                                                                      new AngleToCentrePointCalculator());
 
                 m_Circle = new UTurnCircle(possibleTurnCircles,
                                            uTurnCircleCalculator)
@@ -343,10 +363,11 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
             private UTurnCircle m_Circle;
             private Angle m_FinishAzimuth;
             private Point m_FinishPoint;
-            private Distance m_Radius;
             private ISettings m_Settings;
             private Angle m_StartAzimuth;
             private Point m_StartPoint;
+            private Distance m_RadiusForPortTurn;
+            private Distance m_RadiusForStarboardTurn;
 
             [Test]
             public void CentrePointTest()
@@ -411,13 +432,15 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                           120.0);
                 m_FinishAzimuth = Angle.FromDegrees(180.0);
 
-                m_Radius = new Distance(30);
+                m_RadiusForPortTurn = new Distance(30.0);
+                m_RadiusForStarboardTurn = new Distance(30.0);
 
                 m_Settings = new Settings(m_StartPoint,
                                           m_StartAzimuth,
                                           m_FinishPoint,
                                           m_FinishAzimuth,
-                                          m_Radius,
+                                          m_RadiusForPortTurn,
+                                          m_RadiusForStarboardTurn,
                                           true,
                                           true);
 
@@ -432,7 +455,9 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                           };
                 determineCirclePair.Calculate();
 
-                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair);
+                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair,
+                                                                      possibleTurnCircles,
+                                                                      new AngleToCentrePointCalculator());
 
                 m_Circle = new UTurnCircle(possibleTurnCircles,
                                            uTurnCircleCalculator)
@@ -446,10 +471,11 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
             private UTurnCircle m_Circle;
             private Angle m_FinishAzimuth;
             private Point m_FinishPoint;
-            private Distance m_Radius;
             private ISettings m_Settings;
             private Angle m_StartAzimuth;
             private Point m_StartPoint;
+            private Distance m_RadiusForPortTurn;
+            private Distance m_RadiusForStarboardTurn;
 
             [Test]
             public void IsRequiredTest()
@@ -474,13 +500,16 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                 m_FinishPoint = new Point(200.0,
                                           30.0);
                 m_FinishAzimuth = Angle.FromDegrees(180.0);
-                m_Radius = new Distance(30.0);
+
+                m_RadiusForPortTurn = new Distance(30.0);
+                m_RadiusForStarboardTurn = new Distance(30.0);
 
                 m_Settings = new Settings(m_StartPoint,
                                           m_StartAzimuth,
                                           m_FinishPoint,
                                           m_FinishAzimuth,
-                                          m_Radius,
+                                          m_RadiusForPortTurn,
+                                          m_RadiusForStarboardTurn,
                                           true,
                                           true);
 
@@ -495,7 +524,9 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                           };
                 determineCirclePair.Calculate();
 
-                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair);
+                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair,
+                                                                      possibleTurnCircles,
+                                                                      new AngleToCentrePointCalculator());
 
                 m_Circle = new UTurnCircle(possibleTurnCircles,
                                            uTurnCircleCalculator)
@@ -509,10 +540,11 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
             private UTurnCircle m_Circle;
             private Angle m_FinishAzimuth;
             private Point m_FinishPoint;
-            private Distance m_Radius;
             private ISettings m_Settings;
             private Angle m_StartAzimuth;
             private Point m_StartPoint;
+            private Distance m_RadiusForPortTurn;
+            private Distance m_RadiusForStarboardTurn;
 
             [Test]
             public void CentrePointTest()
@@ -576,13 +608,16 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                 m_FinishPoint = new Point(0.0,
                                           0.0);
                 m_FinishAzimuth = Angle.FromDegrees(270.0);
-                m_Radius = new Distance(100.0);
+
+                m_RadiusForPortTurn = new Distance(100.0);
+                m_RadiusForStarboardTurn = new Distance(100.0);
 
                 m_Settings = new Settings(m_StartPoint,
                                           m_StartAzimuth,
                                           m_FinishPoint,
                                           m_FinishAzimuth,
-                                          m_Radius,
+                                          m_RadiusForPortTurn,
+                                          m_RadiusForStarboardTurn,
                                           true,
                                           true);
 
@@ -597,7 +632,9 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                           };
                 determineCirclePair.Calculate();
 
-                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair);
+                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair,
+                                                                      possibleTurnCircles,
+                                                                      new AngleToCentrePointCalculator());
 
                 m_Circle = new UTurnCircle(possibleTurnCircles,
                                            uTurnCircleCalculator)
@@ -611,10 +648,11 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
             private UTurnCircle m_Circle;
             private Angle m_FinishAzimuth;
             private Point m_FinishPoint;
-            private Distance m_Radius;
             private ISettings m_Settings;
             private Angle m_StartAzimuth;
             private Point m_StartPoint;
+            private Distance m_RadiusForPortTurn;
+            private Distance m_RadiusForStarboardTurn;
 
             [Test]
             public void CentrePointTest()
@@ -680,6 +718,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                                       0.0),
                                             Angle.FromDegrees(270.0),
                                             new Distance(100.0),
+                                            new Distance(100.0),
                                             true,
                                             true);
 
@@ -694,7 +733,9 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                           };
                 determineCirclePair.Calculate();
 
-                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair);
+                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair,
+                                                                      possibleTurnCircles,
+                                                                      new AngleToCentrePointCalculator());
 
                 var circle = new UTurnCircle(possibleTurnCircles,
                                              uTurnCircleCalculator)
@@ -747,13 +788,16 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                 m_FinishPoint = new Point(0.0,
                                           0.0);
                 m_FinishAzimuth = Angle.FromDegrees(90.0);
-                m_Radius = new Distance(100.0);
+
+                m_RadiusForPortTurn = new Distance(100.0);
+                m_RadiusForStarboardTurn = new Distance(100.0);
 
                 m_Settings = new Settings(m_StartPoint,
                                           m_StartAzimuth,
                                           m_FinishPoint,
                                           m_FinishAzimuth,
-                                          m_Radius,
+                                          m_RadiusForPortTurn,
+                                          m_RadiusForStarboardTurn,
                                           true,
                                           true);
 
@@ -768,7 +812,9 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                           };
                 determineCirclePair.Calculate();
 
-                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair);
+                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair,
+                                                                      possibleTurnCircles,
+                                                                      new AngleToCentrePointCalculator());
 
                 m_Circle = new UTurnCircle(possibleTurnCircles,
                                            uTurnCircleCalculator)
@@ -782,10 +828,11 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
             private UTurnCircle m_Circle;
             private Angle m_FinishAzimuth;
             private Point m_FinishPoint;
-            private Distance m_Radius;
             private ISettings m_Settings;
             private Angle m_StartAzimuth;
             private Point m_StartPoint;
+            private Distance m_RadiusForPortTurn;
+            private Distance m_RadiusForStarboardTurn;
 
             [Test]
             public void CentrePointTest()

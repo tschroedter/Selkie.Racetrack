@@ -17,7 +17,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
     [ExcludeFromCodeCoverage]
     internal sealed class UTurnPathTests
     {
-        #region Nested type: UTurnPathGeneralTests
+        #region Nested type: UTurnPathGeneralPropertiesTests
 
         [TestFixture]
         internal sealed class UTurnPathGeneralPropertiesTests
@@ -32,28 +32,29 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                                     0.0),
                                           Angle.For270Degrees,
                                           new Distance(100.0),
+                                          new Distance(100.0),
                                           true,
                                           true);
 
                 m_UTurnCircle = Substitute.For <IUTurnCircle>();
                 m_Calculator = Substitute.For <IDetermineTurnCircleCalculator>();
 
-                m_Path = new UTurnPath(m_UTurnCircle,
-                                       m_Calculator)
-                         {
-                             Settings = m_Settings
-                         };
+                m_Sut = new UTurnPath(m_UTurnCircle,
+                                      m_Calculator)
+                        {
+                            Settings = m_Settings
+                        };
             }
 
             private IDetermineTurnCircleCalculator m_Calculator;
-            private UTurnPath m_Path;
+            private UTurnPath m_Sut;
             private Settings m_Settings;
             private IUTurnCircle m_UTurnCircle;
 
             [Test]
             public void CalculateCallsUTurnCircleCalculateTest()
             {
-                m_Path.Calculate();
+                m_Sut.Calculate();
 
                 m_UTurnCircle.Received().Calculate();
             }
@@ -63,15 +64,15 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
             {
                 m_UTurnCircle.IsRequired.Returns(false);
 
-                m_Path.Calculate();
+                m_Sut.Calculate();
 
-                Assert.True(m_Path.Path.IsUnknown);
+                Assert.True(m_Sut.Path.IsUnknown);
             }
 
             [Test]
             public void CalculateSetsUTurnCircleSettingsTest()
             {
-                m_Path.Calculate();
+                m_Sut.Calculate();
 
                 Assert.AreEqual(m_Settings,
                                 m_UTurnCircle.Settings);
@@ -80,7 +81,7 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
             [Test]
             public void DetermineTurnCirclesCallsCalculateTest()
             {
-                m_Path.DetermineTurnCircles();
+                m_Sut.DetermineTurnCircles();
 
                 m_Calculator.Received().Calculate();
             }
@@ -88,43 +89,79 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
             [Test]
             public void DetermineTurnCirclesSetsSettingsTest()
             {
-                m_Path.DetermineTurnCircles();
+                m_Sut.DetermineTurnCircles();
 
                 Assert.AreEqual(m_Settings,
-                                m_Path.Settings);
+                                m_Sut.Settings);
             }
 
             [Test]
             public void DetermineTurnCirclesSetsUTurnCircleTest()
             {
-                m_Path.DetermineTurnCircles();
+                m_Sut.DetermineTurnCircles();
 
                 Assert.AreEqual(m_UTurnCircle,
-                                m_Path.UTurnCircle);
+                                m_Sut.UTurnCircle);
             }
 
             [Test]
             public void PathDefaultTest()
             {
-                Assert.True(m_Path.Path.IsUnknown);
+                var sut = new UTurnPath(m_UTurnCircle,
+                                        m_Calculator);
+
+                Assert.True(sut.Path.IsUnknown);
             }
 
             [Test]
             public void SettingsRoundtripTest()
             {
-                var settings = Substitute.For <ISettings>();
+                var expected = new Settings(new Point(1.0,
+                                                      2.0),
+                                            Angle.ForZeroDegrees,
+                                            new Point(3.0,
+                                                      4.0),
+                                            Angle.For180Degrees,
+                                            new Distance(100.0),
+                                            new Distance(10.0),
+                                            true,
+                                            true);
 
-                m_Path.Settings = settings;
+                m_Sut.Settings = expected;
 
-                Assert.AreEqual(settings,
-                                m_Path.Settings);
+                ISettings actual = m_Sut.Settings;
+
+                Assert.AreEqual(expected.StartPoint,
+                                actual.StartPoint,
+                                "StartPoint");
+                Assert.AreEqual(expected.StartAzimuth,
+                                actual.StartAzimuth,
+                                "StartAzimuth");
+                Assert.AreEqual(expected.FinishPoint,
+                                actual.FinishPoint,
+                                "FinishPoint");
+                Assert.AreEqual(expected.FinishAzimuth,
+                                actual.FinishAzimuth,
+                                "FinishAzimuth");
+                Assert.AreEqual(new Distance(100.0),
+                                actual.RadiusForPortTurn,
+                                "RadiusForPortTurn");
+                Assert.AreEqual(new Distance(10.0),
+                                actual.RadiusForStarboardTurn,
+                                "RadiusForStarboardTurn");
+                Assert.AreEqual(expected.IsPortTurnAllowed,
+                                actual.IsPortTurnAllowed,
+                                "IsPortTurnAllowed");
+                Assert.AreEqual(expected.IsStarboardTurnAllowed,
+                                actual.IsStarboardTurnAllowed,
+                                "IsStarboardTurnAllowed");
             }
 
             [Test]
             public void UTurnCircleDefaultTest()
             {
                 Assert.AreEqual(m_UTurnCircle,
-                                m_Path.UTurnCircle);
+                                m_Sut.UTurnCircle);
             }
         }
 
@@ -144,13 +181,15 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                 m_FinishPoint = new Point(0.0,
                                           0.0);
                 m_FinishAzimuth = Angle.FromDegrees(270.0);
-                m_Radius = new Distance(100.0);
+                m_RadiusForPortTurn = new Distance(100.0);
+                m_RadiusForStarboardTurn = new Distance(100.0);
 
                 m_Settings = new Settings(m_StartPoint,
                                           m_StartAzimuth,
                                           m_FinishPoint,
                                           m_FinishAzimuth,
-                                          m_Radius,
+                                          m_RadiusForPortTurn,
+                                          m_RadiusForStarboardTurn,
                                           true,
                                           true);
 
@@ -165,7 +204,9 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                           };
                 determineCirclePair.Calculate();
 
-                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair);
+                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair,
+                                                                      possibleTurnCircles,
+                                                                      new AngleToCentrePointCalculator());
 
                 m_UTurnCircle = new UTurnCircle(possibleTurnCircles,
                                                 uTurnCircleCalculator)
@@ -194,11 +235,12 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
             private Angle m_FinishAzimuth;
             private Point m_FinishPoint;
             private UTurnPath m_Path;
-            private Distance m_Radius;
+            private Distance m_RadiusForPortTurn;
             private ISettings m_Settings;
             private Angle m_StartAzimuth;
             private Point m_StartPoint;
             private IUTurnCircle m_UTurnCircle;
+            private Distance m_RadiusForStarboardTurn;
 
             [Test]
             public void CalculateFinishArcSegmentTest()
@@ -494,6 +536,396 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
 
         #endregion
 
+        #region Nested type: UTurnPathWithPortStarboardRadiusDifferentTests
+
+        [TestFixture]
+        internal sealed class UTurnPathWithPortStarboardRadiusDifferentTests
+        {
+            [SetUp]
+            public void Setup()
+            {
+                m_StartPoint = new Point(-50.0,
+                                         0.0);
+                m_StartAzimuth = Angle.FromDegrees(90.0);
+                m_FinishPoint = new Point(0.0,
+                                          0.0);
+                m_FinishAzimuth = Angle.FromDegrees(270.0);
+                m_RadiusForPortTurn = new Distance(100.0);
+                m_RadiusForStarboardTurn = new Distance(10.0);
+
+                m_Settings = new Settings(m_StartPoint,
+                                          m_StartAzimuth,
+                                          m_FinishPoint,
+                                          m_FinishAzimuth,
+                                          m_RadiusForPortTurn,
+                                          m_RadiusForStarboardTurn,
+                                          true,
+                                          true);
+
+                var possibleTurnCircles = new PossibleTurnCircles
+                                          {
+                                              Settings = m_Settings
+                                          };
+
+                var determineCirclePair = new DetermineCirclePairCalculator(possibleTurnCircles)
+                                          {
+                                              Settings = m_Settings
+                                          };
+                determineCirclePair.Calculate();
+
+                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair,
+                                                                      possibleTurnCircles,
+                                                                      new AngleToCentrePointCalculator());
+
+                m_UTurnCircle = new UTurnCircle(possibleTurnCircles,
+                                                uTurnCircleCalculator)
+                                {
+                                    Settings = m_Settings
+                                };
+                m_UTurnCircle.Calculate();
+
+                m_Calculator = new DetermineTurnCircleCalculator
+                               {
+                                   Settings = m_Settings,
+                                   UTurnCircle = m_UTurnCircle
+                               };
+                m_Calculator.Calculate();
+
+                m_Path = new UTurnPath(m_UTurnCircle,
+                                       m_Calculator)
+                         {
+                             Settings = m_Settings
+                         };
+
+                m_Path.Calculate();
+            }
+
+            private DetermineTurnCircleCalculator m_Calculator;
+            private Angle m_FinishAzimuth;
+            private Point m_FinishPoint;
+            private UTurnPath m_Path;
+            private Distance m_RadiusForPortTurn;
+            private ISettings m_Settings;
+            private Angle m_StartAzimuth;
+            private Point m_StartPoint;
+            private IUTurnCircle m_UTurnCircle;
+            private Distance m_RadiusForStarboardTurn;
+
+            [Test]
+            public void CalculateFinishArcSegmentTest()
+            {
+                m_Path.Calculate();
+
+                IEnumerable <IPolylineSegment> polylineSegments = m_Path.Path.Segments;
+                var actual = polylineSegments.ElementAt(2) as ITurnCircleArcSegment;
+
+                Assert.NotNull(actual);
+                Assert.AreEqual(new Point(100.0,
+                                          0.0),
+                                actual.CentrePoint,
+                                "CentrePoint");
+                Assert.AreEqual(new Point(37.5,
+                                          78.06247497998d),
+                                actual.StartPoint,
+                                "StartPoint");
+                Assert.AreEqual(new Point(0.0,
+                                          0.0),
+                                actual.EndPoint,
+                                "EndPoint");
+                Assert.AreEqual(Constants.TurnDirection.Counterclockwise,
+                                actual.TurnDirection,
+                                "TurnDirection");
+                Assert.AreEqual(Constants.CircleOrigin.Finish,
+                                actual.CircleOrigin,
+                                "CircleOrigin");
+            }
+
+            [Test]
+            public void CalculateSegmentsCountTest()
+            {
+                m_Path.Calculate();
+
+                IEnumerable <IPolylineSegment> actual = m_Path.Path.Segments;
+
+                Assert.AreEqual(3,
+                                actual.Count());
+            }
+
+            [Test]
+            public void CalculateStartArcSegmentTest()
+            {
+                m_Path.Calculate();
+
+                IEnumerable <IPolylineSegment> polylineSegments = m_Path.Path.Segments;
+                var actual = polylineSegments.ElementAt(0) as ITurnCircleArcSegment;
+
+                Assert.NotNull(actual);
+                Assert.AreEqual(new Point(-150.0,
+                                          0.0),
+                                actual.CentrePoint,
+                                "CentrePoint");
+                Assert.AreEqual(new Point(-50.0,
+                                          0.0),
+                                actual.StartPoint,
+                                "StartPoint");
+                Assert.AreEqual(new Point(-87.5,
+                                          78.06247497998d),
+                                actual.EndPoint,
+                                "EndPoint");
+                Assert.AreEqual(Constants.TurnDirection.Counterclockwise,
+                                actual.TurnDirection,
+                                "TurnDirection");
+                Assert.AreEqual(Constants.CircleOrigin.Start,
+                                actual.CircleOrigin,
+                                "CircleOrigin");
+                NUnitHelper.AssertIsEquivalent(m_RadiusForPortTurn.Length,
+                                               actual.Radius,
+                                               "Radius");
+            }
+
+            [Test]
+            public void CalculateUTurnMiddleArcSegmentTest()
+            {
+                m_Path.Calculate();
+
+                IEnumerable <IPolylineSegment> polylineSegments = m_Path.Path.Segments;
+                var actual = polylineSegments.ElementAt(1) as ITurnCircleArcSegment;
+
+                Assert.NotNull(actual);
+                Assert.AreEqual(new Point(-25,
+                                          156.12494995996),
+                                actual.CentrePoint,
+                                "CentrePoint");
+                Assert.AreEqual(new Point(-87.5,
+                                          78.06247497998),
+                                actual.StartPoint,
+                                "StartPoint");
+                Assert.AreEqual(new Point(37.5,
+                                          78.06247497998),
+                                actual.EndPoint,
+                                "EndPoint");
+                Assert.AreEqual(Constants.TurnDirection.Clockwise,
+                                actual.TurnDirection,
+                                "TurnDirection");
+                Assert.AreEqual(Constants.CircleOrigin.Unknown,
+                                actual.CircleOrigin,
+                                "CircleOrigin");
+                NUnitHelper.AssertIsEquivalent(m_RadiusForPortTurn.Length,
+                                               actual.Radius,
+                                               "Radius");
+            }
+
+            [Test]
+            public void CreateFinishArcSegmentTest()
+            {
+                var circle = new Circle(2.0,
+                                        3.0,
+                                        4.0);
+
+                var turnCircle = new TurnCircle(circle,
+                                                Constants.CircleSide.Starboard,
+                                                Constants.CircleOrigin.Start,
+                                                Constants.TurnDirection.Clockwise);
+
+                var setting = Substitute.For <ISettings>();
+                var finishPoint = new Point(2.0,
+                                            7.0);
+                setting.FinishPoint.Returns(finishPoint);
+
+                var intersectionPoint = new Point(6.0,
+                                                  3.0);
+
+                ITurnCircleArcSegment actual = m_Path.CreateFinishArcSegment(setting,
+                                                                             intersectionPoint,
+                                                                             turnCircle);
+
+                Assert.NotNull(actual);
+                Assert.AreEqual(circle.CentrePoint,
+                                actual.CentrePoint,
+                                "CentrePoint");
+                Assert.AreEqual(intersectionPoint,
+                                actual.StartPoint,
+                                "StartPoint");
+                Assert.AreEqual(finishPoint,
+                                actual.EndPoint,
+                                "EndPoint");
+                Assert.AreEqual(turnCircle.TurnDirection,
+                                actual.TurnDirection,
+                                "TurnDirection");
+                Assert.AreEqual(Constants.CircleOrigin.Finish,
+                                actual.CircleOrigin,
+                                "CircleOrigin");
+                NUnitHelper.AssertIsEquivalent(circle.Radius,
+                                               actual.Radius,
+                                               "Radius");
+            }
+
+            [Test]
+            public void CreateFinishTurnCircleArcSegmentTest()
+            {
+                var calculator = new DetermineTurnCircleCalculator
+                                 {
+                                     Settings = m_Settings,
+                                     UTurnCircle = m_UTurnCircle
+                                 };
+                calculator.Calculate();
+
+                ITurnCircleArcSegment actual = m_Path.CreateFinishTurnCircleArcSegment(m_Settings,
+                                                                                       m_UTurnCircle,
+                                                                                       calculator);
+
+                Assert.NotNull(actual);
+                Assert.AreEqual(new Point(100.0,
+                                          0.0),
+                                actual.CentrePoint,
+                                "CentrePoint");
+                Assert.AreEqual(new Point(37.5,
+                                          78.06247497998d),
+                                actual.StartPoint,
+                                "StartPoint");
+                Assert.AreEqual(new Point(0.0,
+                                          0.0),
+                                actual.EndPoint,
+                                "EndPoint");
+                Assert.AreEqual(Constants.TurnDirection.Counterclockwise,
+                                actual.TurnDirection,
+                                "TurnDirection");
+                Assert.AreEqual(Constants.CircleOrigin.Finish,
+                                actual.CircleOrigin,
+                                "CircleOrigin");
+                NUnitHelper.AssertIsEquivalent(m_RadiusForPortTurn.Length,
+                                               actual.Radius,
+                                               "Radius");
+            }
+
+            [Test]
+            public void CreateStartArcSegmentTest()
+            {
+                var circle = new Circle(2.0,
+                                        3.0,
+                                        4.0);
+
+                var turnCircle = new TurnCircle(circle,
+                                                Constants.CircleSide.Starboard,
+                                                Constants.CircleOrigin.Start,
+                                                Constants.TurnDirection.Clockwise);
+
+                var setting = Substitute.For <ISettings>();
+                var startPoint = new Point(2.0,
+                                           7.0);
+                setting.StartPoint.Returns(startPoint);
+
+                var intersectionPoint = new Point(6.0,
+                                                  3.0);
+
+                ITurnCircleArcSegment actual = m_Path.CreateStartArcSegment(setting,
+                                                                            intersectionPoint,
+                                                                            turnCircle);
+
+                Assert.NotNull(actual);
+                Assert.AreEqual(circle.CentrePoint,
+                                actual.CentrePoint,
+                                "CentrePoint");
+                Assert.AreEqual(startPoint,
+                                actual.StartPoint,
+                                "StartPoint");
+                Assert.AreEqual(intersectionPoint,
+                                actual.EndPoint,
+                                "EndPoint");
+                Assert.AreEqual(turnCircle.TurnDirection,
+                                actual.TurnDirection,
+                                "TurnDirection");
+                Assert.AreEqual(Constants.CircleOrigin.Start,
+                                actual.CircleOrigin,
+                                "CircleOrigin");
+                NUnitHelper.AssertIsEquivalent(circle.Radius,
+                                               actual.Radius,
+                                               "Radius");
+            }
+
+            [Test]
+            public void CreateStartTurnCircleArcSegmentTest()
+            {
+                var calculator = new DetermineTurnCircleCalculator
+                                 {
+                                     Settings = m_Settings,
+                                     UTurnCircle = m_UTurnCircle
+                                 };
+                calculator.Calculate();
+
+                ITurnCircleArcSegment actual = m_Path.CreateStartTurnCircleArcSegment(m_Settings,
+                                                                                      m_UTurnCircle,
+                                                                                      calculator);
+
+                Assert.NotNull(actual);
+                Assert.AreEqual(new Point(-150.0,
+                                          0.0),
+                                actual.CentrePoint,
+                                "CentrePoint");
+                Assert.AreEqual(new Point(-50.0,
+                                          0.0),
+                                actual.StartPoint,
+                                "StartPoint");
+                Assert.AreEqual(new Point(-87.5,
+                                          78.06247497998d),
+                                actual.EndPoint,
+                                "EndPoint");
+                Assert.AreEqual(Constants.TurnDirection.Counterclockwise,
+                                actual.TurnDirection,
+                                "TurnDirection");
+                Assert.AreEqual(Constants.CircleOrigin.Start,
+                                actual.CircleOrigin,
+                                "CircleOrigin");
+                NUnitHelper.AssertIsEquivalent(m_RadiusForPortTurn.Length,
+                                               actual.Radius,
+                                               "Radius");
+            }
+
+            [Test]
+            public void CreateUTurnArcSegmentTest()
+            {
+                var circle = new Circle(2.0,
+                                        3.0,
+                                        4.0);
+
+                var uTurnCircle = Substitute.For <IUTurnCircle>();
+                uTurnCircle.Circle.Returns(circle);
+                uTurnCircle.TurnDirection.Returns(Constants.TurnDirection.Counterclockwise);
+
+                var startPoint = new Point(2.0,
+                                           7.0);
+                var finishPoint = new Point(6.0,
+                                            3.0);
+
+                ITurnCircleArcSegment actual = m_Path.CreateUTurnArcSegment(uTurnCircle,
+                                                                            Constants.CircleOrigin.Start,
+                                                                            startPoint,
+                                                                            finishPoint);
+
+                Assert.NotNull(actual);
+                Assert.AreEqual(circle.CentrePoint,
+                                actual.CentrePoint,
+                                "CentrePoint");
+                Assert.AreEqual(startPoint,
+                                actual.StartPoint,
+                                "StartPoint");
+                Assert.AreEqual(finishPoint,
+                                actual.EndPoint,
+                                "EndPoint");
+                Assert.AreEqual(uTurnCircle.TurnDirection,
+                                actual.TurnDirection,
+                                "TurnDirection");
+                Assert.AreEqual(Constants.CircleOrigin.Start,
+                                actual.CircleOrigin,
+                                "CircleOrigin");
+                NUnitHelper.AssertIsEquivalent(circle.Radius,
+                                               actual.Radius,
+                                               "Radius");
+            }
+        }
+
+        #endregion
+
         #region Nested type: UTurnPathPortToPortStartAzimuth0FinishAzimuth180Tests
 
         [TestFixture]
@@ -508,13 +940,15 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                 m_FinishPoint = new Point(0.0,
                                           0.0);
                 m_FinishAzimuth = Angle.FromDegrees(270.0);
-                m_Radius = new Distance(100.0);
+                m_RadiusForPortTurn = new Distance(100.0);
+                m_RadiusForStarboardTurn = new Distance(50.0);
 
                 m_Settings = new Settings(m_StartPoint,
                                           m_StartAzimuth,
                                           m_FinishPoint,
                                           m_FinishAzimuth,
-                                          m_Radius,
+                                          m_RadiusForPortTurn,
+                                          m_RadiusForStarboardTurn,
                                           true,
                                           true);
 
@@ -544,7 +978,9 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                           };
                 determineCirclePair.Calculate();
 
-                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair);
+                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair,
+                                                                      possibleTurnCircles,
+                                                                      new AngleToCentrePointCalculator());
 
                 m_UTurnCircle = new UTurnCircle(possibleTurnCircles,
                                                 uTurnCircleCalculator)
@@ -571,7 +1007,6 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
             private Point m_FinishPoint;
             private Point m_OneCentrePoint;
             private UTurnPath m_Path;
-            private Distance m_Radius;
             private ISettings m_Settings;
             private Angle m_StartAzimuth;
             private Point m_StartPoint;
@@ -579,6 +1014,8 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
             private Point m_UTurnOneIntersectionPoint;
             private Point m_UTurnZeroIntersectionPoint;
             private Point m_ZeroCentrePoint;
+            private Distance m_RadiusForPortTurn;
+            private Distance m_RadiusForStarboardTurn;
 
             [Test]
             public void PathCountTest()
@@ -687,6 +1124,50 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
             }
 
             [Test]
+            public void UTrunCircleSettingsDefaultTest()
+            {
+                var sut = new UTurnPath(m_UTurnCircle,
+                                        m_Calculator);
+
+                Assert.AreEqual(Settings.Unknown,
+                                sut.UTrunCircleSettings);
+            }
+
+            [Test]
+            public void UTrunCircleSettingsTest()
+            {
+                Distance expectedRadiusForBothTurns = m_RadiusForPortTurn;
+
+                ISettings actual = m_Path.UTrunCircleSettings;
+
+                Assert.AreEqual(m_StartPoint,
+                                actual.StartPoint,
+                                "StartPoint");
+                Assert.AreEqual(m_FinishPoint,
+                                actual.FinishPoint,
+                                "FinishPoint");
+                Assert.AreEqual(m_StartAzimuth,
+                                actual.StartAzimuth,
+                                "StartAzimuth");
+                Assert.AreEqual(m_FinishAzimuth,
+                                actual.FinishAzimuth,
+                                "FinishAzimuth");
+                Assert.AreEqual(expectedRadiusForBothTurns,
+                                actual.RadiusForPortTurn,
+                                "Radius");
+                Assert.AreEqual(expectedRadiusForBothTurns,
+                                actual.RadiusForStarboardTurn,
+                                "Radius");
+                Assert.True(actual.IsPortTurnAllowed,
+                            "IsPortTurnAllowed");
+                Assert.True(actual.IsStarboardTurnAllowed,
+                            "IsStarboardTurnAllowed");
+                Assert.AreEqual(m_RadiusForPortTurn,
+                                actual.LargestRadiusForTurn,
+                                "LargestRadiusForTurn");
+            }
+
+            [Test]
             public void UTurnCircleTest()
             {
                 Assert.AreEqual(m_UTurnCircle,
@@ -711,14 +1192,16 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                     new Point(200.0,
                                               180.0));
                 m_ToLine = m_ToLine.Reverse() as ILine;
-                m_Radius = new Distance(30.0);
+                m_RadiusForPortTurn = new Distance(100.0);
+                m_RadiusForStarboardTurn = new Distance(100.0);
 
                 // ReSharper disable once PossibleNullReferenceException
                 m_Settings = new Settings(m_FromLine.EndPoint,
                                           m_FromLine.AngleToXAxis,
                                           m_ToLine.StartPoint,
                                           m_ToLine.AngleToXAxis,
-                                          m_Radius,
+                                          m_RadiusForPortTurn,
+                                          m_RadiusForStarboardTurn,
                                           true,
                                           true);
 
@@ -733,7 +1216,9 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                           };
                 determineCirclePair.Calculate();
 
-                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair);
+                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair,
+                                                                      possibleTurnCircles,
+                                                                      new AngleToCentrePointCalculator());
 
                 m_UTurnCircle = new UTurnCircle(possibleTurnCircles,
                                                 uTurnCircleCalculator)
@@ -753,12 +1238,13 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
             }
 
             private ISettings m_Settings;
-            private Distance m_Radius;
             private ILine m_FromLine;
             private ILine m_ToLine;
             private UTurnPath m_UTurnPath;
             private UTurnCircle m_UTurnCircle;
             private DetermineTurnCircleCalculator m_Calculator;
+            private Distance m_RadiusForPortTurn;
+            private Distance m_RadiusForStarboardTurn;
 
             [Test]
             public void SettingsTest()
@@ -790,14 +1276,16 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                               60.0));
                 m_ToLine = m_ToLine.Reverse() as ILine;
 
-                m_Radius = new Distance(30.0);
+                m_RadiusForPortTurn = new Distance(30.0);
+                m_RadiusForStarboardTurn = new Distance(30.0);
 
                 // ReSharper disable once PossibleNullReferenceException
                 m_Settings = new Settings(m_FromLine.EndPoint,
                                           m_FromLine.AngleToXAxis,
                                           m_ToLine.StartPoint,
                                           m_ToLine.AngleToXAxis,
-                                          m_Radius,
+                                          m_RadiusForPortTurn,
+                                          m_RadiusForStarboardTurn,
                                           true,
                                           true);
 
@@ -812,7 +1300,9 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                           };
                 determineCirclePair.Calculate();
 
-                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair);
+                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair,
+                                                                      possibleTurnCircles,
+                                                                      new AngleToCentrePointCalculator());
 
                 m_UTurnCircle = new UTurnCircle(possibleTurnCircles,
                                                 uTurnCircleCalculator)
@@ -832,12 +1322,13 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
             }
 
             private ISettings m_Settings;
-            private Distance m_Radius;
             private ILine m_FromLine;
             private ILine m_ToLine;
             private UTurnPath m_UTurnPath;
             private UTurnCircle m_UTurnCircle;
             private DetermineTurnCircleCalculator m_Calculator;
+            private Distance m_RadiusForPortTurn;
+            private Distance m_RadiusForStarboardTurn;
 
             [Test]
             public void SettingsTest()
@@ -867,13 +1358,16 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                               2.5),
                                     new Point(7.5,
                                               0.0));
-                m_Radius = new Distance(2.5);
+
+                m_RadiusForPortTurn = new Distance(2.5);
+                m_RadiusForStarboardTurn = new Distance(2.5);
 
                 m_Settings = new Settings(m_FromLine.EndPoint,
                                           m_FromLine.AngleToXAxis,
                                           m_ToLine.StartPoint,
                                           m_ToLine.AngleToXAxis,
-                                          m_Radius,
+                                          m_RadiusForPortTurn,
+                                          m_RadiusForStarboardTurn,
                                           true,
                                           true);
 
@@ -888,7 +1382,9 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
                                           };
                 determineCirclePair.Calculate();
 
-                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair);
+                var uTurnCircleCalculator = new UTurnCircleCalculator(determineCirclePair,
+                                                                      possibleTurnCircles,
+                                                                      new AngleToCentrePointCalculator());
 
                 m_UTurnCircle = new UTurnCircle(possibleTurnCircles,
                                                 uTurnCircleCalculator)
@@ -911,11 +1407,12 @@ namespace Selkie.Racetrack.Tests.UTurn.NUnit
 
             private DetermineTurnCircleCalculator m_Calculator;
             private Line m_FromLine;
-            private Distance m_Radius;
             private Settings m_Settings;
             private Line m_ToLine;
             private UTurnCircle m_UTurnCircle;
             private UTurnPath m_UTurnPath;
+            private Distance m_RadiusForPortTurn;
+            private Distance m_RadiusForStarboardTurn;
 
             [Test]
             public void SettingsTest()

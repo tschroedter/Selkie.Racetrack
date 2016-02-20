@@ -15,13 +15,17 @@ namespace Selkie.Racetrack.Calculators
         [NotNull]
         ILine[] ToLines { get; set; }
 
-        [NotNull]
-        Distance Radius { get; set; }
-
         bool IsPortTurnAllowed { get; set; }
+
         bool IsStarboardTurnAllowed { get; set; }
 
         [NotNull]
         ILinePairToRacetrackCalculator Calculator { get; }
+
+        [NotNull]
+        Distance TurnRadiusForPort { get; set; }
+
+        [NotNull]
+        Distance TurnRadiusForStarboard { get; set; }
     }
 }

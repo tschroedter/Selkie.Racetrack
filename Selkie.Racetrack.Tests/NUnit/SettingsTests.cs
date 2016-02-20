@@ -21,23 +21,26 @@ namespace Selkie.Racetrack.Tests.NUnit
             m_FinishPoint = new Point(3.0,
                                       4.0);
             m_FinishAzimuth = Angle.FromDegrees(225.0);
-            m_Radius = new Distance(100.0);
+            m_RadiusForPortTurn = new Distance(123.0);
+            m_RadiusForStarboardTurn = new Distance(456.0);
 
-            m_Settings = new Settings(m_StartPoint,
-                                      m_StartAzimuth,
-                                      m_FinishPoint,
-                                      m_FinishAzimuth,
-                                      m_Radius,
-                                      true,
-                                      true);
+            m_Sut = new Settings(m_StartPoint,
+                                 m_StartAzimuth,
+                                 m_FinishPoint,
+                                 m_FinishAzimuth,
+                                 m_RadiusForPortTurn,
+                                 m_RadiusForStarboardTurn,
+                                 true,
+                                 true);
         }
 
         private Angle m_FinishAzimuth;
         private Point m_FinishPoint;
-        private Distance m_Radius;
-        private Settings m_Settings;
+        private Settings m_Sut;
         private Angle m_StartAzimuth;
         private Point m_StartPoint;
+        private Distance m_RadiusForPortTurn;
+        private Distance m_RadiusForStarboardTurn;
 
         [NotNull]
         private Settings CreateSettings()
@@ -57,13 +60,13 @@ namespace Selkie.Racetrack.Tests.NUnit
             var finishPoint = new Point(3.0,
                                         4.0);
             Angle finischAzimuth = Angle.FromDegrees(225.0);
-            var radius = new Distance(100.0);
 
             var settings = new Settings(startPoint,
                                         startAzimuth,
                                         finishPoint,
                                         finischAzimuth,
-                                        radius,
+                                        m_RadiusForPortTurn,
+                                        m_RadiusForStarboardTurn,
                                         isPortTurnAllowed,
                                         isStarboardTurnAllowed);
 
@@ -73,213 +76,308 @@ namespace Selkie.Racetrack.Tests.NUnit
         [Test]
         public void DefaultTurnDirectionReturnsCounterclockwiseForPortOnlyTest()
         {
-            Settings settings = CreateSettings(true,
-                                               false);
+            // Arrange
+            // Act
+            // Assert
+            Settings sut = CreateSettings(true,
+                                          false);
 
+            // Act
+            // Assert
             Assert.AreEqual(Constants.TurnDirection.Counterclockwise,
-                            settings.DefaultTurnDirection);
+                            sut.DefaultTurnDirection);
         }
 
         [Test]
         public void DefaultTurnDirectionReturnsCounterclockwiseForStarboardOnlyTest()
         {
-            Settings settings = CreateSettings(false,
-                                               true);
+            // Arrange
+            Settings sut = CreateSettings(false,
+                                          true);
 
+            // Act
+            // Assert
             Assert.AreEqual(Constants.TurnDirection.Clockwise,
-                            settings.DefaultTurnDirection);
+                            sut.DefaultTurnDirection);
         }
 
         [Test]
         public void DefaultTurnDirectionReturnsCounterclockwiseTest()
         {
-            Settings settings = CreateSettings();
+            // Arrange
+            Settings sut = CreateSettings();
 
+            // Act
+            // Assert
             Assert.AreEqual(Constants.TurnDirection.Counterclockwise,
-                            settings.DefaultTurnDirection);
+                            sut.DefaultTurnDirection);
         }
 
         [Test]
         public void EqualsOperatorReturnsFalseForDifferentValueTest()
         {
+            // Arrange
             Settings settings1 = CreateSettings();
             var settings2 = new Settings(settings1.StartPoint.Move(10.0,
                                                                    10.0),
                                          settings1.StartAzimuth,
                                          settings1.FinishPoint,
                                          settings1.FinishAzimuth,
-                                         settings1.Radius,
+                                         m_RadiusForPortTurn,
+                                         m_RadiusForStarboardTurn,
                                          settings1.IsPortTurnAllowed,
                                          settings1.IsStarboardTurnAllowed);
 
+            // Act
+            // Assert
             Assert.False(settings1 == settings2);
         }
 
         [Test]
         public void EqualsOperatorReturnsTrueForSameValuesTest()
         {
+            // Arrange
             Settings settings1 = CreateSettings();
             var settings2 = new Settings(settings1.StartPoint,
                                          settings1.StartAzimuth,
                                          settings1.FinishPoint,
                                          settings1.FinishAzimuth,
-                                         settings1.Radius,
+                                         m_RadiusForPortTurn,
+                                         m_RadiusForStarboardTurn,
                                          settings1.IsPortTurnAllowed,
                                          settings1.IsStarboardTurnAllowed);
 
+            // Act
+            // Assert
             Assert.True(settings1 == settings2);
         }
 
         [Test]
         public void EqualsOperatorReturnsTrueForSameValueTest()
         {
+            // Arrange
             Settings settings1 = CreateSettings();
             Settings settings2 = CreateSettings();
 
+            // Act
+            // Assert
             Assert.True(settings1 == settings2);
         }
 
         [Test]
         public void EqualsReturnsFalseForNullTest()
         {
-            Settings settings = CreateSettings();
+            // Arrange
+            Settings sut = CreateSettings();
 
-            Assert.False(settings.Equals(null));
+            // Act
+            // Assert
+            Assert.False(sut.Equals(null));
         }
 
         [Test]
         public void EqualsReturnsFalseForOtherClassTest()
         {
-            Settings settings = CreateSettings();
+            // Arrange
+            Settings sut = CreateSettings();
 
-            Assert.False(settings.Equals(new object()));
+            // Act
+            // Assert
+            Assert.False(sut.Equals(new object()));
         }
 
         [Test]
         public void EqualsReturnsTrueForSameTest()
         {
-            Settings settings = CreateSettings();
+            // Arrange
+            Settings sut = CreateSettings();
 
-            Assert.True(settings.Equals(settings));
+            // Act
+            // Assert
+            Assert.True(sut.Equals(sut));
         }
 
         [Test]
         public void EqualsReturnsTrueForSameValueTest()
         {
-            Settings settings = CreateSettings();
+            // Arrange
+            Settings sut = CreateSettings();
 
+            // Act
+            // Assert
             // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-            Assert.DoesNotThrow(() => settings.GetHashCode());
+            Assert.DoesNotThrow(() => sut.GetHashCode());
         }
 
         [Test]
         public void FinishAzimuthTest()
         {
+            // Arrange
+            // Act
+            // Assert
             Assert.AreEqual(m_FinishAzimuth,
-                            m_Settings.FinishAzimuth);
+                            m_Sut.FinishAzimuth);
         }
 
         [Test]
         public void FinishPointTest()
         {
+            // Arrange
+            // Act
+            // Assert
             Assert.AreEqual(m_FinishPoint,
-                            m_Settings.FinishPoint);
+                            m_Sut.FinishPoint);
         }
 
         [Test]
         public void IsPortTurnAllowedTest()
         {
+            // Arrange
             Settings settings = CreateSettings();
 
+            // Act
+            // Assert
             Assert.True(settings.IsPortTurnAllowed);
         }
 
         [Test]
         public void IsStarboardTurnAllowedTest()
         {
+            // Arrange
             Settings settings = CreateSettings();
 
+            // Act
+            // Assert
             Assert.True(settings.IsStarboardTurnAllowed);
         }
 
         [Test]
         public void IsUnknownDefaultTest()
         {
-            Assert.False(m_Settings.IsUnknown);
+            // Arrange
+            // Act
+            // Assert
+            Assert.False(m_Sut.IsUnknown);
         }
 
         [Test]
         public void IsUnknownReturnsTrueForUnknownTest()
         {
+            // Arrange
+            // Act
+            // Assert
             Assert.True(Settings.Unknown.IsUnknown);
+        }
+
+        [Test]
+        public void LargestRadiusForTurn_RetursLargestRadius_WhenCalled()
+        {
+            // Arrange
+            // Act
+            // Assert
+            Assert.AreEqual(m_RadiusForStarboardTurn,
+                            m_Sut.LargestRadiusForTurn);
         }
 
         [Test]
         public void NotEqualsOperatorReturnsFalseForDifferentValueTest()
         {
+            // Arrange
             Settings settings1 = CreateSettings();
             var settings2 = new Settings(settings1.StartPoint.Move(10.0,
                                                                    10.0),
                                          settings1.StartAzimuth,
                                          settings1.FinishPoint,
                                          settings1.FinishAzimuth,
-                                         settings1.Radius,
+                                         m_RadiusForPortTurn,
+                                         m_RadiusForStarboardTurn,
                                          settings1.IsPortTurnAllowed,
                                          settings1.IsStarboardTurnAllowed);
 
+            // Act
+            // Assert
             Assert.True(settings1 != settings2);
         }
 
         [Test]
         public void NotEqualsOperatorReturnsFalseForSameValuesTest()
         {
+            // Arrange
             Settings settings1 = CreateSettings();
             var settings2 = new Settings(settings1.StartPoint,
                                          settings1.StartAzimuth,
                                          settings1.FinishPoint,
                                          settings1.FinishAzimuth,
-                                         settings1.Radius,
+                                         m_RadiusForPortTurn,
+                                         m_RadiusForStarboardTurn,
                                          settings1.IsPortTurnAllowed,
                                          settings1.IsStarboardTurnAllowed);
 
+            // Act
+            // Assert
             Assert.False(settings1 != settings2);
         }
 
         [Test]
         public void NotEqualsOperatorReturnsTrueForSameValuesTest()
         {
+            // Arrange
             Settings settings1 = CreateSettings();
             Settings settings2 = CreateSettings();
 
+            // Act
+            // Assert
             Assert.False(settings1 != settings2);
         }
 
         [Test]
-        public void RadiusTest()
+        public void RadiusForPortTurnTest()
         {
-            Assert.AreEqual(m_Radius,
-                            m_Settings.Radius);
+            // Arrange
+            // Act
+            // Assert
+            Assert.AreEqual(m_RadiusForPortTurn,
+                            m_Sut.RadiusForPortTurn);
+        }
+
+        [Test]
+        public void RadiusForStarboardTurnTest()
+        {
+            // Arrange
+            // Act
+            // Assert
+            Assert.AreEqual(m_RadiusForStarboardTurn,
+                            m_Sut.RadiusForStarboardTurn);
         }
 
         [Test]
         public void StartAzimuthTest()
         {
+            // Arrange
+            // Act
+            // Assert
             Assert.AreEqual(m_StartAzimuth,
-                            m_Settings.StartAzimuth);
+                            m_Sut.StartAzimuth);
         }
 
         [Test]
         public void StartPointTest()
         {
+            // Arrange
+            // Act
+            // Assert
             Assert.AreEqual(m_StartPoint,
-                            m_Settings.StartPoint);
+                            m_Sut.StartPoint);
         }
 
         [Test]
         public void UnknownTest()
         {
+            // Arrange
+            // Act
             Settings settings = Settings.Unknown;
 
+            // Assert
             Assert.AreEqual(Point.Unknown,
                             settings.StartPoint,
                             "StartPoint");
@@ -293,12 +391,18 @@ namespace Selkie.Racetrack.Tests.NUnit
                             settings.FinishAzimuth,
                             "FinishAzimuth");
             Assert.AreEqual(Distance.Unknown,
-                            settings.Radius,
+                            settings.RadiusForPortTurn,
+                            "Radius");
+            Assert.AreEqual(Distance.Unknown,
+                            settings.RadiusForStarboardTurn,
                             "Radius");
             Assert.True(settings.IsPortTurnAllowed,
                         "IsPortTurnAllowed");
             Assert.True(settings.IsStarboardTurnAllowed,
                         "IsStarboardTurnAllowed");
+            Assert.AreEqual(Distance.Unknown,
+                            settings.LargestRadiusForTurn,
+                            "LargestRadiusForTurn");
         }
     }
 }

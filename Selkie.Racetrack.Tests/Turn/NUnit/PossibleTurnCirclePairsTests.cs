@@ -33,44 +33,54 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
                 Assert.NotNull(m_ToLine,
                                "m_ToLine is null!");
 
-                m_Radius = new Distance(30.0);
+                m_RadiusForPortTurn = new Distance(30.0);
+                m_RadiusForStarboardTurn = new Distance(30.0);
 
                 // ReSharper disable once PossibleNullReferenceException
                 m_Settings = new Settings(m_FromLine.EndPoint,
                                           m_FromLine.AngleToXAxis,
                                           m_ToLine.StartPoint,
                                           m_ToLine.AngleToXAxis,
-                                          m_Radius,
+                                          m_RadiusForPortTurn,
+                                          m_RadiusForStarboardTurn,
                                           true,
                                           true);
 
                 m_PossibleTurnCircles = new PossibleTurnCircles();
 
-                m_Pairs = new PossibleTurnCirclePairs(m_PossibleTurnCircles)
-                          {
-                              Settings = m_Settings
-                          };
-                m_Pairs.Calculate();
+                m_Sut = new PossibleTurnCirclePairs(m_PossibleTurnCircles)
+                        {
+                            Settings = m_Settings
+                        };
+
+                m_Sut.Calculate();
             }
 
-            private PossibleTurnCirclePairs m_Pairs;
+            private PossibleTurnCirclePairs m_Sut;
             private PossibleTurnCircles m_PossibleTurnCircles;
             private Settings m_Settings;
-            private Distance m_Radius;
             private ILine m_ToLine;
             private Line m_FromLine;
+            private Distance m_RadiusForPortTurn;
+            private Distance m_RadiusForStarboardTurn;
 
             [Test]
             public void PossibleTurnCirclePairsCountTest()
             {
+                // Arrange
+                // Act
+                // Assert
                 Assert.AreEqual(4,
-                                m_Pairs.Pairs.Count());
+                                m_Sut.Pairs.Count());
             }
 
             [Test]
             public void PossibleTurnCirclePairsOneCircleOneTest()
             {
-                ITurnCirclePair[] pairs = m_Pairs.Pairs.ToArray();
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
                 ITurnCircle actual = pairs [ 1 ].One;
 
                 Assert.AreEqual(new Point(200.0,
@@ -91,7 +101,10 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void PossibleTurnCirclePairsOneCircleZeroTest()
             {
-                ITurnCirclePair[] pairs = m_Pairs.Pairs.ToArray();
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
                 ITurnCircle actual = pairs [ 1 ].Zero;
 
                 Assert.AreEqual(new Point(200,
@@ -112,7 +125,10 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void PossibleTurnCirclePairsThreeCircleOneTest()
             {
-                ITurnCirclePair[] pairs = m_Pairs.Pairs.ToArray();
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
                 ITurnCircle actual = pairs [ 3 ].One;
 
                 Assert.AreEqual(new Point(200.0,
@@ -133,7 +149,10 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void PossibleTurnCirclePairsThreeCircleZeroTest()
             {
-                ITurnCirclePair[] pairs = m_Pairs.Pairs.ToArray();
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
                 ITurnCircle actual = pairs [ 2 ].Zero;
 
                 Assert.AreEqual(new Point(200,
@@ -154,7 +173,10 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void PossibleTurnCirclePairsTwoCircleOneTest()
             {
-                ITurnCirclePair[] pairs = m_Pairs.Pairs.ToArray();
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
                 ITurnCircle actual = pairs [ 2 ].One;
 
                 Assert.AreEqual(new Point(200.0,
@@ -175,7 +197,10 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void PossibleTurnCirclePairsTwoCircleZeroTest()
             {
-                ITurnCirclePair[] pairs = m_Pairs.Pairs.ToArray();
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
                 ITurnCircle actual = pairs [ 2 ].Zero;
 
                 Assert.AreEqual(new Point(200,
@@ -196,7 +221,10 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void PossibleTurnCirclePairsZeroCircleOneTest()
             {
-                ITurnCirclePair[] pairs = m_Pairs.Pairs.ToArray();
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
                 ITurnCircle actual = pairs [ 0 ].One;
 
                 Assert.AreEqual(new Point(200.0,
@@ -217,7 +245,10 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void PossibleTurnCirclePairsZeroCircleZeroTest()
             {
-                ITurnCirclePair[] pairs = m_Pairs.Pairs.ToArray();
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
                 ITurnCircle actual = pairs [ 0 ].Zero;
 
                 Assert.AreEqual(new Point(200.0,
@@ -255,44 +286,54 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
                 Assert.NotNull(m_ToLine,
                                "m_ToLine is null!");
 
-                m_Radius = new Distance(30.0);
+                m_RadiusForPortTurn = new Distance(30.0);
+                m_RadiusForStarboardTurn = new Distance(30.0);
 
                 // ReSharper disable once PossibleNullReferenceException
                 m_Settings = new Settings(m_FromLine.EndPoint,
                                           m_FromLine.AngleToXAxis,
                                           m_ToLine.StartPoint,
                                           m_ToLine.AngleToXAxis,
-                                          m_Radius,
+                                          m_RadiusForPortTurn,
+                                          m_RadiusForStarboardTurn,
                                           true,
                                           true);
 
                 m_PossibleTurnCircles = new PossibleTurnCircles();
 
-                m_Pairs = new PossibleTurnCirclePairs(m_PossibleTurnCircles)
-                          {
-                              Settings = m_Settings
-                          };
-                m_Pairs.Calculate();
+                m_Sut = new PossibleTurnCirclePairs(m_PossibleTurnCircles)
+                        {
+                            Settings = m_Settings
+                        };
+
+                m_Sut.Calculate();
             }
 
-            private PossibleTurnCirclePairs m_Pairs;
+            private PossibleTurnCirclePairs m_Sut;
             private PossibleTurnCircles m_PossibleTurnCircles;
             private Settings m_Settings;
-            private Distance m_Radius;
             private ILine m_ToLine;
             private Line m_FromLine;
+            private Distance m_RadiusForPortTurn;
+            private Distance m_RadiusForStarboardTurn;
 
             [Test]
             public void PossibleTurnCirclePairsCountTest()
             {
+                // Arrange
+                // Act
+                // Assert
                 Assert.AreEqual(4,
-                                m_Pairs.Pairs.Count());
+                                m_Sut.Pairs.Count());
             }
 
             [Test]
             public void PossibleTurnCirclePairsOneCircleOneTest()
             {
-                ITurnCirclePair[] pairs = m_Pairs.Pairs.ToArray();
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
                 ITurnCircle actual = pairs [ 1 ].One;
 
                 Assert.AreEqual(new Point(200.0,
@@ -313,7 +354,10 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void PossibleTurnCirclePairsOneCircleZeroTest()
             {
-                ITurnCirclePair[] pairs = m_Pairs.Pairs.ToArray();
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
                 ITurnCircle actual = pairs [ 1 ].Zero;
 
                 Assert.AreEqual(new Point(200,
@@ -334,7 +378,10 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void PossibleTurnCirclePairsThreeCircleOneTest()
             {
-                ITurnCirclePair[] pairs = m_Pairs.Pairs.ToArray();
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
                 ITurnCircle actual = pairs [ 3 ].One;
 
                 Assert.AreEqual(new Point(200.0,
@@ -355,7 +402,10 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void PossibleTurnCirclePairsThreeCircleZeroTest()
             {
-                ITurnCirclePair[] pairs = m_Pairs.Pairs.ToArray();
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
                 ITurnCircle actual = pairs [ 2 ].Zero;
 
                 Assert.AreEqual(new Point(200,
@@ -376,7 +426,10 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void PossibleTurnCirclePairsTwoCircleOneTest()
             {
-                ITurnCirclePair[] pairs = m_Pairs.Pairs.ToArray();
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
                 ITurnCircle actual = pairs [ 2 ].One;
 
                 Assert.AreEqual(new Point(200.0,
@@ -397,7 +450,10 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void PossibleTurnCirclePairsTwoCircleZeroTest()
             {
-                ITurnCirclePair[] pairs = m_Pairs.Pairs.ToArray();
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
                 ITurnCircle actual = pairs [ 2 ].Zero;
 
                 Assert.AreEqual(new Point(200,
@@ -418,7 +474,10 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void PossibleTurnCirclePairsZeroCircleOneTest()
             {
-                ITurnCirclePair[] pairs = m_Pairs.Pairs.ToArray();
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
                 ITurnCircle actual = pairs [ 0 ].One;
 
                 Assert.AreEqual(new Point(200.0,
@@ -439,7 +498,10 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void PossibleTurnCirclePairsZeroCircleZeroTest()
             {
-                ITurnCirclePair[] pairs = m_Pairs.Pairs.ToArray();
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
                 ITurnCircle actual = pairs [ 0 ].Zero;
 
                 Assert.AreEqual(new Point(200.0,
@@ -508,18 +570,18 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
                 m_Circles.FinishTurnCirclePort.Returns(m_FinishPointPort);
                 m_Circles.FinishTurnCircleStarboard.Returns(m_FinishPointStarboard);
 
-                m_Pairs = new PossibleTurnCirclePairs(m_Circles)
-                          {
-                              Settings = m_Settings
-                          };
+                m_Sut = new PossibleTurnCirclePairs(m_Circles)
+                        {
+                            Settings = m_Settings
+                        };
 
-                m_Pairs.Calculate();
+                m_Sut.Calculate();
             }
 
             private IPossibleTurnCircles m_Circles;
             private ITurnCircle m_FinishPointPort;
             private ITurnCircle m_FinishPointStarboard;
-            private PossibleTurnCirclePairs m_Pairs;
+            private PossibleTurnCirclePairs m_Sut;
             private ISettings m_Settings;
             private ITurnCircle m_StartPointPort;
             private ITurnCircle m_StartPointStarboard;
@@ -527,12 +589,18 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void CalculateCallsCalculateOfPossibleTurnCirclesTest()
             {
+                // Arrange
+                // Act
+                // Assert
                 m_Circles.Received().Calculate();
             }
 
             [Test]
             public void CalculateSetsSettingForPossibleTurnCirclesTest()
             {
+                // Arrange
+                // Act
+                // Assert
                 Assert.AreEqual(m_Settings,
                                 m_Circles.Settings);
             }
@@ -540,13 +608,16 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void CreateOnlyPortTurnsPairsCountTest()
             {
+                // Arrange
                 var settings = Substitute.For <ISettings>();
                 settings.IsPortTurnAllowed.Returns(true);
                 settings.IsStarboardTurnAllowed.Returns(false);
 
-                List <ITurnCirclePair> pairs = m_Pairs.CreateOnlyPortTurnsPairs(m_Settings,
-                                                                                m_Circles);
+                // Act
+                List <ITurnCirclePair> pairs = m_Sut.CreateOnlyPortTurnsPairs(m_Settings,
+                                                                              m_Circles);
 
+                // Assert
                 Assert.AreEqual(1,
                                 pairs.Count,
                                 "Count");
@@ -555,8 +626,12 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void CreateOnlyPortTurnsPairsTest()
             {
-                List <ITurnCirclePair> onlyPortTurnsPairs = m_Pairs.CreateOnlyPortTurnsPairs(m_Settings,
-                                                                                             m_Circles);
+                // Arrange
+                // Act
+                List <ITurnCirclePair> onlyPortTurnsPairs = m_Sut.CreateOnlyPortTurnsPairs(m_Settings,
+                                                                                           m_Circles);
+
+                // Assert
                 ITurnCirclePair pair = onlyPortTurnsPairs.First();
                 ICirclePair circlePair = pair.CirclePair;
 
@@ -578,13 +653,16 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void CreateOnlyStarboardTurnsPairsCountTest()
             {
+                // Arrange
                 var settings = Substitute.For <ISettings>();
                 settings.IsPortTurnAllowed.Returns(true);
                 settings.IsStarboardTurnAllowed.Returns(false);
 
-                IEnumerable <ITurnCirclePair> pairs = m_Pairs.CreateOnlyStarboardTurnsPairs(m_Settings,
-                                                                                            m_Circles);
+                // Act
+                IEnumerable <ITurnCirclePair> pairs = m_Sut.CreateOnlyStarboardTurnsPairs(m_Settings,
+                                                                                          m_Circles);
 
+                // Assert
                 Assert.AreEqual(1,
                                 pairs.Count(),
                                 "Count");
@@ -593,9 +671,12 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void CreateOnlyStarboardTurnsPairsTest()
             {
-                IEnumerable <ITurnCirclePair> onlyStarboardTurnsPairs = m_Pairs.CreateOnlyStarboardTurnsPairs(
-                                                                                                              m_Settings,
-                                                                                                              m_Circles);
+                // Arrange
+                // Act
+                IEnumerable <ITurnCirclePair> onlyStarboardTurnsPairs = m_Sut.CreateOnlyStarboardTurnsPairs(m_Settings,
+                                                                                                            m_Circles);
+
+                // Assert
                 ITurnCirclePair pair = onlyStarboardTurnsPairs.First();
                 ICirclePair circlePair = pair.CirclePair;
 
@@ -617,8 +698,12 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void CreatePairsFirstPairTest()
             {
-                IEnumerable <ITurnCirclePair> turnCirclePairs = m_Pairs.CreateAllPairs(m_Settings,
-                                                                                       m_Circles);
+                // Arrange
+                // Act
+                IEnumerable <ITurnCirclePair> turnCirclePairs = m_Sut.CreateAllPairs(m_Settings,
+                                                                                     m_Circles);
+
+                // Assert
                 ITurnCirclePair[] pairs = turnCirclePairs.ToArray();
                 ITurnCirclePair first = pairs [ 0 ];
 
@@ -642,9 +727,12 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void CreatePairsForAllCountTest()
             {
-                IEnumerable <ITurnCirclePair> pairs = m_Pairs.CreatePairs(m_Settings,
-                                                                          m_Circles);
+                // Arrange
+                // Act
+                IEnumerable <ITurnCirclePair> pairs = m_Sut.CreatePairs(m_Settings,
+                                                                        m_Circles);
 
+                // Assert
                 Assert.AreEqual(4,
                                 pairs.Count(),
                                 "Count");
@@ -653,12 +741,16 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void CreatePairsForPortOnlyCirclePairTest()
             {
+                // Arrange
                 var settings = Substitute.For <ISettings>();
                 settings.IsPortTurnAllowed.Returns(true);
                 settings.IsStarboardTurnAllowed.Returns(false);
 
-                IEnumerable <ITurnCirclePair> turnCirclePairs = m_Pairs.CreatePairs(settings,
-                                                                                    m_Circles);
+                // Act
+                IEnumerable <ITurnCirclePair> turnCirclePairs = m_Sut.CreatePairs(settings,
+                                                                                  m_Circles);
+
+                // Assert
                 ITurnCirclePair pairs = turnCirclePairs.First();
                 ICirclePair circlePair = pairs.CirclePair;
 
@@ -680,13 +772,16 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void CreatePairsForPortOnlyCountTest()
             {
+                // Arrange
                 var settings = Substitute.For <ISettings>();
                 settings.IsPortTurnAllowed.Returns(true);
                 settings.IsStarboardTurnAllowed.Returns(false);
 
-                IEnumerable <ITurnCirclePair> pairs = m_Pairs.CreatePairs(settings,
-                                                                          m_Circles);
+                // Act
+                IEnumerable <ITurnCirclePair> pairs = m_Sut.CreatePairs(settings,
+                                                                        m_Circles);
 
+                // Assert
                 Assert.AreEqual(1,
                                 pairs.Count(),
                                 "Count");
@@ -695,12 +790,16 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void CreatePairsForStarboardOnlyCirclePairTest()
             {
+                // Arrange
                 var settings = Substitute.For <ISettings>();
                 settings.IsPortTurnAllowed.Returns(false);
                 settings.IsStarboardTurnAllowed.Returns(true);
 
-                IEnumerable <ITurnCirclePair> turnCirclePairs = m_Pairs.CreatePairs(settings,
-                                                                                    m_Circles);
+                // Act
+                IEnumerable <ITurnCirclePair> turnCirclePairs = m_Sut.CreatePairs(settings,
+                                                                                  m_Circles);
+
+                // Assert
                 ITurnCirclePair pairs = turnCirclePairs.First();
                 ICirclePair circlePair = pairs.CirclePair;
 
@@ -722,13 +821,16 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void CreatePairsForStarboardOnlyCountTest()
             {
+                // Arrange
                 var settings = Substitute.For <ISettings>();
                 settings.IsPortTurnAllowed.Returns(false);
                 settings.IsStarboardTurnAllowed.Returns(true);
 
-                IEnumerable <ITurnCirclePair> pairs = m_Pairs.CreatePairs(settings,
-                                                                          m_Circles);
+                // Act
+                IEnumerable <ITurnCirclePair> pairs = m_Sut.CreatePairs(settings,
+                                                                        m_Circles);
 
+                // Assert
                 Assert.AreEqual(1,
                                 pairs.Count(),
                                 "Count");
@@ -737,8 +839,11 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void CreatePairsFourthPairTest()
             {
-                IEnumerable <ITurnCirclePair> turnCirclePairs = m_Pairs.CreateAllPairs(m_Settings,
-                                                                                       m_Circles);
+                // Arrange
+                // Act
+                // Assert
+                IEnumerable <ITurnCirclePair> turnCirclePairs = m_Sut.CreateAllPairs(m_Settings,
+                                                                                     m_Circles);
                 ITurnCirclePair[] pairs = turnCirclePairs.ToArray();
                 ITurnCirclePair first = pairs [ 3 ];
 
@@ -762,8 +867,11 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void CreatePairsSecondPairTest()
             {
-                IEnumerable <ITurnCirclePair> turnCirclePairs = m_Pairs.CreateAllPairs(m_Settings,
-                                                                                       m_Circles);
+                // Arrange
+                // Act
+                // Assert
+                IEnumerable <ITurnCirclePair> turnCirclePairs = m_Sut.CreateAllPairs(m_Settings,
+                                                                                     m_Circles);
                 ITurnCirclePair[] pairs = turnCirclePairs.ToArray();
                 ITurnCirclePair first = pairs [ 1 ];
 
@@ -787,8 +895,11 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void CreatePairsThirdPairTest()
             {
-                IEnumerable <ITurnCirclePair> turnCirclePairs = m_Pairs.CreateAllPairs(m_Settings,
-                                                                                       m_Circles);
+                // Arrange
+                // Act
+                // Assert
+                IEnumerable <ITurnCirclePair> turnCirclePairs = m_Sut.CreateAllPairs(m_Settings,
+                                                                                     m_Circles);
                 ITurnCirclePair[] pairs = turnCirclePairs.ToArray();
                 ITurnCirclePair first = pairs [ 2 ];
 
@@ -812,8 +923,11 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void CreateTurnCirclePairPortToPortTest()
             {
-                TurnCirclePair pair = m_Pairs.CreateTurnCirclePairPortToPort(m_Settings,
-                                                                             m_Circles);
+                // Arrange
+                // Act
+                // Assert
+                TurnCirclePair pair = m_Sut.CreateTurnCirclePairPortToPort(m_Settings,
+                                                                           m_Circles);
                 ICirclePair circlePair = pair.CirclePair;
 
                 Assert.AreEqual(m_FinishPointPort.CentrePoint,
@@ -834,8 +948,11 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void CreateTurnCirclePairPortToStarboardTest()
             {
-                TurnCirclePair pair = m_Pairs.CreateTurnCirclePairPortToStarboard(m_Settings,
-                                                                                  m_Circles);
+                // Arrange
+                // Act
+                // Assert
+                TurnCirclePair pair = m_Sut.CreateTurnCirclePairPortToStarboard(m_Settings,
+                                                                                m_Circles);
                 ICirclePair circlePair = pair.CirclePair;
 
                 Assert.AreEqual(m_FinishPointStarboard.CentrePoint,
@@ -856,8 +973,11 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void CreateTurnCirclePairStarboardToPortTest()
             {
-                TurnCirclePair pair = m_Pairs.CreateTurnCirclePairStarboardToPort(m_Settings,
-                                                                                  m_Circles);
+                // Arrange
+                // Act
+                // Assert
+                TurnCirclePair pair = m_Sut.CreateTurnCirclePairStarboardToPort(m_Settings,
+                                                                                m_Circles);
                 ICirclePair circlePair = pair.CirclePair;
 
                 Assert.AreEqual(m_FinishPointPort.CentrePoint,
@@ -878,8 +998,11 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void CreateTurnCirclePairStarboardToStarboardTest()
             {
-                TurnCirclePair pair = m_Pairs.CreateTurnCirclePairStarboardToStarboard(m_Settings,
-                                                                                       m_Circles);
+                // Arrange
+                // Act
+                // Assert
+                TurnCirclePair pair = m_Sut.CreateTurnCirclePairStarboardToStarboard(m_Settings,
+                                                                                     m_Circles);
                 ICirclePair circlePair = pair.CirclePair;
 
                 Assert.AreEqual(m_FinishPointStarboard.CentrePoint,
@@ -900,25 +1023,286 @@ namespace Selkie.Racetrack.Tests.Turn.NUnit
             [Test]
             public void PairsCountTest()
             {
+                // Arrange
+                // Act
+                // Assert
                 Assert.AreEqual(4,
-                                m_Pairs.Pairs.Count());
+                                m_Sut.Pairs.Count());
             }
 
             [Test]
             public void PairsDefaultTest()
             {
-                var pairs = new PossibleTurnCirclePairs(m_Circles);
+                // Arrange
+                // Act
+                // Assert
+                var actual = new PossibleTurnCirclePairs(m_Circles);
 
                 Assert.AreEqual(0,
-                                pairs.Pairs.Count());
+                                actual.Pairs.Count());
             }
 
             [Test]
             public void SettingsDefaultTest()
             {
-                var pairs = new PossibleTurnCirclePairs(m_Circles);
+                // Arrange
+                // Act
+                // Assert
+                var actual = new PossibleTurnCirclePairs(m_Circles);
 
-                Assert.True(pairs.Settings.IsUnknown);
+                Assert.True(actual.Settings.IsUnknown);
+            }
+        }
+
+        [TestFixture]
+        internal sealed class PossibleTurnCirclePairsForPortAndStarboardWithDifferentRadiusTest
+        {
+            [SetUp]
+            public void Setup()
+            {
+                m_FromLine = new Line(new Point(0.0,
+                                                0.0),
+                                      new Point(0.0,
+                                                100.0));
+                m_ToLine = new Line(new Point(1000.0,
+                                              100.0),
+                                    new Point(1000.0,
+                                              0.0));
+
+                Assert.NotNull(m_ToLine,
+                               "m_ToLine is null!");
+
+                m_RadiusForPortTurn = new Distance(10.0);
+                m_RadiusForStarboardTurn = new Distance(100.0);
+
+                // ReSharper disable once PossibleNullReferenceException
+                m_Settings = new Settings(m_FromLine.EndPoint,
+                                          m_FromLine.AngleToXAxis,
+                                          m_ToLine.StartPoint,
+                                          m_ToLine.AngleToXAxis,
+                                          m_RadiusForPortTurn,
+                                          m_RadiusForStarboardTurn,
+                                          true,
+                                          true);
+
+                m_PossibleTurnCircles = new PossibleTurnCircles();
+
+                m_Sut = new PossibleTurnCirclePairs(m_PossibleTurnCircles)
+                        {
+                            Settings = m_Settings
+                        };
+
+                m_Sut.Calculate();
+            }
+
+            private PossibleTurnCirclePairs m_Sut;
+            private PossibleTurnCircles m_PossibleTurnCircles;
+            private Settings m_Settings;
+            private ILine m_ToLine;
+            private Line m_FromLine;
+            private Distance m_RadiusForPortTurn;
+            private Distance m_RadiusForStarboardTurn;
+
+            [Test]
+            public void PossibleTurnCirclePairsCountTest()
+            {
+                // Arrange
+                // Act
+                // Assert
+                Assert.AreEqual(4,
+                                m_Sut.Pairs.Count());
+            }
+
+            [Test]
+            public void PossibleTurnCirclePairsOneCircleOneTest()
+            {
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
+                ITurnCircle actual = pairs [ 1 ].One;
+
+                Assert.AreEqual(new Point(100.0,
+                                          100.0),
+                                actual.CentrePoint,
+                                "CentrePoint");
+                Assert.AreEqual(100.0,
+                                actual.Radius.Length,
+                                "Radius");
+                Assert.AreEqual(Constants.TurnDirection.Clockwise,
+                                actual.TurnDirection,
+                                "Direction");
+                Assert.AreEqual(Constants.CircleOrigin.Start,
+                                actual.Origin,
+                                "Origin");
+            }
+
+            [Test]
+            public void PossibleTurnCirclePairsOneCircleZeroTest()
+            {
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
+                ITurnCircle actual = pairs [ 1 ].Zero;
+
+                Assert.AreEqual(new Point(900.0,
+                                          100.0),
+                                actual.CentrePoint,
+                                "CentrePoint");
+                Assert.AreEqual(100.0,
+                                actual.Radius.Length,
+                                "Radius");
+                Assert.AreEqual(Constants.TurnDirection.Clockwise,
+                                actual.TurnDirection,
+                                "Direction");
+                Assert.AreEqual(Constants.CircleOrigin.Finish,
+                                actual.Origin,
+                                "Origin");
+            }
+
+            [Test]
+            public void PossibleTurnCirclePairsThreeCircleOneTest()
+            {
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
+                ITurnCircle actual = pairs [ 3 ].One;
+
+                Assert.AreEqual(new Point(1010.0,
+                                          100.0),
+                                actual.CentrePoint,
+                                "CentrePoint");
+                Assert.AreEqual(10.0,
+                                actual.Radius.Length,
+                                "Radius");
+                Assert.AreEqual(Constants.TurnDirection.Counterclockwise,
+                                actual.TurnDirection,
+                                "Direction");
+                Assert.AreEqual(Constants.CircleOrigin.Finish,
+                                actual.Origin,
+                                "Origin");
+            }
+
+            [Test]
+            public void PossibleTurnCirclePairsThreeCircleZeroTest()
+            {
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
+                ITurnCircle actual = pairs [ 2 ].Zero;
+
+                Assert.AreEqual(new Point(900.0,
+                                          100.0),
+                                actual.CentrePoint,
+                                "CentrePoint");
+                Assert.AreEqual(100.0,
+                                actual.Radius.Length,
+                                "Radius");
+                Assert.AreEqual(Constants.TurnDirection.Clockwise,
+                                actual.TurnDirection,
+                                "Direction");
+                Assert.AreEqual(Constants.CircleOrigin.Finish,
+                                actual.Origin,
+                                "Origin");
+            }
+
+            [Test]
+            public void PossibleTurnCirclePairsTwoCircleOneTest()
+            {
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
+                ITurnCircle actual = pairs [ 2 ].One;
+
+                Assert.AreEqual(new Point(-10.0,
+                                          100.0),
+                                actual.CentrePoint,
+                                "CentrePoint");
+                Assert.AreEqual(10.0,
+                                actual.Radius.Length,
+                                "Radius");
+                Assert.AreEqual(Constants.TurnDirection.Counterclockwise,
+                                actual.TurnDirection,
+                                "Direction");
+                Assert.AreEqual(Constants.CircleOrigin.Start,
+                                actual.Origin,
+                                "Origin");
+            }
+
+            [Test]
+            public void PossibleTurnCirclePairsTwoCircleZeroTest()
+            {
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
+                ITurnCircle actual = pairs [ 2 ].Zero;
+
+                Assert.AreEqual(new Point(900.0,
+                                          100.0),
+                                actual.CentrePoint,
+                                "CentrePoint");
+                Assert.AreEqual(100.0,
+                                actual.Radius.Length,
+                                "Radius");
+                Assert.AreEqual(Constants.TurnDirection.Clockwise,
+                                actual.TurnDirection,
+                                "Direction");
+                Assert.AreEqual(Constants.CircleOrigin.Finish,
+                                actual.Origin,
+                                "Origin");
+            }
+
+            [Test]
+            public void PossibleTurnCirclePairsZeroCircleOneTest()
+            {
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
+                ITurnCircle actual = pairs [ 0 ].One;
+
+                Assert.AreEqual(new Point(-10.0,
+                                          100.0),
+                                actual.CentrePoint,
+                                "CentrePoint");
+                Assert.AreEqual(10.0,
+                                actual.Radius.Length,
+                                "Radius");
+                Assert.AreEqual(Constants.TurnDirection.Counterclockwise,
+                                actual.TurnDirection,
+                                "Direction");
+                Assert.AreEqual(Constants.CircleOrigin.Start,
+                                actual.Origin,
+                                "Origin");
+            }
+
+            [Test]
+            public void PossibleTurnCirclePairsZeroCircleZeroTest()
+            {
+                // Arrange
+                // Act
+                // Assert
+                ITurnCirclePair[] pairs = m_Sut.Pairs.ToArray();
+                ITurnCircle actual = pairs [ 0 ].Zero;
+
+                Assert.AreEqual(new Point(1010.0,
+                                          100.0),
+                                actual.CentrePoint,
+                                "CentrePoint");
+                Assert.AreEqual(10.0,
+                                actual.Radius.Length,
+                                "Radius");
+                Assert.AreEqual(Constants.TurnDirection.Counterclockwise,
+                                actual.TurnDirection,
+                                "Direction");
+                Assert.AreEqual(Constants.CircleOrigin.Finish,
+                                actual.Origin,
+                                "Origin");
             }
         }
     }
