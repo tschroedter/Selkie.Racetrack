@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Selkie.Geometry;
 using Selkie.Geometry.Primitives;
 using Selkie.Geometry.Shapes;
+using Selkie.Racetrack.Interfaces;
 using Selkie.Windsor;
 using Selkie.Windsor.Extensions;
 

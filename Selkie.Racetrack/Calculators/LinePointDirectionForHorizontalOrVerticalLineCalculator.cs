@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using NLog;
 using Selkie.Geometry;
 using Selkie.Geometry.Shapes;
+using Selkie.Racetrack.Interfaces.Calculators;
 using Selkie.Windsor.Extensions;
 
 namespace Selkie.Racetrack.Calculators

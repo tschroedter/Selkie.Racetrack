@@ -5,6 +5,7 @@ using NSubstitute;
 using NUnit.Framework;
 using Selkie.Geometry;
 using Selkie.Geometry.Shapes;
+using Selkie.Racetrack.Interfaces;
 using Selkie.Windsor;
 
 namespace Selkie.Racetrack.Tests.NUnit

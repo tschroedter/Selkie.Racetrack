@@ -5,8 +5,8 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using Selkie.Common;
-using Selkie.Racetrack.Calculators;
-using Selkie.Racetrack.Converter;
+using Selkie.Racetrack.Interfaces.Calculators;
+using Selkie.Racetrack.Interfaces.Converters;
 
 namespace Selkie.Racetrack
 {

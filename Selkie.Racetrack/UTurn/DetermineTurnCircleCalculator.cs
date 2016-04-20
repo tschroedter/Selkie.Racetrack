@@ -1,5 +1,7 @@
 ﻿using JetBrains.Annotations;
 using Selkie.Geometry.Shapes;
+using Selkie.Racetrack.Interfaces;
+using Selkie.Racetrack.Interfaces.UTurn;
 
 namespace Selkie.Racetrack.UTurn
 {

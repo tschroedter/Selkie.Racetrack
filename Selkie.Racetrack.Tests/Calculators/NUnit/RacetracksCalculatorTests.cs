@@ -6,6 +6,8 @@ using Selkie.Geometry.Primitives;
 using Selkie.Geometry.Shapes;
 using Selkie.NUnit.Extensions;
 using Selkie.Racetrack.Calculators;
+using Selkie.Racetrack.Interfaces;
+using Selkie.Racetrack.Interfaces.Calculators;
 
 namespace Selkie.Racetrack.Tests.Calculators.NUnit
 {

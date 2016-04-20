@@ -6,6 +6,8 @@ using NUnit.Framework;
 using Selkie.Geometry.Primitives;
 using Selkie.Geometry.Shapes;
 using Selkie.NUnit.Extensions;
+using Selkie.Racetrack.Interfaces;
+using Selkie.Racetrack.Interfaces.UTurn;
 using Selkie.Racetrack.Turn;
 using Selkie.Racetrack.UTurn;
 using Constants = Selkie.Geometry.Constants;

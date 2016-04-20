@@ -4,6 +4,8 @@ using NLog;
 using Selkie.Geometry;
 using Selkie.Geometry.Primitives;
 using Selkie.Geometry.Shapes;
+using Selkie.Racetrack.Interfaces.Turn;
+using Selkie.Racetrack.Interfaces.UTurn;
 using Selkie.Racetrack.Turn;
 using Selkie.Windsor;
 using Selkie.Windsor.Extensions;

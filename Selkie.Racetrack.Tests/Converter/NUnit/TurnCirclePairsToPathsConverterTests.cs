@@ -6,7 +6,10 @@ using NUnit.Framework;
 using Selkie.Geometry;
 using Selkie.Geometry.Primitives;
 using Selkie.Geometry.Shapes;
-using Selkie.Racetrack.Converter;
+using Selkie.Racetrack.Converters;
+using Selkie.Racetrack.Interfaces;
+using Selkie.Racetrack.Interfaces.Converters;
+using Selkie.Racetrack.Interfaces.Turn;
 using Selkie.Racetrack.Turn;
 using Selkie.Windsor;
 

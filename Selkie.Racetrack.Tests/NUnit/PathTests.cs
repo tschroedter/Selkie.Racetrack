@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Selkie.Geometry;
 using Selkie.Geometry.Primitives;
 using Selkie.Geometry.Shapes;
+using Selkie.Racetrack.Interfaces;
 
 namespace Selkie.Racetrack.Tests.NUnit
 {

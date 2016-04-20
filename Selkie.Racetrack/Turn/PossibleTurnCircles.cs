@@ -2,6 +2,8 @@
 using Selkie.Geometry;
 using Selkie.Geometry.Primitives;
 using Selkie.Geometry.Shapes;
+using Selkie.Racetrack.Interfaces;
+using Selkie.Racetrack.Interfaces.Turn;
 using Selkie.Windsor;
 
 namespace Selkie.Racetrack.Turn

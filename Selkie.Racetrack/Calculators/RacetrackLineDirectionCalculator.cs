@@ -3,11 +3,12 @@ using JetBrains.Annotations;
 using NLog;
 using Selkie.Geometry;
 using Selkie.Geometry.Shapes;
+using Selkie.Racetrack.Interfaces.Calculators;
 using Selkie.Windsor.Extensions;
 
 namespace Selkie.Racetrack.Calculators
 {
-    internal class RacetrackLineDirectionCalculator : IRacetrackLineDirectionCalculator
+    public class RacetrackLineDirectionCalculator : IRacetrackLineDirectionCalculator
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly Constants.TurnDirection m_TurnDirection;

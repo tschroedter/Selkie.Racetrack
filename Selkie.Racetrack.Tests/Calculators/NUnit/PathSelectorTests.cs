@@ -3,8 +3,9 @@ using System.Linq;
 using NSubstitute;
 using NUnit.Framework;
 using Selkie.Racetrack.Calculators;
-using Selkie.Racetrack.Converter;
-using Selkie.Racetrack.UTurn;
+using Selkie.Racetrack.Interfaces;
+using Selkie.Racetrack.Interfaces.Converters;
+using Selkie.Racetrack.Interfaces.UTurn;
 
 namespace Selkie.Racetrack.Tests.Calculators.NUnit
 {

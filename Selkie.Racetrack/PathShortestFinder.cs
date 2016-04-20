@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Selkie.Racetrack.Interfaces;
 using Selkie.Windsor;
 
 namespace Selkie.Racetrack

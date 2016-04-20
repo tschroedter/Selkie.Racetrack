@@ -3,6 +3,8 @@ using System.Linq;
 using JetBrains.Annotations;
 using Selkie.Geometry.Calculators;
 using Selkie.Geometry.Shapes;
+using Selkie.Racetrack.Interfaces;
+using Selkie.Racetrack.Interfaces.Turn;
 using Selkie.Windsor;
 
 namespace Selkie.Racetrack.Turn

@@ -4,6 +4,7 @@ using System.Linq;
 using NSubstitute;
 using NUnit.Framework;
 using Selkie.Geometry.Primitives;
+using Selkie.Racetrack.Interfaces;
 
 namespace Selkie.Racetrack.Tests.NUnit
 {

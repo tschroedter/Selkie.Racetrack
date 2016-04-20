@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Selkie.Racetrack.Converter;
-using Selkie.Racetrack.UTurn;
+using Selkie.Racetrack.Interfaces;
+using Selkie.Racetrack.Interfaces.Calculators;
+using Selkie.Racetrack.Interfaces.Converters;
+using Selkie.Racetrack.Interfaces.UTurn;
 
 namespace Selkie.Racetrack.Calculators
 {

@@ -7,6 +7,8 @@ using Selkie.Geometry;
 using Selkie.Geometry.Calculators;
 using Selkie.Geometry.Primitives;
 using Selkie.Geometry.Shapes;
+using Selkie.Racetrack.Interfaces;
+using Selkie.Racetrack.Interfaces.Turn;
 using Selkie.Racetrack.Turn;
 
 namespace Selkie.Racetrack.Tests.Turn.NUnit

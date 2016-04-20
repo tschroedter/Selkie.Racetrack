@@ -4,6 +4,9 @@ using Selkie.Geometry;
 using Selkie.Geometry.Primitives;
 using Selkie.Geometry.Shapes;
 using Selkie.Racetrack.Calculators;
+using Selkie.Racetrack.Interfaces;
+using Selkie.Racetrack.Interfaces.Turn;
+using Selkie.Racetrack.Interfaces.UTurn;
 using Selkie.Racetrack.Turn;
 
 namespace Selkie.Racetrack.UTurn
