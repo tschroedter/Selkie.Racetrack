@@ -9,10 +9,6 @@ namespace Selkie.Racetrack.UTurn
 {
     public class UTurnCircleCalculator : IUTurnCircleCalculator
     {
-        private readonly IAngleToCentrePointCalculator m_AngleToCentrePointCalculator;
-        private readonly IDetermineCirclePairCalculator m_DetermineCirclePairCalculator;
-        private readonly IPossibleTurnCircles m_PossibleTurnCircles;
-
         public UTurnCircleCalculator([NotNull] IDetermineCirclePairCalculator determineCirclePairCalculator,
                                      [NotNull] IPossibleTurnCircles possibleTurnCircles,
                                      [NotNull] IAngleToCentrePointCalculator angleToCentrePointCalculator)
@@ -26,6 +22,10 @@ namespace Selkie.Racetrack.UTurn
             m_PossibleTurnCircles = possibleTurnCircles;
             m_AngleToCentrePointCalculator = angleToCentrePointCalculator;
         }
+
+        private readonly IAngleToCentrePointCalculator m_AngleToCentrePointCalculator;
+        private readonly IDetermineCirclePairCalculator m_DetermineCirclePairCalculator;
+        private readonly IPossibleTurnCircles m_PossibleTurnCircles;
 
         public ISettings Settings { get; set; }
 

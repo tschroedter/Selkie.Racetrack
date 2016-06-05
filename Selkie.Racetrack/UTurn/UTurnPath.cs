@@ -10,9 +10,6 @@ namespace Selkie.Racetrack.UTurn
     [ProjectComponent(Lifestyle.Transient)]
     public class UTurnPath : IUTurnPath
     {
-        private readonly IDetermineTurnCircleCalculator m_Calculator;
-        private IPath m_Path = Racetrack.Path.Unknown;
-
         public UTurnPath([NotNull] IUTurnCircle uTurnCircle,
                          [NotNull] IDetermineTurnCircleCalculator calculator)
         {
@@ -21,6 +18,9 @@ namespace Selkie.Racetrack.UTurn
             UTurnCircle = uTurnCircle;
             m_Calculator = calculator;
         }
+
+        private readonly IDetermineTurnCircleCalculator m_Calculator;
+        private IPath m_Path = Racetrack.Path.Unknown;
 
         public void Calculate()
         {
@@ -41,18 +41,94 @@ namespace Selkie.Racetrack.UTurn
 
         public IUTurnCircle UTurnCircle { get; private set; }
 
-        private ISettings CreateSettingsWithMaximumRadius(ISettings settings)
+        [NotNull]
+        internal ITurnCircleArcSegment CreateFinishArcSegment([NotNull] ISettings settings,
+                                                              [NotNull] Point intersectionPoint,
+                                                              [NotNull] ITurnCircle finishTurnCircle)
         {
-            var maxRadiusSettings = new Settings(settings.StartPoint,
-                                                 settings.StartAzimuth,
-                                                 settings.FinishPoint,
-                                                 settings.FinishAzimuth,
-                                                 settings.LargestRadiusForTurn,
-                                                 settings.LargestRadiusForTurn,
-                                                 settings.IsPortTurnAllowed,
-                                                 settings.IsStarboardTurnAllowed);
+            ITurnCircleArcSegment turnCircle = new TurnCircleArcSegment(finishTurnCircle.Circle,
+                                                                        finishTurnCircle.TurnDirection,
+                                                                        Constants.CircleOrigin.Finish,
+                                                                        intersectionPoint,
+                                                                        settings.FinishPoint);
 
-            return maxRadiusSettings;
+            return turnCircle;
+        }
+
+        [NotNull]
+        internal ITurnCircleArcSegment CreateFinishTurnCircleArcSegment([NotNull] ISettings settings,
+                                                                        [NotNull] IUTurnCircle uTurnCircle,
+                                                                        [NotNull] IDetermineTurnCircleCalculator
+                                                                            calculator)
+        {
+            Point intersectionPoint = DeterminArcSegmentIntersectionPoint(uTurnCircle,
+                                                                          calculator.FinishTurnCircle);
+
+            ITurnCircleArcSegment finishArcSegment = CreateFinishArcSegment(settings,
+                                                                            intersectionPoint,
+                                                                            calculator.FinishTurnCircle);
+            return finishArcSegment;
+        }
+
+        [NotNull]
+        internal ITurnCircleArcSegment CreateStartArcSegment([NotNull] ISettings settings,
+                                                             [NotNull] Point intersectionPoint,
+                                                             [NotNull] ITurnCircle startTurnCircle)
+        {
+            ITurnCircleArcSegment turnCircle = new TurnCircleArcSegment(startTurnCircle.Circle,
+                                                                        startTurnCircle.TurnDirection,
+                                                                        Constants.CircleOrigin.Start,
+                                                                        settings.StartPoint,
+                                                                        intersectionPoint);
+
+            return turnCircle;
+        }
+
+        [NotNull]
+        internal ITurnCircleArcSegment CreateStartTurnCircleArcSegment([NotNull] ISettings settings,
+                                                                       [NotNull] IUTurnCircle uTurnCircle,
+                                                                       [NotNull] IDetermineTurnCircleCalculator
+                                                                           calculator)
+        {
+            Point intersectionPoint = DeterminArcSegmentIntersectionPoint(uTurnCircle,
+                                                                          calculator.StartTurnCircle);
+
+            ITurnCircleArcSegment startArcSegment = CreateStartArcSegment(settings,
+                                                                          intersectionPoint,
+                                                                          calculator.StartTurnCircle);
+            return startArcSegment;
+        }
+
+        [NotNull]
+        // ReSharper disable once TooManyArguments
+        internal ITurnCircleArcSegment CreateUTurnArcSegment([NotNull] IUTurnCircle uTurnCircle,
+                                                             Constants.CircleOrigin origin,
+                                                             [NotNull] Point startPoint,
+                                                             [NotNull] Point endPoint)
+        {
+            ITurnCircleArcSegment turnCircle = new TurnCircleArcSegment(uTurnCircle.Circle,
+                                                                        uTurnCircle.TurnDirection,
+                                                                        origin,
+                                                                        startPoint,
+                                                                        endPoint);
+
+            return turnCircle;
+        }
+
+        [NotNull]
+        internal Point DeterminArcSegmentIntersectionPoint([NotNull] IUTurnCircle uTurnCircle,
+                                                           [NotNull] ITurnCircle circle)
+        {
+            return circle.IsPointOnCircle(uTurnCircle.UTurnZeroIntersectionPoint)
+                       ? uTurnCircle.UTurnZeroIntersectionPoint
+                       : uTurnCircle.UTurnOneIntersectionPoint;
+        }
+
+        internal void DetermineTurnCircles()
+        {
+            m_Calculator.Settings = UTrunCircleSettings;
+            m_Calculator.UTurnCircle = UTurnCircle;
+            m_Calculator.Calculate();
         }
 
         [NotNull]
@@ -90,94 +166,18 @@ namespace Selkie.Racetrack.UTurn
             return path;
         }
 
-        internal void DetermineTurnCircles()
+        private ISettings CreateSettingsWithMaximumRadius(ISettings settings)
         {
-            m_Calculator.Settings = UTrunCircleSettings;
-            m_Calculator.UTurnCircle = UTurnCircle;
-            m_Calculator.Calculate();
-        }
+            var maxRadiusSettings = new Settings(settings.StartPoint,
+                                                 settings.StartAzimuth,
+                                                 settings.FinishPoint,
+                                                 settings.FinishAzimuth,
+                                                 settings.LargestRadiusForTurn,
+                                                 settings.LargestRadiusForTurn,
+                                                 settings.IsPortTurnAllowed,
+                                                 settings.IsStarboardTurnAllowed);
 
-        [NotNull]
-        internal ITurnCircleArcSegment CreateFinishTurnCircleArcSegment([NotNull] ISettings settings,
-                                                                        [NotNull] IUTurnCircle uTurnCircle,
-                                                                        [NotNull] IDetermineTurnCircleCalculator
-                                                                            calculator)
-        {
-            Point intersectionPoint = DeterminArcSegmentIntersectionPoint(uTurnCircle,
-                                                                          calculator.FinishTurnCircle);
-
-            ITurnCircleArcSegment finishArcSegment = CreateFinishArcSegment(settings,
-                                                                            intersectionPoint,
-                                                                            calculator.FinishTurnCircle);
-            return finishArcSegment;
-        }
-
-        [NotNull]
-        internal ITurnCircleArcSegment CreateStartTurnCircleArcSegment([NotNull] ISettings settings,
-                                                                       [NotNull] IUTurnCircle uTurnCircle,
-                                                                       [NotNull] IDetermineTurnCircleCalculator
-                                                                           calculator)
-        {
-            Point intersectionPoint = DeterminArcSegmentIntersectionPoint(uTurnCircle,
-                                                                          calculator.StartTurnCircle);
-
-            ITurnCircleArcSegment startArcSegment = CreateStartArcSegment(settings,
-                                                                          intersectionPoint,
-                                                                          calculator.StartTurnCircle);
-            return startArcSegment;
-        }
-
-        [NotNull]
-        // ReSharper disable once TooManyArguments
-        internal ITurnCircleArcSegment CreateUTurnArcSegment([NotNull] IUTurnCircle uTurnCircle,
-                                                             Constants.CircleOrigin origin,
-                                                             [NotNull] Point startPoint,
-                                                             [NotNull] Point endPoint)
-        {
-            ITurnCircleArcSegment turnCircle = new TurnCircleArcSegment(uTurnCircle.Circle,
-                                                                        uTurnCircle.TurnDirection,
-                                                                        origin,
-                                                                        startPoint,
-                                                                        endPoint);
-
-            return turnCircle;
-        }
-
-        [NotNull]
-        internal ITurnCircleArcSegment CreateStartArcSegment([NotNull] ISettings settings,
-                                                             [NotNull] Point intersectionPoint,
-                                                             [NotNull] ITurnCircle startTurnCircle)
-        {
-            ITurnCircleArcSegment turnCircle = new TurnCircleArcSegment(startTurnCircle.Circle,
-                                                                        startTurnCircle.TurnDirection,
-                                                                        Constants.CircleOrigin.Start,
-                                                                        settings.StartPoint,
-                                                                        intersectionPoint);
-
-            return turnCircle;
-        }
-
-        [NotNull]
-        internal Point DeterminArcSegmentIntersectionPoint([NotNull] IUTurnCircle uTurnCircle,
-                                                           [NotNull] ITurnCircle circle)
-        {
-            return circle.IsPointOnCircle(uTurnCircle.UTurnZeroIntersectionPoint)
-                       ? uTurnCircle.UTurnZeroIntersectionPoint
-                       : uTurnCircle.UTurnOneIntersectionPoint;
-        }
-
-        [NotNull]
-        internal ITurnCircleArcSegment CreateFinishArcSegment([NotNull] ISettings settings,
-                                                              [NotNull] Point intersectionPoint,
-                                                              [NotNull] ITurnCircle finishTurnCircle)
-        {
-            ITurnCircleArcSegment turnCircle = new TurnCircleArcSegment(finishTurnCircle.Circle,
-                                                                        finishTurnCircle.TurnDirection,
-                                                                        Constants.CircleOrigin.Finish,
-                                                                        intersectionPoint,
-                                                                        settings.FinishPoint);
-
-            return turnCircle;
+            return maxRadiusSettings;
         }
 
         #region IUTurnPath Members

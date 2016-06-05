@@ -8,17 +8,17 @@ namespace Selkie.Racetrack.Converters
 {
     public class TurnCirclePairsToPathsConverter : ITurnCirclePairsToPathsConverter
     {
-        private readonly IPossibleTurnCirclePairs m_PossibleTurnCirclePairs;
-        private readonly ITurnCirclePairToPathConverter m_TurnCirclePairToPathConverter;
-        private IEnumerable <IPath> m_Paths = new IPath[0];
-        private ISettings m_Settings = Racetrack.Settings.Unknown;
-
         public TurnCirclePairsToPathsConverter([NotNull] ITurnCirclePairToPathConverter turnCirclePairToPathConverter,
                                                [NotNull] IPossibleTurnCirclePairs possibleTurnCirclePairs)
         {
             m_TurnCirclePairToPathConverter = turnCirclePairToPathConverter;
             m_PossibleTurnCirclePairs = possibleTurnCirclePairs;
         }
+
+        private readonly IPossibleTurnCirclePairs m_PossibleTurnCirclePairs;
+        private readonly ITurnCirclePairToPathConverter m_TurnCirclePairToPathConverter;
+        private IEnumerable <IPath> m_Paths = new IPath[0];
+        private ISettings m_Settings = Racetrack.Settings.Unknown;
 
         public void Convert()
         {

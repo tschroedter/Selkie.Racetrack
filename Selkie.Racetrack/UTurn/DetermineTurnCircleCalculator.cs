@@ -61,12 +61,12 @@ namespace Selkie.Racetrack.UTurn
         }
 
         [NotNull]
-        internal ITurnCircle DetermineStartTurnCircle([NotNull] ISettings settings,
-                                                      [NotNull] IUTurnCircle uTurnCircle)
+        internal ITurnCircle DetermineFinishTurnCircle([NotNull] ISettings settings,
+                                                       [NotNull] IUTurnCircle uTurnCircle)
         {
             ITurnCircle turnCircle = uTurnCircle.Zero;
 
-            if ( !turnCircle.IsPointOnCircle(settings.StartPoint) )
+            if ( !turnCircle.IsPointOnCircle(settings.FinishPoint) )
             {
                 turnCircle = uTurnCircle.One;
             }
@@ -75,12 +75,12 @@ namespace Selkie.Racetrack.UTurn
         }
 
         [NotNull]
-        internal ITurnCircle DetermineFinishTurnCircle([NotNull] ISettings settings,
-                                                       [NotNull] IUTurnCircle uTurnCircle)
+        internal ITurnCircle DetermineStartTurnCircle([NotNull] ISettings settings,
+                                                      [NotNull] IUTurnCircle uTurnCircle)
         {
             ITurnCircle turnCircle = uTurnCircle.Zero;
 
-            if ( !turnCircle.IsPointOnCircle(settings.FinishPoint) )
+            if ( !turnCircle.IsPointOnCircle(settings.StartPoint) )
             {
                 turnCircle = uTurnCircle.One;
             }

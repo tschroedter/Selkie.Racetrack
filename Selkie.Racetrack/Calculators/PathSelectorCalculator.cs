@@ -9,11 +9,6 @@ namespace Selkie.Racetrack.Calculators
 {
     public class PathSelectorCalculator : IPathSelectorCalculator
     {
-        private readonly ITurnCirclePairsToPathsConverter m_Converter;
-        private readonly IUTurnPath m_UTurnPath;
-        private List <IPath> m_Paths = new List <IPath>();
-        private ISettings m_Settings = Racetrack.Settings.Unknown;
-
         public PathSelectorCalculator([NotNull] ITurnCirclePairsToPathsConverter converter,
                                       [NotNull] IUTurnPath uTurnPath)
         {
@@ -28,6 +23,11 @@ namespace Selkie.Racetrack.Calculators
                 return m_Settings.IsPortTurnAllowed && m_Settings.IsStarboardTurnAllowed;
             }
         }
+
+        private readonly ITurnCirclePairsToPathsConverter m_Converter;
+        private readonly IUTurnPath m_UTurnPath;
+        private List <IPath> m_Paths = new List <IPath>();
+        private ISettings m_Settings = Racetrack.Settings.Unknown;
 
         public void Calculate()
         {

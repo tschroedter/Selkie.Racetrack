@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 using Selkie.Geometry.Primitives;
-using Selkie.Geometry.Shapes;
+using Selkie.Geometry.Surveying;
 using Selkie.Racetrack.Interfaces;
 using Selkie.Racetrack.Interfaces.Calculators;
 
@@ -8,23 +8,19 @@ namespace Selkie.Racetrack.Calculators
 {
     public abstract class BaseRacetrackCalculator : IBaseRacetrackCalculator
     {
-        protected BaseRacetrackCalculator([NotNull] ILinePairToRacetrackCalculator calculator)
+        protected BaseRacetrackCalculator([NotNull] IFeaturePairToRacetrackCalculator calculator)
         {
             IsPortTurnAllowed = true;
             IsStarboardTurnAllowed = true;
-            Paths = new IPath[]
-                    {
-                    };
-            FromLine = Line.Unknown;
-            ToLines = new ILine[]
-                      {
-                      };
+            Paths = new IPath[0];
+            FromFeature = SurveyFeature.Unknown;
+            ToFeatures = new ISurveyFeature[0];
             TurnRadiusForPort = Distance.Unknown;
             TurnRadiusForStarboard = Distance.Unknown;
             Calculator = calculator;
         }
 
-        public ILinePairToRacetrackCalculator Calculator { get; private set; }
+        public IFeaturePairToRacetrackCalculator Calculator { get; private set; }
 
         public bool IsPortTurnAllowed { get; set; }
 
@@ -32,9 +28,9 @@ namespace Selkie.Racetrack.Calculators
 
         public IPath[] Paths { get; private set; }
 
-        public ILine FromLine { get; set; }
+        public ISurveyFeature FromFeature { get; set; }
 
-        public ILine[] ToLines { get; set; }
+        public ISurveyFeature[] ToFeatures { get; set; }
 
         public Distance TurnRadiusForPort { get; set; }
 
@@ -46,33 +42,33 @@ namespace Selkie.Racetrack.Calculators
         }
 
         [NotNull]
-        internal abstract ILinePairToRacetrackCalculator GetCalculator([NotNull] ILine fromLine,
-                                                                       [NotNull] ILine toLine,
-                                                                       [NotNull] Distance radiusForPortTurn,
-                                                                       [NotNull] Distance radiusForStarboardTurn);
+        internal abstract IFeaturePairToRacetrackCalculator GetCalculator([NotNull] ISurveyFeature fromFeature,
+                                                                          [NotNull] ISurveyFeature toFeature,
+                                                                          [NotNull] Distance radiusForPortTurn,
+                                                                          [NotNull] Distance radiusForStarboardTurn);
 
         [NotNull]
         private IPath[] CalculateRacetracks()
         {
-            var racetracks = new IPath[ToLines.Length];
+            var racetracks = new IPath[ToFeatures.Length];
 
-            for ( var i = 0 ; i < ToLines.Length ; i++ )
+            for ( var i = 0 ; i < ToFeatures.Length ; i++ )
             {
-                ILine toLine = ToLines [ i ];
+                ISurveyFeature toFeature = ToFeatures [ i ];
                 IPath racetrack;
 
-                if ( FromLine.Equals(toLine) )
+                if ( FromFeature.Equals(toFeature) )
                 {
                     racetrack = Path.Unknown;
                 }
                 else
                 {
-                    ILinePairToRacetrackCalculator linePairToRacetrackCalculator = GetCalculator(FromLine,
-                                                                                                 toLine,
-                                                                                                 TurnRadiusForPort,
-                                                                                                 TurnRadiusForStarboard);
+                    IFeaturePairToRacetrackCalculator featurePairToRacetrackCalculator = GetCalculator(FromFeature,
+                                                                                                       toFeature,
+                                                                                                       TurnRadiusForPort,
+                                                                                                       TurnRadiusForStarboard);
 
-                    racetrack = linePairToRacetrackCalculator.Racetrack;
+                    racetrack = featurePairToRacetrackCalculator.Racetrack;
                 }
 
                 racetracks [ i ] = racetrack;

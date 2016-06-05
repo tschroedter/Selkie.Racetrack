@@ -9,14 +9,14 @@ namespace Selkie.Racetrack.Turn
     [ProjectComponent(Lifestyle.Transient)]
     public class PossibleTurnCirclePairs : IPossibleTurnCirclePairs
     {
-        private readonly IPossibleTurnCircles m_PossibleTurnCircles;
-        private IEnumerable <ITurnCirclePair> m_Pairs = new ITurnCirclePair[0];
-        private ISettings m_Settings = Racetrack.Settings.Unknown;
-
         public PossibleTurnCirclePairs([NotNull] IPossibleTurnCircles possibleTurnCircles)
         {
             m_PossibleTurnCircles = possibleTurnCircles;
         }
+
+        private readonly IPossibleTurnCircles m_PossibleTurnCircles;
+        private IEnumerable <ITurnCirclePair> m_Pairs = new ITurnCirclePair[0];
+        private ISettings m_Settings = Racetrack.Settings.Unknown;
 
         public void Calculate()
         {
@@ -25,57 +25,6 @@ namespace Selkie.Racetrack.Turn
 
             m_Pairs = CreatePairs(m_Settings,
                                   m_PossibleTurnCircles);
-        }
-
-        [NotNull]
-        internal IEnumerable <ITurnCirclePair> CreatePairs([NotNull] ISettings settings,
-                                                           [NotNull] IPossibleTurnCircles turnCircles)
-        {
-            if ( settings.IsPortTurnAllowed &&
-                 settings.IsStarboardTurnAllowed )
-            {
-                return CreateAllPairs(settings,
-                                      turnCircles);
-            }
-
-            if ( settings.IsPortTurnAllowed )
-            {
-                return CreateOnlyPortTurnsPairs(settings,
-                                                turnCircles);
-            }
-
-            return CreateOnlyStarboardTurnsPairs(settings,
-                                                 turnCircles);
-        }
-
-        [NotNull]
-        internal IEnumerable <ITurnCirclePair> CreateOnlyStarboardTurnsPairs([NotNull] ISettings settings,
-                                                                             [NotNull] IPossibleTurnCircles turnCircles)
-        {
-            TurnCirclePair two = CreateTurnCirclePairStarboardToStarboard(settings,
-                                                                          turnCircles);
-
-            var pairs = new List <ITurnCirclePair>
-                        {
-                            two
-                        };
-
-            return pairs;
-        }
-
-        [NotNull]
-        internal List <ITurnCirclePair> CreateOnlyPortTurnsPairs([NotNull] ISettings settings,
-                                                                 [NotNull] IPossibleTurnCircles turnCircles)
-        {
-            TurnCirclePair one = CreateTurnCirclePairPortToPort(settings,
-                                                                turnCircles);
-
-            var pairs = new List <ITurnCirclePair>
-                        {
-                            one
-                        };
-
-            return pairs;
         }
 
         [NotNull]
@@ -106,13 +55,64 @@ namespace Selkie.Racetrack.Turn
         }
 
         [NotNull]
-        internal TurnCirclePair CreateTurnCirclePairStarboardToPort([NotNull] ISettings settings,
-                                                                    [NotNull] IPossibleTurnCircles turnCircles)
+        internal List <ITurnCirclePair> CreateOnlyPortTurnsPairs([NotNull] ISettings settings,
+                                                                 [NotNull] IPossibleTurnCircles turnCircles)
         {
-            var four = new TurnCirclePair(settings,
-                                          turnCircles.StartTurnCircleStarboard,
-                                          turnCircles.FinishTurnCirclePort);
-            return four;
+            TurnCirclePair one = CreateTurnCirclePairPortToPort(settings,
+                                                                turnCircles);
+
+            var pairs = new List <ITurnCirclePair>
+                        {
+                            one
+                        };
+
+            return pairs;
+        }
+
+        [NotNull]
+        internal IEnumerable <ITurnCirclePair> CreateOnlyStarboardTurnsPairs([NotNull] ISettings settings,
+                                                                             [NotNull] IPossibleTurnCircles turnCircles)
+        {
+            TurnCirclePair two = CreateTurnCirclePairStarboardToStarboard(settings,
+                                                                          turnCircles);
+
+            var pairs = new List <ITurnCirclePair>
+                        {
+                            two
+                        };
+
+            return pairs;
+        }
+
+        [NotNull]
+        internal IEnumerable <ITurnCirclePair> CreatePairs([NotNull] ISettings settings,
+                                                           [NotNull] IPossibleTurnCircles turnCircles)
+        {
+            if ( settings.IsPortTurnAllowed &&
+                 settings.IsStarboardTurnAllowed )
+            {
+                return CreateAllPairs(settings,
+                                      turnCircles);
+            }
+
+            if ( settings.IsPortTurnAllowed )
+            {
+                return CreateOnlyPortTurnsPairs(settings,
+                                                turnCircles);
+            }
+
+            return CreateOnlyStarboardTurnsPairs(settings,
+                                                 turnCircles);
+        }
+
+        [NotNull]
+        internal TurnCirclePair CreateTurnCirclePairPortToPort([NotNull] ISettings settings,
+                                                               [NotNull] IPossibleTurnCircles turnCircles)
+        {
+            var one = new TurnCirclePair(settings,
+                                         turnCircles.StartTurnCirclePort,
+                                         turnCircles.FinishTurnCirclePort);
+            return one;
         }
 
         [NotNull]
@@ -126,6 +126,16 @@ namespace Selkie.Racetrack.Turn
         }
 
         [NotNull]
+        internal TurnCirclePair CreateTurnCirclePairStarboardToPort([NotNull] ISettings settings,
+                                                                    [NotNull] IPossibleTurnCircles turnCircles)
+        {
+            var four = new TurnCirclePair(settings,
+                                          turnCircles.StartTurnCircleStarboard,
+                                          turnCircles.FinishTurnCirclePort);
+            return four;
+        }
+
+        [NotNull]
         internal TurnCirclePair CreateTurnCirclePairStarboardToStarboard([NotNull] ISettings settings,
                                                                          [NotNull] IPossibleTurnCircles turnCircles)
         {
@@ -133,16 +143,6 @@ namespace Selkie.Racetrack.Turn
                                          turnCircles.StartTurnCircleStarboard,
                                          turnCircles.FinishTurnCircleStarboard);
             return two;
-        }
-
-        [NotNull]
-        internal TurnCirclePair CreateTurnCirclePairPortToPort([NotNull] ISettings settings,
-                                                               [NotNull] IPossibleTurnCircles turnCircles)
-        {
-            var one = new TurnCirclePair(settings,
-                                         turnCircles.StartTurnCirclePort,
-                                         turnCircles.FinishTurnCirclePort);
-            return one;
         }
 
         #region IPossibleTurnCirclePairs Members

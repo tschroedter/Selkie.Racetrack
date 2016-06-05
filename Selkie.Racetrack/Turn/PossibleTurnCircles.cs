@@ -11,8 +11,6 @@ namespace Selkie.Racetrack.Turn
     [ProjectComponent(Lifestyle.Transient)]
     public class PossibleTurnCircles : IPossibleTurnCircles
     {
-        public static readonly IPossibleTurnCircles Unknown = new PossibleTurnCircles(true);
-
         public PossibleTurnCircles()
         {
             FinishTurnCircleStarboard = TurnCircle.Unknown;
@@ -32,6 +30,8 @@ namespace Selkie.Racetrack.Turn
             IsUnknown = isUnknown;
         }
 
+        public static readonly IPossibleTurnCircles Unknown = new PossibleTurnCircles(true);
+
         public void Calculate()
         {
             StartTurnCirclePort = CreateTurnCircleStartPointPort();
@@ -41,35 +41,31 @@ namespace Selkie.Racetrack.Turn
         }
 
         [NotNull]
-        internal ITurnCircle CreateTurnCircleStartPointPort()
+        internal Point CalculateCentrePointForFinishPointPort()
         {
-            Point centrePoint = CalculateCentrePointForStartPointPort();
+            Point centrePoint = Settings.FinishPoint;
             Distance radius = Settings.RadiusForPortTurn;
-            var circle = new Circle(centrePoint,
-                                    radius.Length);
+            Angle azimuth = PortAzimuth(Settings.FinishAzimuth);
 
-            var turnCircle = new TurnCircle(circle,
-                                            Constants.CircleSide.Port,
-                                            Constants.CircleOrigin.Start,
-                                            Constants.TurnDirection.Counterclockwise);
+            Point point = CalculateCentrePoint(centrePoint,
+                                               radius,
+                                               azimuth);
 
-            return turnCircle;
+            return point;
         }
 
         [NotNull]
-        internal ITurnCircle CreateTurnCircleStartPointStarboard()
+        internal Point CalculateCentrePointForFinishPointStarboard()
         {
-            Point centrePoint = CalculateCentrePointForStartPointStarboard();
+            Point centrePoint = Settings.FinishPoint;
             Distance radius = Settings.RadiusForStarboardTurn;
-            var circle = new Circle(centrePoint,
-                                    radius.Length);
+            Angle azimuth = StarboardAzimuth(Settings.FinishAzimuth);
 
-            var turnCircle = new TurnCircle(circle,
-                                            Constants.CircleSide.Starboard,
-                                            Constants.CircleOrigin.Start,
-                                            Constants.TurnDirection.Clockwise);
+            Point point = CalculateCentrePoint(centrePoint,
+                                               radius,
+                                               azimuth);
 
-            return turnCircle;
+            return point;
         }
 
         [NotNull]
@@ -133,17 +129,35 @@ namespace Selkie.Racetrack.Turn
         }
 
         [NotNull]
-        internal Point CalculateCentrePointForFinishPointPort()
+        internal ITurnCircle CreateTurnCircleStartPointPort()
         {
-            Point centrePoint = Settings.FinishPoint;
+            Point centrePoint = CalculateCentrePointForStartPointPort();
             Distance radius = Settings.RadiusForPortTurn;
-            Angle azimuth = PortAzimuth(Settings.FinishAzimuth);
+            var circle = new Circle(centrePoint,
+                                    radius.Length);
 
-            Point point = CalculateCentrePoint(centrePoint,
-                                               radius,
-                                               azimuth);
+            var turnCircle = new TurnCircle(circle,
+                                            Constants.CircleSide.Port,
+                                            Constants.CircleOrigin.Start,
+                                            Constants.TurnDirection.Counterclockwise);
 
-            return point;
+            return turnCircle;
+        }
+
+        [NotNull]
+        internal ITurnCircle CreateTurnCircleStartPointStarboard()
+        {
+            Point centrePoint = CalculateCentrePointForStartPointStarboard();
+            Distance radius = Settings.RadiusForStarboardTurn;
+            var circle = new Circle(centrePoint,
+                                    radius.Length);
+
+            var turnCircle = new TurnCircle(circle,
+                                            Constants.CircleSide.Starboard,
+                                            Constants.CircleOrigin.Start,
+                                            Constants.TurnDirection.Clockwise);
+
+            return turnCircle;
         }
 
         [NotNull]
@@ -152,20 +166,6 @@ namespace Selkie.Racetrack.Turn
             Angle portAzimuth = azimuth + Angle.FromDegrees(90.0);
 
             return portAzimuth;
-        }
-
-        [NotNull]
-        internal Point CalculateCentrePointForFinishPointStarboard()
-        {
-            Point centrePoint = Settings.FinishPoint;
-            Distance radius = Settings.RadiusForStarboardTurn;
-            Angle azimuth = StarboardAzimuth(Settings.FinishAzimuth);
-
-            Point point = CalculateCentrePoint(centrePoint,
-                                               radius,
-                                               azimuth);
-
-            return point;
         }
 
         [NotNull]

@@ -10,10 +10,6 @@ namespace Selkie.Racetrack.Calculators
 {
     public class LinePointDirectionForHorizontalOrVerticalLineCalculator : ILinePointDirectionCalculator
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly Constants.TurnDirection m_DefaultTurnDirection;
-        private readonly Constants.TurnDirection m_TurnDirection;
-
         public LinePointDirectionForHorizontalOrVerticalLineCalculator([NotNull] ILine line,
                                                                        [NotNull] Point point,
                                                                        Constants.TurnDirection defaultTurnDirection)
@@ -23,6 +19,10 @@ namespace Selkie.Racetrack.Calculators
                                                  point);
         }
 
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly Constants.TurnDirection m_DefaultTurnDirection;
+        private readonly Constants.TurnDirection m_TurnDirection;
+
         public Constants.TurnDirection TurnDirection
         {
             get
@@ -31,7 +31,6 @@ namespace Selkie.Racetrack.Calculators
             }
         }
 
-        // ReSharper disable once MethodTooLong
         internal Constants.TurnDirection DetermineDirection([NotNull] ILine line,
                                                             [NotNull] Point point)
         {
@@ -46,7 +45,7 @@ namespace Selkie.Racetrack.Calculators
             {
                 return FindSideForVerticalLine(ay,
                                                bx,
-                                               @by,
+                                               by,
                                                cx);
             }
 
@@ -54,7 +53,7 @@ namespace Selkie.Racetrack.Calculators
             {
                 return FindSideForHorizontalLine(ax,
                                                  bx,
-                                                 @by,
+                                                 by,
                                                  cy);
             }
 
@@ -66,20 +65,19 @@ namespace Selkie.Racetrack.Calculators
             return Constants.TurnDirection.Unknown;
         }
 
-        // ReSharper disable once TooManyArguments
         internal Constants.TurnDirection FindSideForHorizontalLine(double ax,
                                                                    double bx,
-                                                                   double @by,
+                                                                   double by,
                                                                    double cy)
         {
-            if ( cy < @by )
+            if ( cy < by )
             {
                 return bx > ax
                            ? Constants.TurnDirection.Clockwise
                            : Constants.TurnDirection.Counterclockwise;
             }
 
-            if ( cy > @by )
+            if ( cy > by )
             {
                 return bx > ax
                            ? Constants.TurnDirection.Counterclockwise
@@ -99,21 +97,20 @@ namespace Selkie.Racetrack.Calculators
             return m_DefaultTurnDirection;
         }
 
-        // ReSharper disable once TooManyArguments
         internal Constants.TurnDirection FindSideForVerticalLine(double ay,
                                                                  double bx,
-                                                                 double @by,
+                                                                 double by,
                                                                  double cx)
         {
             if ( cx < bx )
             {
-                return @by > ay
+                return by > ay
                            ? Constants.TurnDirection.Counterclockwise
                            : Constants.TurnDirection.Clockwise;
             }
             if ( cx > bx )
             {
-                return @by > ay
+                return by > ay
                            ? Constants.TurnDirection.Clockwise
                            : Constants.TurnDirection.Counterclockwise;
             }

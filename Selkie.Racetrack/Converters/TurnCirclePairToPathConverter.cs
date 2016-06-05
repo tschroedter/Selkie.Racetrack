@@ -13,13 +13,6 @@ namespace Selkie.Racetrack.Converters
 {
     public class TurnCirclePairToPathConverter : ITurnCirclePairToPathConverter
     {
-        private readonly ISelkieLogger m_Logger;
-        private readonly IPathValidator m_PathValidator;
-        private IEnumerable <IPath> m_Paths = new IPath[0];
-        private IEnumerable <IPath> m_PossiblePaths = new IPath[0];
-        private ISettings m_Settings = Racetrack.Settings.Unknown;
-        private ITurnCirclePair m_TurnCirclePair = Turn.TurnCirclePair.Unknown;
-
         public TurnCirclePairToPathConverter([NotNull] ISelkieLogger logger,
                                              [NotNull] IPathValidator pathValidator)
         {
@@ -27,25 +20,19 @@ namespace Selkie.Racetrack.Converters
             m_PathValidator = pathValidator;
         }
 
+        private readonly ISelkieLogger m_Logger;
+        private readonly IPathValidator m_PathValidator;
+        private IEnumerable <IPath> m_Paths = new IPath[0];
+        private IEnumerable <IPath> m_PossiblePaths = new IPath[0];
+        private ISettings m_Settings = Racetrack.Settings.Unknown;
+        private ITurnCirclePair m_TurnCirclePair = Turn.TurnCirclePair.Unknown;
+
         public void Convert()
         {
             m_PossiblePaths = CreatePossiblePaths(m_Settings,
                                                   m_TurnCirclePair);
 
             m_Paths = ValidatePossiblePaths(m_PossiblePaths);
-        }
-
-        [NotNull]
-        private IEnumerable <IPath> ValidatePossiblePaths([NotNull] IEnumerable <IPath> allPossiblePaths)
-        {
-            IPath[] array = allPossiblePaths.ToArray();
-
-            Constants.TurnDirection defaultTurnDirection = m_Settings.DefaultTurnDirection;
-
-            IEnumerable <IPath> valid = array.Where(x => m_PathValidator.IsValid(x,
-                                                                                 defaultTurnDirection));
-
-            return valid.ToList();
         }
 
         [NotNull]
@@ -88,14 +75,27 @@ namespace Selkie.Racetrack.Converters
                 return path;
             }
 
-            if ( path.StartPoint != settings.StartPoint )
+            if ( path.StartPoint == settings.StartPoint )
             {
-                IPath reversed = path.Reverse();
-
-                return reversed;
+                return path;
             }
 
-            return path;
+            IPath reversed = path.Reverse();
+
+            return reversed;
+        }
+
+        [NotNull]
+        private IEnumerable <IPath> ValidatePossiblePaths([NotNull] IEnumerable <IPath> allPossiblePaths)
+        {
+            IPath[] array = allPossiblePaths.ToArray();
+
+            Constants.TurnDirection defaultTurnDirection = m_Settings.DefaultTurnDirection;
+
+            IEnumerable <IPath> valid = array.Where(x => m_PathValidator.IsValid(x,
+                                                                                 defaultTurnDirection));
+
+            return valid.ToList();
         }
 
         #region ITurnCirclePairToPathConverter Members

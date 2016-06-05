@@ -43,33 +43,49 @@
     <Reference Include="Castle.Windsor">
       <HintPath>..\packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
     </Reference>
-    <Reference Include="JetBrains.Annotations, Version=10.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
-      <HintPath>..\packages\JetBrains.Annotations.10.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+    <Reference Include="JetBrains.Annotations, Version=10.1.4.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.10.1.4\lib\net20\JetBrains.Annotations.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.1.0\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NSubstitute, Version=1.8.2.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
-      <HintPath>..\packages\NSubstitute.1.8.2.0\lib\net45\NSubstitute.dll</HintPath>
+    <Reference Include="NSubstitute, Version=1.10.0.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\NSubstitute.1.10.0.0\lib\net45\NSubstitute.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.2.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.2.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Selkie.Common">
-      <HintPath>..\packages\Selkie.Common.0.6.218.0\lib\net45\Selkie.Common.dll</HintPath>
+    <Reference Include="Ploeh.AutoFixture, Version=3.46.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoFixture.3.46.0\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Selkie.Geometry">
-      <HintPath>..\packages\Selkie.Geometry.0.6.128.0\lib\net45\Selkie.Geometry.dll</HintPath>
+    <Reference Include="Ploeh.AutoFixture.AutoNSubstitute, Version=3.46.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoFixture.AutoNSubstitute.3.46.0\lib\net40\Ploeh.AutoFixture.AutoNSubstitute.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Selkie.NUnit.Extensions">
-      <HintPath>..\packages\Selkie.NUnit.Extensions.0.6.111.0\lib\net45\Selkie.NUnit.Extensions.dll</HintPath>
+    <Reference Include="Ploeh.AutoFixture.NUnit3, Version=3.46.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoFixture.NUnit3.3.46.0\lib\net40\Ploeh.AutoFixture.NUnit3.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Selkie.Windsor">
-      <HintPath>..\packages\Selkie.Windsor.0.6.248.0\lib\net45\Selkie.Windsor.dll</HintPath>
+    <Reference Include="Selkie.Common, Version=0.6.249.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selkie.Common.0.6.249\lib\net45\Selkie.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Selkie.Geometry, Version=0.6.165.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selkie.Geometry.0.6.165.0\lib\net45\Selkie.Geometry.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Selkie.NUnit.Extensions, Version=0.6.136.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selkie.NUnit.Extensions.0.6.136\lib\net45\Selkie.NUnit.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Selkie.Windsor, Version=0.6.259.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selkie.Windsor.0.6.259.0\lib\net45\Selkie.Windsor.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -80,36 +96,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Calculators\NUnit\BaseLinesToLinesRacetracksCalculatorTests.cs" />
-    <Compile Include="Calculators\NUnit\BaseRacetrackCalculatorTests.cs" />
-    <Compile Include="Calculators\NUnit\ForwardToForwardCalculatorTests.cs" />
-    <Compile Include="Calculators\NUnit\ForwardToReverseCalculatorTests.cs" />
-    <Compile Include="Calculators\NUnit\LinePairToRacetrackCalculatorTests.cs" />
-    <Compile Include="Calculators\NUnit\LinePointDirectionForHorizontalOrVerticalLineCalculatorTests.cs" />
-    <Compile Include="Calculators\NUnit\PathCalculatorTests.cs" />
-    <Compile Include="Calculators\NUnit\PathSelectorTests.cs" />
-    <Compile Include="Calculators\NUnit\RacetrackLineDirectionCalculatorTests.cs" />
-    <Compile Include="Calculators\NUnit\RacetracksCalculatorTests.cs" />
-    <Compile Include="Calculators\NUnit\ReverseToForwardCalculatorTests.cs" />
-    <Compile Include="Calculators\NUnit\ReverseToReverseCalculatorTests.cs" />
-    <Compile Include="Converter\NUnit\TurnCirclePairsToPathsConverterTests.cs" />
-    <Compile Include="Converter\NUnit\TurnCirclePairToPathConverterTests.cs" />
-    <Compile Include="Converter\NUnit\TurnCirclePairToPathCreatorTests.cs" />
-    <Compile Include="NUnit\PathShortestFinderTests.cs" />
-    <Compile Include="NUnit\PathTests.cs" />
-    <Compile Include="NUnit\PathValidatorTests.cs" />
-    <Compile Include="NUnit\SettingsTests.cs" />
+    <Compile Include="Calculators\BaseFeaturesToFeaturesRacetracksCalculatorTests.cs" />
+    <Compile Include="Calculators\BaseRacetrackCalculatorTests.cs" />
+    <Compile Include="Calculators\ForwardToForwardCalculatorTests.cs" />
+    <Compile Include="Calculators\ForwardToReverseCalculatorTests.cs" />
+    <Compile Include="Calculators\LinePairToRacetrackCalculatorTests.cs" />
+    <Compile Include="Calculators\LinePointDirectionForHorizontalOrVerticalLineCalculatorTests.cs" />
+    <Compile Include="Calculators\PathCalculatorTests.cs" />
+    <Compile Include="Calculators\PathSelectorTests.cs" />
+    <Compile Include="Calculators\RacetrackLineDirectionCalculatorTests.cs" />
+    <Compile Include="Calculators\RacetracksCalculatorTests.cs" />
+    <Compile Include="Calculators\ReverseToForwardCalculatorTests.cs" />
+    <Compile Include="Calculators\ReverseToReverseCalculatorTests.cs" />
+    <Compile Include="Converter\TurnCirclePairsToPathsConverterTests.cs" />
+    <Compile Include="Converter\TurnCirclePairToPathConverterTests.cs" />
+    <Compile Include="Converter\TurnCirclePairToPathCreatorTests.cs" />
+    <Compile Include="PathShortestFinderTests.cs" />
+    <Compile Include="PathTests.cs" />
+    <Compile Include="PathValidatorTests.cs" />
+    <Compile Include="SettingsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Turn\NUnit\PossibleTurnCirclePairsTests.cs" />
-    <Compile Include="Turn\NUnit\PossibleTurnCirclesTests.cs" />
-    <Compile Include="Turn\NUnit\TurnCircleArcSegmentTests.cs" />
-    <Compile Include="Turn\NUnit\TurnCirclePairTests.cs" />
-    <Compile Include="UTurn\NUnit\AngleToCentrePointCalculatorTests.cs" />
-    <Compile Include="UTurn\NUnit\DetermineCirclePairTests.cs" />
-    <Compile Include="UTurn\NUnit\DetermineTurnCircleTests.cs" />
-    <Compile Include="UTurn\NUnit\UTurnCircleCalculatorTests.cs" />
-    <Compile Include="UTurn\NUnit\UTurnCircleTests.cs" />
-    <Compile Include="UTurn\NUnit\UTurnPathTests.cs" />
+    <Compile Include="Turn\PossibleTurnCirclePairsTests.cs" />
+    <Compile Include="Turn\PossibleTurnCirclesTests.cs" />
+    <Compile Include="Turn\TurnCircleArcSegmentTests.cs" />
+    <Compile Include="Turn\TurnCirclePairTests.cs" />
+    <Compile Include="UTurn\AngleToCentrePointCalculatorTests.cs" />
+    <Compile Include="UTurn\DetermineCirclePairTests.cs" />
+    <Compile Include="UTurn\DetermineTurnCircleTests.cs" />
+    <Compile Include="UTurn\UTurnCircleCalculatorTests.cs" />
+    <Compile Include="UTurn\UTurnCircleTests.cs" />
+    <Compile Include="UTurn\UTurnPathTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -13,15 +13,6 @@ namespace Selkie.Racetrack
     [ProjectComponent(Lifestyle.Transient)]
     public class Path : IPath
     {
-        private const int DoNotCareId = -1;
-        public static readonly IPath Unknown = new Path(Point.Unknown);
-
-        private readonly IPolyline m_Polyline = new Polyline(DoNotCareId,
-                                                             Constants.LineDirection.Forward);
-
-        private readonly Point m_StartPoint;
-        private Point m_EndPoint = Point.Unknown;
-
         public Path([NotNull] Point startPoint)
         {
             m_StartPoint = startPoint;
@@ -39,12 +30,21 @@ namespace Selkie.Racetrack
                     [NotNull] IPolylineSegment line,
                     [NotNull] IPolylineSegment endArcSegment)
         {
+            EndPoint = Point.Unknown;
             m_StartPoint = startArcSegment.StartPoint;
 
             AddSegment(startArcSegment);
             AddSegment(line);
             AddSegment(endArcSegment);
         }
+
+        private const int DoNotCareId = -1;
+        public static readonly IPath Unknown = new Path(Point.Unknown);
+
+        private readonly IPolyline m_Polyline = new Polyline(DoNotCareId,
+                                                             Constants.LineDirection.Forward);
+
+        private readonly Point m_StartPoint;
 
         public override string ToString()
         {
@@ -61,17 +61,7 @@ namespace Selkie.Racetrack
             }
         }
 
-        public Point EndPoint
-        {
-            get
-            {
-                return m_EndPoint;
-            }
-            private set
-            {
-                m_EndPoint = value;
-            }
-        }
+        public Point EndPoint { get; private set; }
 
         public void AddSegment(IPolylineSegment polylineSegment)
         {

@@ -9,8 +9,6 @@ namespace Selkie.Racetrack.Calculators
     [ProjectComponent(Lifestyle.Transient)]
     public class PathCalculator : IPathCalculator
     {
-        private readonly IPathSelectorCalculator m_Selector;
-
         public PathCalculator([NotNull] IPathSelectorCalculator selector,
                               [NotNull] IPathShortestFinder pathShortestFinder)
         {
@@ -18,6 +16,8 @@ namespace Selkie.Racetrack.Calculators
             m_Selector = selector;
             PathShortestFinder = pathShortestFinder;
         }
+
+        private readonly IPathSelectorCalculator m_Selector;
 
         public void Calculate()
         {

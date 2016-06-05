@@ -10,9 +10,6 @@ namespace Selkie.Racetrack.Calculators
 {
     public class RacetrackLineDirectionCalculator : IRacetrackLineDirectionCalculator
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly Constants.TurnDirection m_TurnDirection;
-
         public RacetrackLineDirectionCalculator([NotNull] ILine line,
                                                 [NotNull] Point point,
                                                 Constants.TurnDirection defaultTurnDirection)
@@ -27,14 +24,21 @@ namespace Selkie.Racetrack.Calculators
                     m_TurnDirection = direction;
                     break;
 
-                default:
+                case Constants.TurnDirection.Unknown:
                     var calculator = new LinePointDirectionForHorizontalOrVerticalLineCalculator(line,
                                                                                                  point,
                                                                                                  defaultTurnDirection);
                     m_TurnDirection = calculator.TurnDirection;
                     break;
+
+                default:
+                    string message = "Calculated turn direction '{0}' is not known!".Inject(direction);
+                    throw new ArgumentException(message);
             }
         }
+
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private readonly Constants.TurnDirection m_TurnDirection;
 
         #region IRacetrackLineDirectionCalculator Members
 
@@ -48,7 +52,6 @@ namespace Selkie.Racetrack.Calculators
 
         #endregion
 
-        // ReSharper disable once MethodTooLong
         internal Constants.TurnDirection Calculate([NotNull] ILine line,
                                                    [NotNull] Point point)
         {
@@ -74,12 +77,15 @@ namespace Selkie.Racetrack.Calculators
                 case Side.Left:
                     return Constants.TurnDirection.Counterclockwise;
 
-                default:
+                case Side.Unknown:
                     return Constants.TurnDirection.Unknown;
+
+                default:
+                    string message = "Calculated side '{0}' is not known!".Inject(side);
+                    throw new ArgumentException(message);
             }
         }
 
-        // ReSharper disable once TooManyArguments
         internal Side FindSide(double ax,
                                double ay,
                                double bx,
@@ -112,35 +118,37 @@ namespace Selkie.Racetrack.Calculators
             return FindSideDependingOnSlope(ax,
                                             ay,
                                             bx,
-                                            @by,
+                                            by,
                                             cx,
                                             cy);
         }
 
-        // ReSharper disable once TooManyArguments
         internal Side FindSideDependingOnSlope(double ax,
                                                double ay,
                                                double bx,
-                                               double @by,
+                                               double by,
                                                double cx,
                                                double cy)
         {
-            double slope = ( by - ay ) / ( bx - ax );
-            double yIntercept = ay - ax * slope;
-            double cSolution = slope * cx + yIntercept;
-
-            if ( Math.Abs(slope - 0.0) > Constants.EpsilonDistance )
+            if ( Math.Abs(bx - ax) > 0.0 )
             {
-                if ( cy > cSolution )
-                {
-                    return bx > ax
-                               ? Side.Left
-                               : Side.Right;
-                }
+                double slope = ( by - ay ) / ( bx - ax );
+                double yIntercept = ay - ax * slope;
+                double cSolution = slope * cx + yIntercept;
 
-                return bx > ax
-                           ? Side.Right
-                           : Side.Left;
+                if ( Math.Abs(slope - 0.0) > Constants.EpsilonDistance )
+                {
+                    if ( cy > cSolution )
+                    {
+                        return bx > ax
+                                   ? Side.Left
+                                   : Side.Right;
+                    }
+
+                    return bx > ax
+                               ? Side.Right
+                               : Side.Left;
+                }
             }
 
             string message = "Could not determine Side! Parameters: ax:{0} ay:{1} bx:{2} by:{3} cx:{4} cy:{5}".Inject(

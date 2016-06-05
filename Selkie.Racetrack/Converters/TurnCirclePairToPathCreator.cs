@@ -12,9 +12,6 @@ namespace Selkie.Racetrack.Converters
 {
     public class TurnCirclePairToPathCreator : ITurnCirclePairToPathCreator
     {
-        private readonly ISelkieLogger m_Logger;
-        private readonly IPath m_Path;
-
         public TurnCirclePairToPathCreator([NotNull] ISelkieLogger logger,
                                            [NotNull] ISettings settings,
                                            [NotNull] ITurnCirclePair turnCirclePair,
@@ -25,6 +22,9 @@ namespace Selkie.Racetrack.Converters
                                 turnCirclePair,
                                 tangent);
         }
+
+        private readonly ISelkieLogger m_Logger;
+        private readonly IPath m_Path;
 
         #region ITurnCirclePairToPathCreator Members
 

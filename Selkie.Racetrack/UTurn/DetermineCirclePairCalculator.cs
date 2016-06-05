@@ -8,19 +8,20 @@ using Selkie.Racetrack.Interfaces;
 using Selkie.Racetrack.Interfaces.Turn;
 using Selkie.Racetrack.Interfaces.UTurn;
 using Selkie.Racetrack.Turn;
+using Selkie.Windsor.Extensions;
 
 namespace Selkie.Racetrack.UTurn
 {
     public class DetermineCirclePairCalculator : IDetermineCirclePairCalculator
     {
-        private readonly IPossibleTurnCircles m_PossibleTurnCircles;
-        private ITurnCirclePair m_Pair = TurnCirclePair.Unknown;
-        private ISettings m_Settings = Racetrack.Settings.Unknown;
-
         public DetermineCirclePairCalculator([NotNull] IPossibleTurnCircles possibleTurnCircles)
         {
             m_PossibleTurnCircles = possibleTurnCircles;
         }
+
+        private readonly IPossibleTurnCircles m_PossibleTurnCircles;
+        private ITurnCirclePair m_Pair = TurnCirclePair.Unknown;
+        private ISettings m_Settings = Racetrack.Settings.Unknown;
 
         public void Calculate()
         {
@@ -57,9 +58,13 @@ namespace Selkie.Racetrack.UTurn
                                               possibleTurnCircles.StartTurnCirclePort,
                                               possibleTurnCircles.FinishTurnCirclePort);
 
-                default:
+                case Constants.TurnDirection.Unknown:
                     return CalculatePair(settings,
                                          possibleTurnCircles);
+
+                default:
+                    string message = "Calculated turn direction '{0}' is not known!".Inject(calculator.TurnDirection);
+                    throw new ArgumentException(message);
             }
         }
 

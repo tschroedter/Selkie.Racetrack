@@ -22,7 +22,7 @@ namespace Selkie.Racetrack
             container.Register(
                                Classes.FromThisAssembly()
                                       .BasedOn <ICalculator>()
-                                      .WithServiceFromInterface(typeof ( ICalculator ))
+                                      .WithServiceFromInterface(typeof( ICalculator ))
                                       .Configure(c => c.LifeStyle.Is(LifestyleType.Transient)));
             // ReSharper restore MaximumChainedReferences
 
@@ -30,7 +30,7 @@ namespace Selkie.Racetrack
             container.Register(
                                Classes.FromThisAssembly()
                                       .BasedOn <IConverter>()
-                                      .WithServiceFromInterface(typeof ( IConverter ))
+                                      .WithServiceFromInterface(typeof( IConverter ))
                                       .Configure(c => c.LifeStyle.Is(LifestyleType.Transient)));
             // ReSharper restore MaximumChainedReferences        
         }

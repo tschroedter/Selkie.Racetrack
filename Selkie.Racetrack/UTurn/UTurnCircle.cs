@@ -12,10 +12,6 @@ namespace Selkie.Racetrack.UTurn
     [ProjectComponent(Lifestyle.Transient)]
     public class UTurnCircle : IUTurnCircle
     {
-        public static IUTurnCircle Unknown = new UTurnCircle(true);
-        private readonly IPossibleTurnCircles m_PossibleTurnCircles;
-        private readonly IUTurnCircleCalculator m_UTurnCircleCalculator;
-
         private UTurnCircle(bool isUnknown = false)
         {
             Settings = Racetrack.Settings.Unknown;
@@ -29,6 +25,10 @@ namespace Selkie.Racetrack.UTurn
             m_PossibleTurnCircles = possibleTurnCircles;
             m_UTurnCircleCalculator = uTurnCircleCalculator;
         }
+
+        public static readonly IUTurnCircle Unknown = new UTurnCircle(true);
+        private readonly IPossibleTurnCircles m_PossibleTurnCircles;
+        private readonly IUTurnCircleCalculator m_UTurnCircleCalculator;
 
         public bool IsUnknown { get; private set; }
 
@@ -45,6 +45,16 @@ namespace Selkie.Racetrack.UTurn
             }
 
             CalculatePossibleUTurnCircle();
+        }
+
+        internal bool DetermineIsUTurnRequired([NotNull] IPossibleTurnCircles possibleTurnCircles)
+        {
+            ICircle startPointPort = possibleTurnCircles.StartTurnCirclePort.Circle;
+            ICircle startPointStarboard = possibleTurnCircles.StartTurnCircleStarboard.Circle;
+            ICircle finishPointPort = possibleTurnCircles.FinishTurnCirclePort.Circle;
+            ICircle finishPointStarboard = possibleTurnCircles.FinishTurnCircleStarboard.Circle;
+
+            return startPointPort.Intersects(finishPointStarboard) && startPointStarboard.Intersects(finishPointPort);
         }
 
         private void CalculatePossibleUTurnCircle()
@@ -69,16 +79,6 @@ namespace Selkie.Racetrack.UTurn
         private bool IsSameStartFinishAzimuth()
         {
             return Math.Abs(Settings.StartAzimuth.Radians - Settings.FinishAzimuth.Radians) < Constants.EpsilonDistance;
-        }
-
-        internal bool DetermineIsUTurnRequired([NotNull] IPossibleTurnCircles possibleTurnCircles)
-        {
-            ICircle startPointPort = possibleTurnCircles.StartTurnCirclePort.Circle;
-            ICircle startPointStarboard = possibleTurnCircles.StartTurnCircleStarboard.Circle;
-            ICircle finishPointPort = possibleTurnCircles.FinishTurnCirclePort.Circle;
-            ICircle finishPointStarboard = possibleTurnCircles.FinishTurnCircleStarboard.Circle;
-
-            return startPointPort.Intersects(finishPointStarboard) && startPointStarboard.Intersects(finishPointPort);
         }
 
         #region IUTurnCircle Members

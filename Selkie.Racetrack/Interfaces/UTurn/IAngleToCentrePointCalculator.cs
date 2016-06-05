@@ -31,9 +31,9 @@ namespace Selkie.Racetrack.Interfaces.UTurn
         [NotNull]
         ITurnCirclePair Pair { get; set; }
 
+        void Calculate();
+
         [NotNull]
         Point IntersectionPointForTurnCircle([NotNull] ITurnCircle turnCircle);
-
-        void Calculate();
     }
 }

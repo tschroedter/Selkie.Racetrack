@@ -13,19 +13,6 @@ namespace Selkie.Racetrack
         : ISettings,
           IEquatable <Settings>
     {
-        public static readonly Settings Unknown = new Settings();
-        private readonly Angle m_FinishAzimuth;
-        private readonly Point m_FinishPoint;
-        private readonly bool m_IsPortTurnAllowed;
-        private readonly bool m_IsStarboardTurnAllowed;
-
-        private readonly bool m_IsUnknown;
-        private readonly Distance m_LargestRadiusForTurn;
-        private readonly Distance m_RadiusForPortTurn;
-        private readonly Distance m_RadiusForStarboardTurn;
-        private readonly Angle m_StartAzimuth;
-        private readonly Point m_StartPoint;
-
         private Settings()
         {
             m_StartPoint = Point.Unknown;
@@ -63,6 +50,19 @@ namespace Selkie.Racetrack
                                          : RadiusForStarboardTurn;
         }
 
+        public static readonly Settings Unknown = new Settings();
+        private readonly Angle m_FinishAzimuth;
+        private readonly Point m_FinishPoint;
+        private readonly bool m_IsPortTurnAllowed;
+        private readonly bool m_IsStarboardTurnAllowed;
+
+        private readonly bool m_IsUnknown;
+        private readonly Distance m_LargestRadiusForTurn;
+        private readonly Distance m_RadiusForPortTurn;
+        private readonly Distance m_RadiusForStarboardTurn;
+        private readonly Angle m_StartAzimuth;
+        private readonly Point m_StartPoint;
+
         #region IEquatable<Settings> Members
 
         // ReSharper disable once CodeAnnotationAnalyzer
@@ -95,6 +95,20 @@ namespace Selkie.Racetrack
 
         #endregion
 
+        public static bool operator ==(Settings left,
+                                       Settings right)
+        {
+            return Equals(left,
+                          right);
+        }
+
+        public static bool operator !=(Settings left,
+                                       Settings right)
+        {
+            return !Equals(left,
+                           right);
+        }
+
         // ReSharper disable once CodeAnnotationAnalyzer
         public override bool Equals(object obj)
         {
@@ -108,11 +122,7 @@ namespace Selkie.Racetrack
             {
                 return true;
             }
-            if ( obj.GetType() != typeof ( Settings ) )
-            {
-                return false;
-            }
-            return Equals(( Settings ) obj);
+            return obj.GetType() == typeof( Settings ) && Equals(( Settings ) obj);
         }
 
         public override int GetHashCode()
@@ -129,20 +139,6 @@ namespace Selkie.Racetrack
 
                 return result;
             }
-        }
-
-        public static bool operator ==(Settings left,
-                                       Settings right)
-        {
-            return Equals(left,
-                          right);
-        }
-
-        public static bool operator !=(Settings left,
-                                       Settings right)
-        {
-            return !Equals(left,
-                           right);
         }
 
         #region ISettings Members

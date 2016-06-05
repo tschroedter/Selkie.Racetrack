@@ -35,15 +35,15 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Calculators\BaseLinesToLinesRacetracksCalculator.cs" />
+    <Compile Include="Calculators\BaseFeaturesToFeaturesRacetracksCalculator.cs" />
     <Compile Include="Calculators\BaseRacetrackCalculator.cs" />
     <Compile Include="Calculators\ForwardToForwardCalculator.cs" />
     <Compile Include="Calculators\ForwardToReverseCalculator.cs" />
-    <Compile Include="Calculators\LinePairToRacetrackCalculator.cs" />
-    <Compile Include="Calculators\LinesToLinesForwardToForwardRacetrackCalculator.cs" />
-    <Compile Include="Calculators\LinesToLinesForwardToReverseRacetrackCalculator.cs" />
-    <Compile Include="Calculators\LinesToLinesReverseToForwardRacetrackCalculator.cs" />
-    <Compile Include="Calculators\LinesToLinesReverseToReverseRacetrackCalculator.cs" />
+    <Compile Include="Calculators\FeaturePairToRacetrackCalculator.cs" />
+    <Compile Include="Calculators\FeaturesToFeaturesForwardToForwardRacetrackCalculator.cs" />
+    <Compile Include="Calculators\FeaturesToFeaturesForwardToReverseRacetrackCalculator.cs" />
+    <Compile Include="Calculators\FeaturesToFeaturesReverseToForwardRacetrackCalculator.cs" />
+    <Compile Include="Calculators\FeaturesToFeaturesReverseToReverseRacetrackCalculator.cs" />
     <Compile Include="Calculators\PathCalculator.cs" />
     <Compile Include="Calculators\PathSelectorCalculator.cs" />
     <Compile Include="Calculators\RacetracksCalculator.cs" />
@@ -52,18 +52,18 @@
     <Compile Include="Converters\TurnCirclePairToPathCreator.cs" />
     <Compile Include="Installer.cs" />
     <Compile Include="Calculators\LinePointDirectionForHorizontalOrVerticalLineCalculator.cs" />
-    <Compile Include="Interfaces\Calculators\IBaseLinesToLinesRacetracksCalculator.cs" />
+    <Compile Include="Interfaces\Calculators\IBaseFeaturesToFeaturesRacetracksCalculator.cs" />
     <Compile Include="Interfaces\Calculators\IBaseRacetrackCalculator.cs" />
     <Compile Include="Interfaces\Calculators\ICalculator.cs" />
     <Compile Include="Interfaces\Calculators\ICalculatorFactory.cs" />
     <Compile Include="Interfaces\Calculators\IForwardToForwardCalculator.cs" />
     <Compile Include="Interfaces\Calculators\IForwardToReverseCalculator.cs" />
-    <Compile Include="Interfaces\Calculators\ILinePairToRacetrackCalculator.cs" />
+    <Compile Include="Interfaces\Calculators\IFeaturePairToRacetrackCalculator.cs" />
     <Compile Include="Interfaces\Calculators\ILinePointDirectionCalculator.cs" />
-    <Compile Include="Interfaces\Calculators\ILinesToLinesForwardToForwardRacetrackCalculator.cs" />
-    <Compile Include="Interfaces\Calculators\ILinesToLinesForwardToReverseRacetrackCalculator.cs" />
-    <Compile Include="Interfaces\Calculators\ILinesToLinesReverseToForwardRacetrackCalculator.cs" />
-    <Compile Include="Interfaces\Calculators\ILinesToLinesReverseToReverseRacetrackCalculator.cs" />
+    <Compile Include="Interfaces\Calculators\IFeaturesToFeaturesForwardToForwardRacetrackCalculator.cs" />
+    <Compile Include="Interfaces\Calculators\IFeaturesToFeaturesForwardToReverseRacetrackCalculator.cs" />
+    <Compile Include="Interfaces\Calculators\IFeaturesToFeaturesReverseToForwardRacetrackCalculator.cs" />
+    <Compile Include="Interfaces\Calculators\IFeaturesToFeaturesReverseToReverseRacetrackCalculator.cs" />
     <Compile Include="Interfaces\Calculators\IPathCalculator.cs" />
     <Compile Include="Interfaces\Calculators\IPathSelectorCalculator.cs" />
     <Compile Include="Interfaces\Calculators\IRacetrackLineDirectionCalculator.cs" />
@@ -126,22 +126,25 @@
     <Reference Include="Castle.Windsor">
       <HintPath>..\packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
     </Reference>
-    <Reference Include="JetBrains.Annotations, Version=10.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
-      <HintPath>..\packages\JetBrains.Annotations.10.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
+    <Reference Include="JetBrains.Annotations, Version=10.1.4.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.10.1.4\lib\net20\JetBrains.Annotations.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.1.0\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Selkie.Common">
-      <HintPath>..\packages\Selkie.Common.0.6.218.0\lib\net45\Selkie.Common.dll</HintPath>
+    <Reference Include="Selkie.Common, Version=0.6.249.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selkie.Common.0.6.249\lib\net45\Selkie.Common.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Selkie.Geometry">
-      <HintPath>..\packages\Selkie.Geometry.0.6.128.0\lib\net45\Selkie.Geometry.dll</HintPath>
+    <Reference Include="Selkie.Geometry, Version=0.6.165.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selkie.Geometry.0.6.165.0\lib\net45\Selkie.Geometry.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Selkie.Windsor">
-      <HintPath>..\packages\Selkie.Windsor.0.6.248.0\lib\net45\Selkie.Windsor.dll</HintPath>
+    <Reference Include="Selkie.Windsor, Version=0.6.259.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selkie.Windsor.0.6.259.0\lib\net45\Selkie.Windsor.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />

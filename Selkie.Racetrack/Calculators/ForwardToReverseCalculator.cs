@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 using Selkie.Geometry.Primitives;
-using Selkie.Geometry.Shapes;
+using Selkie.Geometry.Surveying;
 using Selkie.Racetrack.Interfaces.Calculators;
 
 namespace Selkie.Racetrack.Calculators
@@ -9,20 +9,20 @@ namespace Selkie.Racetrack.Calculators
         : BaseRacetrackCalculator,
           IForwardToReverseCalculator
     {
-        public ForwardToReverseCalculator([NotNull] ILinePairToRacetrackCalculator calculator)
+        public ForwardToReverseCalculator([NotNull] IFeaturePairToRacetrackCalculator calculator)
             : base(calculator)
         {
         }
 
-        internal override ILinePairToRacetrackCalculator GetCalculator(ILine fromLine,
-                                                                       ILine toLine,
-                                                                       Distance radiusForPortTurn,
-                                                                       Distance radiusForStarboardTurn)
+        internal override IFeaturePairToRacetrackCalculator GetCalculator(ISurveyFeature fromFeature,
+                                                                          ISurveyFeature toFeature,
+                                                                          Distance radiusForPortTurn,
+                                                                          Distance radiusForStarboardTurn)
         {
-            var reverseToLine = toLine.Reverse() as ILine;
+            ISurveyFeature reverseToFeature = toFeature.Reverse();
 
-            Calculator.FromLine = fromLine;
-            Calculator.ToLine = reverseToLine ?? toLine;
+            Calculator.FromFeature = fromFeature;
+            Calculator.ToFeature = reverseToFeature ?? toFeature;
             Calculator.RadiusForPortTurn = radiusForPortTurn;
             Calculator.RadiusForStarboardTurn = radiusForStarboardTurn;
             Calculator.IsPortTurnAllowed = IsPortTurnAllowed;

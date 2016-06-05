@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Selkie.Geometry.Primitives;
-using Selkie.Geometry.Shapes;
+using Selkie.Geometry.Surveying;
 
 namespace Selkie.Racetrack.Interfaces.Calculators
 {
@@ -10,7 +10,7 @@ namespace Selkie.Racetrack.Interfaces.Calculators
           ICalculator
     {
         [NotNull]
-        IEnumerable <ILine> Lines { get; set; }
+        IEnumerable <ISurveyFeature> Features { get; set; }
 
         [NotNull]
         Distance TurnRadiusForPort { get; set; }

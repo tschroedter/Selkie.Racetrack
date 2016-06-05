@@ -15,8 +15,6 @@ namespace Selkie.Racetrack.UTurn
     [ProjectComponent(Lifestyle.Transient)]
     public class AngleToCentrePointCalculator : IAngleToCentrePointCalculator
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-
         public AngleToCentrePointCalculator()
         {
             CentrePoint = Point.Unknown;
@@ -28,6 +26,8 @@ namespace Selkie.Racetrack.UTurn
             AngleForRightTurnCircle = Angle.Unknown;
             Pair = TurnCirclePair.Unknown;
         }
+
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public ITurnCirclePair Pair { get; set; }
 
@@ -60,22 +60,54 @@ namespace Selkie.Racetrack.UTurn
             RightIntersectionPoint = circleRight.PointOnCircle(AngleForRightTurnCircle);
         }
 
-        private void ValidatePair()
+        [NotNull]
+        internal Angle CalculateAngleRelativeToCentreLine([NotNull] Point zeroCentrePoint,
+                                                          [NotNull] Point oneCentrePoint,
+                                                          double radius)
         {
-            if ( !IsValid(Pair) )
-            {
-                string message = "TurnCirclePair is not valid! Pair.Zero: {0} Pair.One: {1}".Inject(Pair.Zero,
-                                                                                                    Pair.One);
+            double distance = zeroCentrePoint.DistanceTo(oneCentrePoint);
 
-                Logger.Error(message);
+            double a = distance / 2.0;
+            double c = radius;
+            double radians = Math.Acos(a / c);
 
-                throw new ArgumentException(message);
-            }
+            return Angle.FromRadians(radians);
         }
 
-        internal bool IsValid([NotNull] ITurnCirclePair pair)
+        [NotNull]
+        internal Angle CalculateRadiansRelativeToXAxisForLeftTurnCircle([NotNull] Point zeroCentrePoint,
+                                                                        [NotNull] Point oneCentrePoint,
+                                                                        double radius)
         {
-            return pair.Zero.Side == pair.One.Side;
+            Angle relativeToCentreLine = CalculateAngleRelativeToCentreLine(zeroCentrePoint,
+                                                                            oneCentrePoint,
+                                                                            radius);
+
+            Angle centreLineRadians = CalculateCentreLineRadians(zeroCentrePoint,
+                                                                 oneCentrePoint,
+                                                                 radius);
+
+            Angle relativeToXAxis = centreLineRadians + relativeToCentreLine;
+
+            return relativeToXAxis;
+        }
+
+        [NotNull]
+        internal Angle CalculateRadiansRelativeToXAxisForRightTurnCircle([NotNull] Point zeroCentrePoint,
+                                                                         [NotNull] Point oneCentrePoint,
+                                                                         double radius)
+        {
+            Angle relativeToCentreLine = CalculateAngleRelativeToCentreLine(zeroCentrePoint,
+                                                                            oneCentrePoint,
+                                                                            radius);
+
+            Angle centreLineRadians = CalculateCentreLineRadians(zeroCentrePoint,
+                                                                 oneCentrePoint,
+                                                                 radius);
+
+            Angle relativeToXAxis = centreLineRadians - relativeToCentreLine;
+
+            return relativeToXAxis;
         }
 
         [NotNull]
@@ -103,42 +135,9 @@ namespace Selkie.Racetrack.UTurn
             throw new ArgumentException(message);
         }
 
-        private static bool IsOneStarboardAndStart([NotNull] ITurnCircle one)
+        internal bool IsValid([NotNull] ITurnCirclePair pair)
         {
-            return one.Side == Constants.CircleSide.Starboard && one.Origin == Constants.CircleOrigin.Start;
-        }
-
-        private static bool IsOnePortAndStart([NotNull] ITurnCircle one)
-        {
-            return one.Side == Constants.CircleSide.Port && one.Origin == Constants.CircleOrigin.Start;
-        }
-
-        private static bool IsZeroStarboardAndStart([NotNull] ITurnCircle zero)
-        {
-            return zero.Side == Constants.CircleSide.Starboard && zero.Origin == Constants.CircleOrigin.Start;
-        }
-
-        private static bool IsZeroPortAndStart([NotNull] ITurnCircle zero)
-        {
-            return zero.Side == Constants.CircleSide.Port && zero.Origin == Constants.CircleOrigin.Start;
-        }
-
-        [NotNull]
-        internal Angle CalculateRadiansRelativeToXAxisForLeftTurnCircle([NotNull] Point zeroCentrePoint,
-                                                                        [NotNull] Point oneCentrePoint,
-                                                                        double radius)
-        {
-            Angle relativeToCentreLine = CalculateAngleRelativeToCentreLine(zeroCentrePoint,
-                                                                            oneCentrePoint,
-                                                                            radius);
-
-            Angle centreLineRadians = CalculateCentreLineRadians(zeroCentrePoint,
-                                                                 oneCentrePoint,
-                                                                 radius);
-
-            Angle relativeToXAxis = centreLineRadians + relativeToCentreLine;
-
-            return relativeToXAxis;
+            return pair.Zero.Side == pair.One.Side;
         }
 
         [NotNull]
@@ -153,36 +152,24 @@ namespace Selkie.Racetrack.UTurn
             return centreLineRadians;
         }
 
-        [NotNull]
-        internal Angle CalculateRadiansRelativeToXAxisForRightTurnCircle([NotNull] Point zeroCentrePoint,
-                                                                         [NotNull] Point oneCentrePoint,
-                                                                         double radius)
+        private static bool IsOnePortAndStart([NotNull] ITurnCircle one)
         {
-            Angle relativeToCentreLine = CalculateAngleRelativeToCentreLine(zeroCentrePoint,
-                                                                            oneCentrePoint,
-                                                                            radius);
-
-            Angle centreLineRadians = CalculateCentreLineRadians(zeroCentrePoint,
-                                                                 oneCentrePoint,
-                                                                 radius);
-
-            Angle relativeToXAxis = centreLineRadians - relativeToCentreLine;
-
-            return relativeToXAxis;
+            return one.Side == Constants.CircleSide.Port && one.Origin == Constants.CircleOrigin.Start;
         }
 
-        [NotNull]
-        internal Angle CalculateAngleRelativeToCentreLine([NotNull] Point zeroCentrePoint,
-                                                          [NotNull] Point oneCentrePoint,
-                                                          double radius)
+        private static bool IsOneStarboardAndStart([NotNull] ITurnCircle one)
         {
-            double distance = zeroCentrePoint.DistanceTo(oneCentrePoint);
+            return one.Side == Constants.CircleSide.Starboard && one.Origin == Constants.CircleOrigin.Start;
+        }
 
-            double a = distance / 2.0;
-            double c = radius;
-            double radians = Math.Acos(a / c);
+        private static bool IsZeroPortAndStart([NotNull] ITurnCircle zero)
+        {
+            return zero.Side == Constants.CircleSide.Port && zero.Origin == Constants.CircleOrigin.Start;
+        }
 
-            return Angle.FromRadians(radians);
+        private static bool IsZeroStarboardAndStart([NotNull] ITurnCircle zero)
+        {
+            return zero.Side == Constants.CircleSide.Starboard && zero.Origin == Constants.CircleOrigin.Start;
         }
 
         [NotNull]
@@ -213,6 +200,21 @@ namespace Selkie.Racetrack.UTurn
             Point point = unitCircle.PointOnCircle(angle);
 
             return point;
+        }
+
+        private void ValidatePair()
+        {
+            if ( IsValid(Pair) )
+            {
+                return;
+            }
+
+            string message = "TurnCirclePair is not valid! Pair.Zero: {0} Pair.One: {1}".Inject(Pair.Zero,
+                                                                                                Pair.One);
+
+            Logger.Error(message);
+
+            throw new ArgumentException(message);
         }
 
         #region IAngleToCentrePointCalculator Members

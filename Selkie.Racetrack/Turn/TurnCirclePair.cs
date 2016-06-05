@@ -12,15 +12,6 @@ namespace Selkie.Racetrack.Turn
     [ProjectComponent(Lifestyle.Transient)]
     public class TurnCirclePair : ITurnCirclePair
     {
-        public static readonly ITurnCirclePair Unknown = new TurnCirclePair(true);
-        private readonly ICirclePairTangentLinesCalculator m_Calculator;
-        private readonly ICirclePair m_CirclePair = Geometry.Shapes.CirclePair.Unknown;
-        private readonly bool m_IsUnknown;
-        private readonly bool m_IsValid;
-        private readonly ITurnCircle m_One = TurnCircle.Unknown;
-        private readonly IEnumerable <ILine> m_ValidTangents = new ILine[0];
-        private readonly ITurnCircle m_Zero = TurnCircle.Unknown;
-
         private TurnCirclePair(bool isUnknown)
         {
             m_IsUnknown = isUnknown;
@@ -64,6 +55,15 @@ namespace Selkie.Racetrack.Turn
             }
         }
 
+        public static readonly ITurnCirclePair Unknown = new TurnCirclePair(true);
+        private readonly ICirclePairTangentLinesCalculator m_Calculator;
+        private readonly ICirclePair m_CirclePair = Geometry.Shapes.CirclePair.Unknown;
+        private readonly bool m_IsUnknown;
+        private readonly bool m_IsValid;
+        private readonly ITurnCircle m_One = TurnCircle.Unknown;
+        private readonly IEnumerable <ILine> m_ValidTangents = new ILine[0];
+        private readonly ITurnCircle m_Zero = TurnCircle.Unknown;
+
         public bool IsUnknown
         {
             get
@@ -88,17 +88,6 @@ namespace Selkie.Racetrack.Turn
             return lines;
         }
 
-        [NotNull]
-        internal IEnumerable <ILine> SelectTangents([NotNull] ICirclePairTangentLinesCalculator calculator)
-        {
-            var lines = new List <ILine>();
-
-            lines.AddRange(calculator.OuterTangents);
-            lines.AddRange(calculator.InnerTangents);
-
-            return lines;
-        }
-
         internal bool DetermineIsValid([NotNull] ITurnCircle one,
                                        [NotNull] ITurnCircle two)
         {
@@ -111,6 +100,17 @@ namespace Selkie.Racetrack.Turn
             double distance = one.Circle.Distance(two.Circle);
 
             return distance >= radius;
+        }
+
+        [NotNull]
+        internal IEnumerable <ILine> SelectTangents([NotNull] ICirclePairTangentLinesCalculator calculator)
+        {
+            var lines = new List <ILine>();
+
+            lines.AddRange(calculator.OuterTangents);
+            lines.AddRange(calculator.InnerTangents);
+
+            return lines;
         }
 
         #region ITurnCirclePair Members

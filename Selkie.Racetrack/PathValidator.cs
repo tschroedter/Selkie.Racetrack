@@ -11,12 +11,12 @@ namespace Selkie.Racetrack
     [ProjectComponent(Lifestyle.Transient)]
     public class PathValidator : IPathValidator
     {
-        private readonly ISelkieLogger m_Logger;
-
         public PathValidator([NotNull] ISelkieLogger logger)
         {
             m_Logger = logger;
         }
+
+        private readonly ISelkieLogger m_Logger;
 
         #region IPathValidator Members
 
@@ -60,6 +60,7 @@ namespace Selkie.Racetrack
                 return false;
             }
 
+            // ReSharper disable once ConvertIfStatementToReturnStatement
             if ( !IsValidArcSegment(middleSegment,
                                     endSegment,
                                     defaultTurnDirection) )
