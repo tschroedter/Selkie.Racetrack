@@ -186,3 +186,4 @@ FakesAssemblies/
 *.bak
 Selkie.Racetrack.sln.DotSettings
 NuGet.Selkie.Racetrack/lib/
+/.vs/Selkie.Racetrack/v15/Server/sqlite3
