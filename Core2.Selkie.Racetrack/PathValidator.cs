@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Shapes;
+using Core2.Selkie.Racetrack.Calculators;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Windsor;
 using Core2.Selkie.Windsor.Interfaces;
