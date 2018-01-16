@@ -1,6 +1,6 @@
-﻿using JetBrains.Annotations;
-using Core2.Selkie.Geometry.Primitives;
-using Core2.Selkie.Geometry.Surveying;
+﻿using Core2.Selkie.Geometry.Primitives;
+using Core2.Selkie.Geometry.Shapes;
+using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.Interfaces.Calculators
 {
@@ -10,17 +10,17 @@ namespace Core2.Selkie.Racetrack.Interfaces.Calculators
         IPath[] Paths { get; }
 
         [NotNull]
-        ISurveyFeature FromFeature { get; set; }
+        ILine FromLine { get; set; }
 
         [NotNull]
-        ISurveyFeature[] ToFeatures { get; set; }
+        ILine[] ToLines { get; set; }
 
         bool IsPortTurnAllowed { get; set; }
 
         bool IsStarboardTurnAllowed { get; set; }
 
         [NotNull]
-        IFeaturePairToRacetrackCalculator Calculator { get; }
+        ILinePairToRacetrackCalculator Calculator { get; }
 
         [NotNull]
         Distance TurnRadiusForPort { get; set; }

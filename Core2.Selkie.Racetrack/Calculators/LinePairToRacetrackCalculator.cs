@@ -2,6 +2,7 @@
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Interfaces;
+using Core2.Selkie.Racetrack.Interfaces.Calculators;
 using Core2.Selkie.Windsor;
 using SelkieRacetrack = Core2.Selkie.Racetrack;
 

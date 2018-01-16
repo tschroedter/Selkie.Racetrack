@@ -5,6 +5,7 @@ using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
+using Core2.Selkie.Racetrack.Interfaces.UTurn;
 using Core2.Selkie.Racetrack.Turn;
 using Core2.Selkie.Windsor;
 

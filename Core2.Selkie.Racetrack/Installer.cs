@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Castle.Core;
 using Castle.Facilities.TypedFactory;
 using Castle.MicroKernel.Registration;
@@ -9,6 +10,8 @@ using Core2.Selkie.Common;
 using Core2.Selkie.Geometry.ThreeD.Interfaces.Converters;
 using Core2.Selkie.Racetrack.Interfaces.Calculators;
 using ICalculator = Core2.Selkie.Geometry.Calculators.ICalculator;
+
+[assembly: InternalsVisibleTo("Core2.Selkie.Racetrack.Tests")]
 
 namespace Core2.Selkie.Racetrack
 {

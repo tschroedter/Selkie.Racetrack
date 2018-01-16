@@ -14,6 +14,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Selkie.Racetrack.Tests", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core2.Selkie.Racetrack", "Core2.Selkie.Racetrack\Core2.Selkie.Racetrack.csproj", "{9F206BDF-71D2-427D-9D6D-8335FAD78E15}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9A390016-A5A6-4F08-A412-64FE62B0C983}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core2.Selkie.Racetrack.Tests", "Core2.Selkie.Racetrack.Tests\Core2.Selkie.Racetrack.Tests.csproj", "{ADBAB891-0586-459C-BACB-8C7554539DB7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,9 +40,16 @@ Global
 		{9F206BDF-71D2-427D-9D6D-8335FAD78E15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F206BDF-71D2-427D-9D6D-8335FAD78E15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F206BDF-71D2-427D-9D6D-8335FAD78E15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADBAB891-0586-459C-BACB-8C7554539DB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADBAB891-0586-459C-BACB-8C7554539DB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADBAB891-0586-459C-BACB-8C7554539DB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADBAB891-0586-459C-BACB-8C7554539DB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ADBAB891-0586-459C-BACB-8C7554539DB7} = {9A390016-A5A6-4F08-A412-64FE62B0C983}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AFDA4E6B-E568-4A85-8755-6582602722F9}
