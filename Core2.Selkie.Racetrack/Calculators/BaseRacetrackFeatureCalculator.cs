@@ -20,7 +20,7 @@ namespace Core2.Selkie.Racetrack.Calculators
             Calculator = calculator;
         }
 
-        public IFeaturePairToRacetrackCalculator Calculator { get; private set; }
+        public IFeaturePairToRacetrackCalculator Calculator { get; }
 
         public bool IsPortTurnAllowed { get; set; }
 
@@ -52,12 +52,12 @@ namespace Core2.Selkie.Racetrack.Calculators
         {
             var racetracks = new IPath[ToFeatures.Length];
 
-            for (var i = 0; i < ToFeatures.Length; i++)
+            for ( var i = 0 ; i < ToFeatures.Length ; i++ )
             {
-                ISurveyFeature toFeature = ToFeatures[i];
+                ISurveyFeature toFeature = ToFeatures [ i ];
                 IPath racetrack;
 
-                if (FromFeature.Equals(toFeature))
+                if ( FromFeature.Equals(toFeature) )
                 {
                     racetrack = Path.Unknown;
                 }
@@ -71,7 +71,7 @@ namespace Core2.Selkie.Racetrack.Calculators
                     racetrack = featurePairToRacetrackCalculator.Racetrack;
                 }
 
-                racetracks[i] = racetrack;
+                racetracks [ i ] = racetrack;
             }
 
             return racetracks;

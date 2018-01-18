@@ -1,11 +1,11 @@
 ﻿using System;
-using JetBrains.Annotations;
 using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
 using Core2.Selkie.Racetrack.Interfaces.UTurn;
 using Core2.Selkie.Windsor;
+using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.UTurn
 {
@@ -30,7 +30,7 @@ namespace Core2.Selkie.Racetrack.UTurn
         private readonly IPossibleTurnCircles m_PossibleTurnCircles;
         private readonly IUTurnCircleCalculator m_UTurnCircleCalculator;
 
-        public bool IsUnknown { get; private set; }
+        public bool IsUnknown { get; }
 
         public ISettings Settings { get; set; }
 
@@ -83,73 +83,25 @@ namespace Core2.Selkie.Racetrack.UTurn
 
         #region IUTurnCircle Members
 
-        public Point UTurnZeroIntersectionPoint
-        {
-            get
-            {
-                return m_UTurnCircleCalculator.UTurnZeroIntersectionPoint;
-            }
-        }
+        public Point UTurnZeroIntersectionPoint => m_UTurnCircleCalculator.UTurnZeroIntersectionPoint;
 
-        public Point UTurnOneIntersectionPoint
-        {
-            get
-            {
-                return m_UTurnCircleCalculator.UTurnOneIntersectionPoint;
-            }
-        }
+        public Point UTurnOneIntersectionPoint => m_UTurnCircleCalculator.UTurnOneIntersectionPoint;
 
-        public Point CentrePoint
-        {
-            get
-            {
-                return m_UTurnCircleCalculator.Circle.CentrePoint;
-            }
-        }
+        public Point CentrePoint => m_UTurnCircleCalculator.Circle.CentrePoint;
 
-        public ICircle Circle
-        {
-            get
-            {
-                return m_UTurnCircleCalculator.Circle;
-            }
-        }
+        public ICircle Circle => m_UTurnCircleCalculator.Circle;
 
-        public Constants.TurnDirection TurnDirection
-        {
-            get
-            {
-                return m_UTurnCircleCalculator.TurnDirection;
-            }
-        }
+        public Constants.TurnDirection TurnDirection => m_UTurnCircleCalculator.TurnDirection;
 
         public bool IsPossible { get; private set; }
 
         public bool IsRequired { get; private set; }
 
-        public ITurnCirclePair TurnCirclePair
-        {
-            get
-            {
-                return m_UTurnCircleCalculator.Pair;
-            }
-        }
+        public ITurnCirclePair TurnCirclePair => m_UTurnCircleCalculator.Pair;
 
-        public ITurnCircle Zero
-        {
-            get
-            {
-                return m_UTurnCircleCalculator.Zero;
-            }
-        }
+        public ITurnCircle Zero => m_UTurnCircleCalculator.Zero;
 
-        public ITurnCircle One
-        {
-            get
-            {
-                return m_UTurnCircleCalculator.One;
-            }
-        }
+        public ITurnCircle One => m_UTurnCircleCalculator.One;
 
         #endregion
     }

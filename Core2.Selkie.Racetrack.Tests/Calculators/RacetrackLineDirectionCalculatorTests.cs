@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using NUnit.Framework;
 using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Calculators;
+using NUnit.Framework;
 
 namespace Core2.Selkie.Racetrack.Tests.Calculators
 {

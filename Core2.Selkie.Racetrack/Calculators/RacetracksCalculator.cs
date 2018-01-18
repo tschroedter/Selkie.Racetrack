@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Calculators;
 using Core2.Selkie.Windsor;
+using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.Calculators
 {
@@ -84,19 +84,13 @@ namespace Core2.Selkie.Racetrack.Calculators
 
         public IEnumerable <ILine> Lines
         {
-            get
-            {
-                return m_Lines;
-            }
-            set
-            {
-                m_Lines = value.ToArray();
-            }
+            get => m_Lines;
+            set => m_Lines = value.ToArray();
         }
 
         public Distance TurnRadiusForPort { get; set; }
 
-        public bool IsUnknown { get; private set; }
+        public bool IsUnknown { get; }
 
         public IPath[][] ForwardToForward { get; private set; }
 

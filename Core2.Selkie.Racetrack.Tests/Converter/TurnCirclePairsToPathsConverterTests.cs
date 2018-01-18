@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using NSubstitute;
-using NUnit.Framework;
 using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
@@ -12,6 +10,8 @@ using Core2.Selkie.Racetrack.Interfaces.Converters;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
 using Core2.Selkie.Racetrack.Turn;
 using Core2.Selkie.Windsor.Interfaces;
+using NSubstitute;
+using NUnit.Framework;
 using TurnCircle = Core2.Selkie.Racetrack.Turn.TurnCircle;
 
 namespace Core2.Selkie.Racetrack.Tests.Converter
@@ -20,7 +20,6 @@ namespace Core2.Selkie.Racetrack.Tests.Converter
     {
         [TestFixture]
         [ExcludeFromCodeCoverage]
-        
         internal sealed class TurnCirclePairsToPathsConverterPortAndStarboardRadiusAreTheSameTests
         {
             [SetUp]
@@ -168,7 +167,6 @@ namespace Core2.Selkie.Racetrack.Tests.Converter
 
         [TestFixture]
         [ExcludeFromCodeCoverage]
-        
         internal sealed class TurnCirclePairsToPathsConverterForPortAndStarboardWithDifferentRadiusTests
         {
             [SetUp]

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using JetBrains.Annotations;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
 using Core2.Selkie.Windsor;
+using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.Turn
 {
@@ -15,16 +15,14 @@ namespace Core2.Selkie.Racetrack.Turn
         }
 
         private readonly IPossibleTurnCircles m_PossibleTurnCircles;
-        private IEnumerable <ITurnCirclePair> m_Pairs = new ITurnCirclePair[0];
-        private ISettings m_Settings = Racetrack.Settings.Unknown;
 
         public void Calculate()
         {
-            m_PossibleTurnCircles.Settings = m_Settings;
+            m_PossibleTurnCircles.Settings = Settings;
             m_PossibleTurnCircles.Calculate();
 
-            m_Pairs = CreatePairs(m_Settings,
-                                  m_PossibleTurnCircles);
+            Pairs = CreatePairs(Settings,
+                                m_PossibleTurnCircles);
         }
 
         [NotNull]
@@ -147,25 +145,9 @@ namespace Core2.Selkie.Racetrack.Turn
 
         #region IPossibleTurnCirclePairs Members
 
-        public ISettings Settings
-        {
-            get
-            {
-                return m_Settings;
-            }
-            set
-            {
-                m_Settings = value;
-            }
-        }
+        public ISettings Settings { get; set; } = Racetrack.Settings.Unknown;
 
-        public IEnumerable <ITurnCirclePair> Pairs
-        {
-            get
-            {
-                return m_Pairs;
-            }
-        }
+        public IEnumerable <ITurnCirclePair> Pairs { get; private set; } = new ITurnCirclePair[0];
 
         #endregion
     }

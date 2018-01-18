@@ -1,13 +1,13 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using JetBrains.Annotations;
-using NSubstitute;
-using NUnit.Framework;
 using Core2.Selkie.Geometry.Primitives;
+using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Calculators;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Calculators;
-using Core2.Selkie.Geometry.Shapes;
+using JetBrains.Annotations;
+using NSubstitute;
+using NUnit.Framework;
 
 namespace Core2.Selkie.Racetrack.Tests.Calculators
 {
@@ -44,7 +44,10 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators
             {
             }
 
-            internal override ILinePairToRacetrackCalculator GetCalculator([NotNull] ILine fromLine, [NotNull] ILine toLine, [NotNull] Distance radiusForPortTurn, [NotNull] Distance radiusForStarboardTurn)
+            internal override ILinePairToRacetrackCalculator GetCalculator([NotNull] ILine fromLine,
+                                                                           [NotNull] ILine toLine,
+                                                                           [NotNull] Distance radiusForPortTurn,
+                                                                           [NotNull] Distance radiusForStarboardTurn)
             {
                 return Calculator;
             }

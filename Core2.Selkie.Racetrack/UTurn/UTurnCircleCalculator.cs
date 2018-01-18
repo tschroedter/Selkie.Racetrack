@@ -1,9 +1,9 @@
-﻿using JetBrains.Annotations;
-using Core2.Selkie.Geometry;
+﻿using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
 using Core2.Selkie.Racetrack.Interfaces.UTurn;
+using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.UTurn
 {
@@ -33,29 +33,11 @@ namespace Core2.Selkie.Racetrack.UTurn
 
         public Constants.TurnDirection TurnDirection { get; private set; }
 
-        public ITurnCircle Zero
-        {
-            get
-            {
-                return m_DetermineCirclePairCalculator.Zero;
-            }
-        }
+        public ITurnCircle Zero => m_DetermineCirclePairCalculator.Zero;
 
-        public ITurnCircle One
-        {
-            get
-            {
-                return m_DetermineCirclePairCalculator.One;
-            }
-        }
+        public ITurnCircle One => m_DetermineCirclePairCalculator.One;
 
-        public ITurnCirclePair Pair
-        {
-            get
-            {
-                return m_DetermineCirclePairCalculator.Pair;
-            }
-        }
+        public ITurnCirclePair Pair => m_DetermineCirclePairCalculator.Pair;
 
         public Point UTurnZeroIntersectionPoint { get; private set; }
 

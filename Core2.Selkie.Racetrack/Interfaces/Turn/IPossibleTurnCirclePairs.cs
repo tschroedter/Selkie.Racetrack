@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using Core2.Selkie.Racetrack.Interfaces.Calculators;
+using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.Interfaces.Turn
 {

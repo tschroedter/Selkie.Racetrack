@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Converters;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
 using Core2.Selkie.Windsor.Interfaces;
+using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.Converters
 {
@@ -22,17 +22,13 @@ namespace Core2.Selkie.Racetrack.Converters
 
         private readonly ISelkieLogger m_Logger;
         private readonly IPathValidator m_PathValidator;
-        private IEnumerable <IPath> m_Paths = new IPath[0];
-        private IEnumerable <IPath> m_PossiblePaths = new IPath[0];
-        private ISettings m_Settings = Racetrack.Settings.Unknown;
-        private ITurnCirclePair m_TurnCirclePair = Turn.TurnCirclePair.Unknown;
 
         public void Convert()
         {
-            m_PossiblePaths = CreatePossiblePaths(m_Settings,
-                                                  m_TurnCirclePair);
+            PossiblePaths = CreatePossiblePaths(Settings,
+                                                TurnCirclePair);
 
-            m_Paths = ValidatePossiblePaths(m_PossiblePaths);
+            Paths = ValidatePossiblePaths(PossiblePaths);
         }
 
         [NotNull]
@@ -88,7 +84,7 @@ namespace Core2.Selkie.Racetrack.Converters
         {
             IPath[] array = allPossiblePaths.ToArray();
 
-            Constants.TurnDirection defaultTurnDirection = m_Settings.DefaultTurnDirection;
+            Constants.TurnDirection defaultTurnDirection = Settings.DefaultTurnDirection;
 
             IEnumerable <IPath> valid = array.Where(x => m_PathValidator.IsValid(x,
                                                                                  defaultTurnDirection));
@@ -98,45 +94,13 @@ namespace Core2.Selkie.Racetrack.Converters
 
         #region ITurnCirclePairToPathConverter Members
 
-        public ISettings Settings
-        {
-            get
-            {
-                return m_Settings;
-            }
-            set
-            {
-                m_Settings = value;
-            }
-        }
+        public ISettings Settings { get; set; } = Racetrack.Settings.Unknown;
 
-        public ITurnCirclePair TurnCirclePair
-        {
-            get
-            {
-                return m_TurnCirclePair;
-            }
-            set
-            {
-                m_TurnCirclePair = value;
-            }
-        }
+        public ITurnCirclePair TurnCirclePair { get; set; } = Turn.TurnCirclePair.Unknown;
 
-        public IEnumerable <IPath> PossiblePaths
-        {
-            get
-            {
-                return m_PossiblePaths;
-            }
-        }
+        public IEnumerable <IPath> PossiblePaths { get; private set; } = new IPath[0];
 
-        public IEnumerable <IPath> Paths
-        {
-            get
-            {
-                return m_Paths;
-            }
-        }
+        public IEnumerable <IPath> Paths { get; private set; } = new IPath[0];
 
         #endregion
     }

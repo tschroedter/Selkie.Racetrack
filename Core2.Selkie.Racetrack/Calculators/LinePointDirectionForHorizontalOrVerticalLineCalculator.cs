@@ -1,9 +1,9 @@
 ﻿using System;
-using JetBrains.Annotations;
-using NLog;
 using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Interfaces.Calculators;
+using JetBrains.Annotations;
+using NLog;
 
 namespace Core2.Selkie.Racetrack.Calculators
 {
@@ -14,21 +14,14 @@ namespace Core2.Selkie.Racetrack.Calculators
                                                                        Constants.TurnDirection defaultTurnDirection)
         {
             m_DefaultTurnDirection = defaultTurnDirection;
-            m_TurnDirection = DetermineDirection(line,
-                                                 point);
+            TurnDirection = DetermineDirection(line,
+                                               point);
         }
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly Constants.TurnDirection m_DefaultTurnDirection;
-        private readonly Constants.TurnDirection m_TurnDirection;
 
-        public Constants.TurnDirection TurnDirection
-        {
-            get
-            {
-                return m_TurnDirection;
-            }
-        }
+        public Constants.TurnDirection TurnDirection { get; }
 
         internal Constants.TurnDirection DetermineDirection([NotNull] ILine line,
                                                             [NotNull] Point point)

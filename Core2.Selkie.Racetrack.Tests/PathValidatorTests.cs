@@ -1,18 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using JetBrains.Annotations;
-using NSubstitute;
-using NUnit.Framework;
 using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Windsor.Interfaces;
+using JetBrains.Annotations;
+using NSubstitute;
+using NUnit.Framework;
 
 namespace Core2.Selkie.Racetrack.Tests
 {
     // todo cleanup all tests, make sure to use arrange, act, assert and method name
-    
-    
+
+
     [TestFixture]
     [ExcludeFromCodeCoverage]
     internal sealed class PathValidatorTests

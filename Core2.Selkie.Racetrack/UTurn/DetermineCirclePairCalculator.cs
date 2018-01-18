@@ -1,5 +1,4 @@
 ﻿using System;
-using JetBrains.Annotations;
 using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
@@ -8,6 +7,7 @@ using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
 using Core2.Selkie.Racetrack.Interfaces.UTurn;
 using Core2.Selkie.Racetrack.Turn;
+using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.UTurn
 {
@@ -19,13 +19,11 @@ namespace Core2.Selkie.Racetrack.UTurn
         }
 
         private readonly IPossibleTurnCircles m_PossibleTurnCircles;
-        private ITurnCirclePair m_Pair = TurnCirclePair.Unknown;
-        private ISettings m_Settings = Racetrack.Settings.Unknown;
 
         public void Calculate()
         {
-            m_Pair = Determine(m_Settings,
-                               m_PossibleTurnCircles);
+            Pair = Determine(Settings,
+                             m_PossibleTurnCircles);
         }
 
         [NotNull]
@@ -79,7 +77,7 @@ namespace Core2.Selkie.Racetrack.UTurn
 
             Angle relativeToStartAzimuth = angle - settings.StartAzimuth;
 
-            if ( Math.Abs(relativeToStartAzimuth.Radians - Angle.RadiansFor180Degrees) < 0.001 )
+            if ( Math.Abs(relativeToStartAzimuth.Radians - BaseAngle.RadiansFor180Degrees) < 0.001 )
             {
                 return new TurnCirclePair(settings,
                                           possibleTurnCircles.StartTurnCirclePort,
@@ -92,41 +90,13 @@ namespace Core2.Selkie.Racetrack.UTurn
 
         #region IDetermineCirclePairCalculator Members
 
-        public ISettings Settings
-        {
-            get
-            {
-                return m_Settings;
-            }
-            set
-            {
-                m_Settings = value;
-            }
-        }
+        public ISettings Settings { get; set; } = Racetrack.Settings.Unknown;
 
-        public ITurnCirclePair Pair
-        {
-            get
-            {
-                return m_Pair;
-            }
-        }
+        public ITurnCirclePair Pair { get; private set; } = TurnCirclePair.Unknown;
 
-        public ITurnCircle Zero
-        {
-            get
-            {
-                return m_Pair.Zero;
-            }
-        }
+        public ITurnCircle Zero => Pair.Zero;
 
-        public ITurnCircle One
-        {
-            get
-            {
-                return m_Pair.One;
-            }
-        }
+        public ITurnCircle One => Pair.One;
 
         #endregion
     }

@@ -23,9 +23,9 @@ namespace Core2.Selkie.Racetrack.Interfaces.Calculators
         Distance TurnRadiusForStarboard { get; set; }
 
         [NotNull]
-        ISurveyFeature[] ToFeatures { get; set; }   // TODO currently work-around = ToLine
+        ISurveyFeature[] ToFeatures { get; set; } // TODO currently work-around = ToLine
 
         [NotNull]
-        ISurveyFeature FromFeature { get; set; }    // TODO currently work-around = FromLine
+        ISurveyFeature FromFeature { get; set; } // TODO currently work-around = FromLine
     }
 }

@@ -1,33 +1,28 @@
-﻿using JetBrains.Annotations;
-using Core2.Selkie.Geometry;
+﻿using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Windsor;
+using JetBrains.Annotations;
+using ITurnCircleArcSegment = Core2.Selkie.Racetrack.Interfaces.Turn.ITurnCircleArcSegment;
 
 namespace Core2.Selkie.Racetrack.Turn
 {
     [ProjectComponent(Lifestyle.Transient)]
-    public class TurnCircleArcSegment : Interfaces.Turn.ITurnCircleArcSegment
+    public class TurnCircleArcSegment : ITurnCircleArcSegment
     {
-        public static readonly Interfaces.Turn.ITurnCircleArcSegment Unknown = new TurnCircleArcSegment();
-        private readonly IArcSegment m_ArcSegment;
-        private readonly Constants.CircleOrigin m_CircleOrigin;
-        private readonly Constants.TurnDirection m_Direction;
-        private readonly bool m_IsUnknown;
-
         private TurnCircleArcSegment()
         {
-            m_IsUnknown = true;
-            m_ArcSegment = Geometry.Shapes.ArcSegment.Unknown;
+            IsUnknown = true;
+            ArcSegment = Geometry.Shapes.ArcSegment.Unknown;
         }
 
         private TurnCircleArcSegment([NotNull] IArcSegment arcSegment,
                                      Constants.TurnDirection direction,
                                      Constants.CircleOrigin circleOrigin)
         {
-            m_ArcSegment = arcSegment;
-            m_Direction = direction;
-            m_CircleOrigin = circleOrigin;
+            ArcSegment = arcSegment;
+            TurnDirection = direction;
+            CircleOrigin = circleOrigin;
         }
 
         public TurnCircleArcSegment([NotNull] ICircle circle,
@@ -36,114 +31,63 @@ namespace Core2.Selkie.Racetrack.Turn
                                     [NotNull] Point startPoint,
                                     [NotNull] Point endPoint)
         {
-            m_ArcSegment = new ArcSegment(circle,
-                                          startPoint,
-                                          endPoint,
-                                          direction);
+            ArcSegment = new ArcSegment(circle,
+                                        startPoint,
+                                        endPoint,
+                                        direction);
 
-            m_Direction = direction;
-            m_CircleOrigin = circleOrigin;
+            TurnDirection = direction;
+            CircleOrigin = circleOrigin;
         }
 
-        public Angle Angle
-        {
-            get
-            {
-                return m_ArcSegment.TurnDirection == Constants.TurnDirection.Clockwise
-                           ? m_ArcSegment.AngleClockwise
-                           : m_ArcSegment.AngleCounterClockwise;
-            }
-        }
+        public static readonly ITurnCircleArcSegment Unknown = new TurnCircleArcSegment();
+
+        public Angle Angle => ArcSegment.TurnDirection == Constants.TurnDirection.Clockwise
+                                  ? ArcSegment.AngleClockwise
+                                  : ArcSegment.AngleCounterClockwise;
 
         public override string ToString()
         {
-            return $"CentrePoint: {m_ArcSegment.CentrePoint} StartPoint: {m_ArcSegment.StartPoint} EndPoint: {m_ArcSegment.EndPoint} Direction: {m_ArcSegment.TurnDirection}";
+            return
+                $"CentrePoint: {ArcSegment.CentrePoint} StartPoint: {ArcSegment.StartPoint} EndPoint: {ArcSegment.EndPoint} Direction: {ArcSegment.TurnDirection}";
         }
 
         #region ITurnCircleArcSegment Members
 
-        public bool IsUnknown
-        {
-            get
-            {
-                return m_IsUnknown;
-            }
-        }
+        public bool IsUnknown { get; }
 
-        public IArcSegment ArcSegment
-        {
-            get
-            {
-                return m_ArcSegment;
-            }
-        }
+        public IArcSegment ArcSegment { get; }
 
-        public Point CentrePoint
-        {
-            get
-            {
-                return m_ArcSegment.CentrePoint;
-            }
-        }
+        public Point CentrePoint => ArcSegment.CentrePoint;
 
-        public Angle AngleClockwise
-        {
-            get
-            {
-                return m_ArcSegment.AngleClockwise;
-            }
-        }
+        public Angle AngleClockwise => ArcSegment.AngleClockwise;
 
-        public Angle AngleCounterClockwise
-        {
-            get
-            {
-                return m_ArcSegment.AngleCounterClockwise;
-            }
-        }
+        public Angle AngleCounterClockwise => ArcSegment.AngleCounterClockwise;
 
-        public Point StartPoint
-        {
-            get
-            {
-                return m_ArcSegment.StartPoint;
-            }
-        }
+        public Point StartPoint => ArcSegment.StartPoint;
 
-        public Point EndPoint
-        {
-            get
-            {
-                return m_ArcSegment.EndPoint;
-            }
-        }
+        public Point EndPoint => ArcSegment.EndPoint;
 
         public Angle AngleToXAxisAtEndPoint { get; }
         public Angle AngleToXAxisAtStartPoint { get; }
 
         public Constants.TurnDirection TurnDirectionToPoint(Point point)
         {
-            return m_ArcSegment.TurnDirectionToPoint(point); // todo testing
+            return ArcSegment.TurnDirectionToPoint(point); // todo testing
         }
 
-        public double Length
-        {
-            get
-            {
-                return m_ArcSegment.TurnDirection == Constants.TurnDirection.Clockwise
-                           ? m_ArcSegment.LengthClockwise
-                           : m_ArcSegment.LengthCounterClockwise;
-            }
-        }
+        public double Length => ArcSegment.TurnDirection == Constants.TurnDirection.Clockwise
+                                    ? ArcSegment.LengthClockwise
+                                    : ArcSegment.LengthCounterClockwise;
 
         public bool IsOnLine(Point point)
         {
-            return m_ArcSegment.IsOnLine(point); // todo testing
+            return ArcSegment.IsOnLine(point); // todo testing
         }
 
         public IPolylineSegment Reverse()
         {
-            var arcSegment = m_ArcSegment.Reverse() as IArcSegment;
+            var arcSegment = ArcSegment.Reverse() as IArcSegment;
 
             if ( arcSegment == null )
             {
@@ -151,56 +95,26 @@ namespace Core2.Selkie.Racetrack.Turn
                 return Unknown;
             }
 
-            Constants.CircleOrigin origin = m_CircleOrigin == Constants.CircleOrigin.Start
+            Constants.CircleOrigin origin = CircleOrigin == Constants.CircleOrigin.Start
                                                 ? Constants.CircleOrigin.Finish
                                                 : Constants.CircleOrigin.Start;
 
             var reverse = new TurnCircleArcSegment(arcSegment,
-                                                   m_Direction,
+                                                   TurnDirection,
                                                    origin);
 
             return reverse;
         }
 
-        public double Radius
-        {
-            get
-            {
-                return m_ArcSegment.Radius;
-            }
-        }
+        public double Radius => ArcSegment.Radius;
 
-        public double LengthClockwise
-        {
-            get
-            {
-                return m_ArcSegment.LengthClockwise;
-            }
-        }
+        public double LengthClockwise => ArcSegment.LengthClockwise;
 
-        public double LengthCounterClockwise
-        {
-            get
-            {
-                return m_ArcSegment.LengthCounterClockwise;
-            }
-        }
+        public double LengthCounterClockwise => ArcSegment.LengthCounterClockwise;
 
-        public Constants.TurnDirection TurnDirection
-        {
-            get
-            {
-                return m_Direction;
-            }
-        }
+        public Constants.TurnDirection TurnDirection { get; }
 
-        public Constants.CircleOrigin CircleOrigin
-        {
-            get
-            {
-                return m_CircleOrigin;
-            }
-        }
+        public Constants.CircleOrigin CircleOrigin { get; }
 
         #endregion
     }

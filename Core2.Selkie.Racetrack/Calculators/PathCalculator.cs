@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using JetBrains.Annotations;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Calculators;
 using Core2.Selkie.Windsor;
+using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.Calculators
 {
@@ -31,23 +31,11 @@ namespace Core2.Selkie.Racetrack.Calculators
         #region ICalculator Members
 
         [NotNull]
-        internal IPathShortestFinder PathShortestFinder { get; private set; }
+        internal IPathShortestFinder PathShortestFinder { get; }
 
-        public IPath Path
-        {
-            get
-            {
-                return PathShortestFinder.ShortestPath;
-            }
-        }
+        public IPath Path => PathShortestFinder.ShortestPath;
 
-        public IEnumerable <IPath> Paths
-        {
-            get
-            {
-                return m_Selector.Paths;
-            }
-        }
+        public IEnumerable <IPath> Paths => m_Selector.Paths;
 
         public ISettings Settings { get; set; }
 

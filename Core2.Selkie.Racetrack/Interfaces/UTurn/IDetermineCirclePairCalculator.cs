@@ -1,7 +1,7 @@
-using JetBrains.Annotations;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Interfaces.Calculators;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
+using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.Interfaces.UTurn
 {

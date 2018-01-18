@@ -1,13 +1,12 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using JetBrains.Annotations;
-using NUnit.Framework;
 using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
+using JetBrains.Annotations;
+using NUnit.Framework;
 
 namespace Core2.Selkie.Racetrack.Tests
 {
-    
     [TestFixture]
     [ExcludeFromCodeCoverage]
     internal sealed class SettingsTests

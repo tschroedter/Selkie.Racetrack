@@ -1,9 +1,9 @@
-﻿using JetBrains.Annotations;
-using Core2.Selkie.Geometry.Primitives;
+﻿using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Calculators;
 using Core2.Selkie.Windsor;
+using JetBrains.Annotations;
 using SelkieRacetrack = Core2.Selkie.Racetrack;
 
 namespace Core2.Selkie.Racetrack.Calculators
@@ -12,8 +12,6 @@ namespace Core2.Selkie.Racetrack.Calculators
     public sealed class LinePairToRacetrackCalculator
         : ILinePairToRacetrackCalculator
     {
-        private readonly IPathCalculator m_Calculator;
-
         public LinePairToRacetrackCalculator([NotNull] IPathCalculator calculator)
         {
             Settings = SelkieRacetrack.Settings.Unknown;
@@ -25,6 +23,8 @@ namespace Core2.Selkie.Racetrack.Calculators
             FromLine = Line.Unknown;
             m_Calculator = calculator;
         }
+
+        private readonly IPathCalculator m_Calculator;
 
         public bool IsPortTurnAllowed { get; set; }
 
@@ -40,13 +40,7 @@ namespace Core2.Selkie.Racetrack.Calculators
 
         public ISettings Settings { get; private set; }
 
-        public IPath Racetrack
-        {
-            get
-            {
-                return m_Calculator.Path;
-            }
-        }
+        public IPath Racetrack => m_Calculator.Path;
 
         public void Calculate()
         {

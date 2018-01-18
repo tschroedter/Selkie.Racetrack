@@ -1,6 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using NSubstitute;
-using NUnit.Framework;
 using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
@@ -8,6 +6,8 @@ using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.UTurn;
 using Core2.Selkie.Racetrack.Turn;
 using Core2.Selkie.Racetrack.UTurn;
+using NSubstitute;
+using NUnit.Framework;
 
 namespace Core2.Selkie.Racetrack.Tests.UTurn
 {
@@ -85,7 +85,7 @@ namespace Core2.Selkie.Racetrack.Tests.UTurn
             public void DetermineFinishTurnCircleReturnsOneForFinishPointIsOnOneCircleTest()
             {
                 var zeroTurnCircle = Substitute.For <ITurnCircle>();
-                
+
                 zeroTurnCircle.IsPointOnCircle(Arg.Any <Point>()).ReturnsForAnyArgs(false);
 
                 var oneTurnCircle = Substitute.For <ITurnCircle>();
@@ -105,7 +105,7 @@ namespace Core2.Selkie.Racetrack.Tests.UTurn
             public void DetermineFinishTurnCircleReturnsZeroForFinishPointIsOnZeroCircleTest()
             {
                 var zeroTurnCircle = Substitute.For <ITurnCircle>();
-                
+
                 zeroTurnCircle.IsPointOnCircle(Arg.Any <Point>()).ReturnsForAnyArgs(true);
 
                 var uTurnCircle = Substitute.For <IUTurnCircle>();
@@ -122,7 +122,7 @@ namespace Core2.Selkie.Racetrack.Tests.UTurn
             public void DetermineStartTurnCircleReturnsOneForStartPointIsOnOneCircleTest()
             {
                 var zeroTurnCircle = Substitute.For <ITurnCircle>();
-                
+
                 zeroTurnCircle.IsPointOnCircle(Arg.Any <Point>()).ReturnsForAnyArgs(false);
 
                 var oneTurnCircle = Substitute.For <ITurnCircle>();
@@ -142,7 +142,7 @@ namespace Core2.Selkie.Racetrack.Tests.UTurn
             public void DetermineStartTurnCircleReturnsZeroForFinishPointIsOnZeroCircleTest()
             {
                 var zeroTurnCircle = Substitute.For <ITurnCircle>();
-                
+
                 zeroTurnCircle.IsPointOnCircle(Arg.Any <Point>()).ReturnsForAnyArgs(true);
 
                 var uTurnCircle = Substitute.For <IUTurnCircle>();

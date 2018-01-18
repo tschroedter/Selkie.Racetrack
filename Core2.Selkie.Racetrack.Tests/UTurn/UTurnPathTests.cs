@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using NSubstitute;
-using NUnit.Framework;
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.NUnit.Extensions;
@@ -10,13 +8,13 @@ using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.UTurn;
 using Core2.Selkie.Racetrack.Turn;
 using Core2.Selkie.Racetrack.UTurn;
+using NSubstitute;
+using NUnit.Framework;
 using Constants = Core2.Selkie.Geometry.Constants;
 using TurnCircle = Core2.Selkie.Racetrack.Turn.TurnCircle;
 
 namespace Core2.Selkie.Racetrack.Tests.UTurn
 {
-    
-    
     [ExcludeFromCodeCoverage]
     internal sealed class UTurnPathTests
     {
@@ -1198,7 +1196,7 @@ namespace Core2.Selkie.Racetrack.Tests.UTurn
                 m_RadiusForPortTurn = new Distance(100.0);
                 m_RadiusForStarboardTurn = new Distance(100.0);
 
-                
+
                 m_Settings = new Settings(m_FromLine.EndPoint,
                                           m_FromLine.AngleToXAxis,
                                           m_ToLine.StartPoint,
@@ -1282,7 +1280,7 @@ namespace Core2.Selkie.Racetrack.Tests.UTurn
                 m_RadiusForPortTurn = new Distance(30.0);
                 m_RadiusForStarboardTurn = new Distance(30.0);
 
-                
+
                 m_Settings = new Settings(m_FromLine.EndPoint,
                                           m_FromLine.AngleToXAxis,
                                           m_ToLine.StartPoint,

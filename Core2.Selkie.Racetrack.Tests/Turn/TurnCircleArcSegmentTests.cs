@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using NUnit.Framework;
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.NUnit.Extensions;
+using NUnit.Framework;
 using Constants = Core2.Selkie.Geometry.Constants;
 
 namespace Core2.Selkie.Racetrack.Tests.Turn

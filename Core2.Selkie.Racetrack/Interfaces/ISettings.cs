@@ -21,7 +21,10 @@ namespace Core2.Selkie.Racetrack.Interfaces
 
         bool IsPortTurnAllowed { get; }
         bool IsStarboardTurnAllowed { get; }
-        Constants.TurnDirection DefaultTurnDirection { get; }   // TODO: Remove TurnDirectiom from Selkie.Geometry and use Selkie.Common one
+
+        Constants.TurnDirection
+            DefaultTurnDirection { get; } // TODO: Remove TurnDirectiom from Selkie.Geometry and use Selkie.Common one
+
         bool IsUnknown { get; }
 
         [NotNull]

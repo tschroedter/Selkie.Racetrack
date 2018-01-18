@@ -15,16 +15,16 @@ namespace Core2.Selkie.Racetrack
     {
         private Settings()
         {
-            m_StartPoint = Point.Unknown;
-            m_StartAzimuth = Angle.Unknown;
-            m_FinishPoint = Point.Unknown;
-            m_FinishAzimuth = Angle.Unknown;
-            m_RadiusForPortTurn = Distance.Unknown;
-            m_RadiusForStarboardTurn = Distance.Unknown;
-            m_IsPortTurnAllowed = true;
-            m_IsStarboardTurnAllowed = true;
-            m_IsUnknown = true;
-            m_LargestRadiusForTurn = Distance.Unknown;
+            StartPoint = Point.Unknown;
+            StartAzimuth = Angle.Unknown;
+            FinishPoint = Point.Unknown;
+            FinishAzimuth = Angle.Unknown;
+            RadiusForPortTurn = Distance.Unknown;
+            RadiusForStarboardTurn = Distance.Unknown;
+            IsPortTurnAllowed = true;
+            IsStarboardTurnAllowed = true;
+            IsUnknown = true;
+            LargestRadiusForTurn = Distance.Unknown;
         }
 
         public Settings([NotNull] Point startPoint,
@@ -36,35 +36,23 @@ namespace Core2.Selkie.Racetrack
                         bool isPortTurnAllowed,
                         bool isStarboardTurnAllowed)
         {
-            m_StartPoint = startPoint;
-            m_StartAzimuth = startAzimuth;
-            m_FinishPoint = finishPoint;
-            m_FinishAzimuth = finishAzimuth;
-            m_RadiusForPortTurn = radiusForPortTurn;
-            m_RadiusForStarboardTurn = radiusForStarboardTurn;
-            m_IsPortTurnAllowed = isPortTurnAllowed;
-            m_IsStarboardTurnAllowed = isStarboardTurnAllowed;
-            m_LargestRadiusForTurn = RadiusForPortTurn >= RadiusForStarboardTurn
-                                         ? RadiusForPortTurn
-                                         : RadiusForStarboardTurn;
+            StartPoint = startPoint;
+            StartAzimuth = startAzimuth;
+            FinishPoint = finishPoint;
+            FinishAzimuth = finishAzimuth;
+            RadiusForPortTurn = radiusForPortTurn;
+            RadiusForStarboardTurn = radiusForStarboardTurn;
+            IsPortTurnAllowed = isPortTurnAllowed;
+            IsStarboardTurnAllowed = isStarboardTurnAllowed;
+            LargestRadiusForTurn = RadiusForPortTurn >= RadiusForStarboardTurn
+                                       ? RadiusForPortTurn
+                                       : RadiusForStarboardTurn;
         }
 
         public static readonly Settings Unknown = new Settings();
-        private readonly Angle m_FinishAzimuth;
-        private readonly Point m_FinishPoint;
-        private readonly bool m_IsPortTurnAllowed;
-        private readonly bool m_IsStarboardTurnAllowed;
-
-        private readonly bool m_IsUnknown;
-        private readonly Distance m_LargestRadiusForTurn;
-        private readonly Distance m_RadiusForPortTurn;
-        private readonly Distance m_RadiusForStarboardTurn;
-        private readonly Angle m_StartAzimuth;
-        private readonly Point m_StartPoint;
 
         #region IEquatable<Settings> Members
 
-        
         public bool Equals(Settings other)
         {
             if ( ReferenceEquals(null,
@@ -108,7 +96,7 @@ namespace Core2.Selkie.Racetrack
                            right);
         }
 
-        
+
         public override bool Equals(object obj)
         {
             if ( ReferenceEquals(null,
@@ -142,95 +130,29 @@ namespace Core2.Selkie.Racetrack
 
         #region ISettings Members
 
-        public bool IsUnknown
-        {
-            get
-            {
-                return m_IsUnknown;
-            }
-        }
+        public bool IsUnknown { get; }
 
-        public bool IsPortTurnAllowed
-        {
-            get
-            {
-                return m_IsPortTurnAllowed;
-            }
-        }
+        public bool IsPortTurnAllowed { get; }
 
-        public bool IsStarboardTurnAllowed
-        {
-            get
-            {
-                return m_IsStarboardTurnAllowed;
-            }
-        }
+        public bool IsStarboardTurnAllowed { get; }
 
-        public Point StartPoint
-        {
-            get
-            {
-                return m_StartPoint;
-            }
-        }
+        public Point StartPoint { get; }
 
-        public Angle StartAzimuth
-        {
-            get
-            {
-                return m_StartAzimuth;
-            }
-        }
+        public Angle StartAzimuth { get; }
 
-        public Point FinishPoint
-        {
-            get
-            {
-                return m_FinishPoint;
-            }
-        }
+        public Point FinishPoint { get; }
 
-        public Angle FinishAzimuth
-        {
-            get
-            {
-                return m_FinishAzimuth;
-            }
-        }
+        public Angle FinishAzimuth { get; }
 
-        public Distance LargestRadiusForTurn
-        {
-            get
-            {
-                return m_LargestRadiusForTurn;
-            }
-        }
+        public Distance LargestRadiusForTurn { get; }
 
-        public Distance RadiusForPortTurn
-        {
-            get
-            {
-                return m_RadiusForPortTurn;
-            }
-        }
+        public Distance RadiusForPortTurn { get; }
 
-        public Distance RadiusForStarboardTurn
-        {
-            get
-            {
-                return m_RadiusForStarboardTurn;
-            }
-        }
+        public Distance RadiusForStarboardTurn { get; }
 
-        public Constants.TurnDirection DefaultTurnDirection
-        {
-            get
-            {
-                return IsPortTurnAllowed
-                           ? Constants.TurnDirection.Counterclockwise
-                           : Constants.TurnDirection.Clockwise;
-            }
-        }
+        public Constants.TurnDirection DefaultTurnDirection => IsPortTurnAllowed
+                                                                   ? Constants.TurnDirection.Counterclockwise
+                                                                   : Constants.TurnDirection.Clockwise;
 
         #endregion
     }

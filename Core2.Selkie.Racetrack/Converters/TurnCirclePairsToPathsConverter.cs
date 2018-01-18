@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using JetBrains.Annotations;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Converters;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
+using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.Converters
 {
@@ -12,50 +12,25 @@ namespace Core2.Selkie.Racetrack.Converters
                                                [NotNull] IPossibleTurnCirclePairs possibleTurnCirclePairs)
         {
             m_TurnCirclePairToPathConverter = turnCirclePairToPathConverter;
-            m_PossibleTurnCirclePairs = possibleTurnCirclePairs;
+            PossibleTurnCirclePairs = possibleTurnCirclePairs;
         }
 
-        private readonly IPossibleTurnCirclePairs m_PossibleTurnCirclePairs;
         private readonly ITurnCirclePairToPathConverter m_TurnCirclePairToPathConverter;
-        private IEnumerable <IPath> m_Paths = new IPath[0];
-        private ISettings m_Settings = Racetrack.Settings.Unknown;
 
         public void Convert()
         {
-            m_PossibleTurnCirclePairs.Settings = m_Settings;
-            m_PossibleTurnCirclePairs.Calculate();
+            PossibleTurnCirclePairs.Settings = Settings;
+            PossibleTurnCirclePairs.Calculate();
 
-            m_Paths = CreatePaths(m_Settings,
-                                  m_PossibleTurnCirclePairs);
+            Paths = CreatePaths(Settings,
+                                PossibleTurnCirclePairs);
         }
 
-        public ISettings Settings
-        {
-            get
-            {
-                return m_Settings;
-            }
-            set
-            {
-                m_Settings = value;
-            }
-        }
+        public ISettings Settings { get; set; } = Racetrack.Settings.Unknown;
 
-        public IPossibleTurnCirclePairs PossibleTurnCirclePairs
-        {
-            get
-            {
-                return m_PossibleTurnCirclePairs;
-            }
-        }
+        public IPossibleTurnCirclePairs PossibleTurnCirclePairs { get; }
 
-        public IEnumerable <IPath> Paths
-        {
-            get
-            {
-                return m_Paths;
-            }
-        }
+        public IEnumerable <IPath> Paths { get; private set; } = new IPath[0];
 
         [NotNull]
         private IEnumerable <IPath> CreatePaths([NotNull] ISettings settings,

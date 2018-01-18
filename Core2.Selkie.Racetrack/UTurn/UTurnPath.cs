@@ -1,9 +1,9 @@
-using JetBrains.Annotations;
 using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.UTurn;
 using Core2.Selkie.Windsor;
+using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.UTurn
 {
@@ -20,7 +20,6 @@ namespace Core2.Selkie.Racetrack.UTurn
         }
 
         private readonly IDetermineTurnCircleCalculator m_Calculator;
-        private IPath m_Path = Racetrack.Path.Unknown;
 
         public void Calculate()
         {
@@ -29,17 +28,17 @@ namespace Core2.Selkie.Racetrack.UTurn
             UTurnCircle.Settings = UTrunCircleSettings;
             UTurnCircle.Calculate();
 
-            m_Path = UTurnCircle.IsRequired
-                         ? CalculatePath(UTrunCircleSettings,
-                                         UTurnCircle)
-                         : Racetrack.Path.Unknown;
+            Path = UTurnCircle.IsRequired
+                       ? CalculatePath(UTrunCircleSettings,
+                                       UTurnCircle)
+                       : Racetrack.Path.Unknown;
         }
 
         public ISettings UTrunCircleSettings { get; private set; }
 
         public ISettings Settings { get; set; }
 
-        public IUTurnCircle UTurnCircle { get; private set; }
+        public IUTurnCircle UTurnCircle { get; }
 
         [NotNull]
         internal ITurnCircleArcSegment CreateFinishArcSegment([NotNull] ISettings settings,
@@ -181,21 +180,9 @@ namespace Core2.Selkie.Racetrack.UTurn
 
         #region IUTurnPath Members
 
-        public IPath Path
-        {
-            get
-            {
-                return m_Path;
-            }
-        }
+        public IPath Path { get; private set; } = Racetrack.Path.Unknown;
 
-        public bool IsRequired
-        {
-            get
-            {
-                return UTurnCircle.IsRequired;
-            }
-        }
+        public bool IsRequired => UTurnCircle.IsRequired;
 
         #endregion
     }

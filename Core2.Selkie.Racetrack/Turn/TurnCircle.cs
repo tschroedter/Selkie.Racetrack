@@ -1,9 +1,9 @@
 ﻿using System;
-using JetBrains.Annotations;
 using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Windsor;
+using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.Turn
 {
@@ -12,22 +12,14 @@ namespace Core2.Selkie.Racetrack.Turn
         : ITurnCircle,
           IEquatable <TurnCircle>
     {
-        public static TurnCircle Unknown = new TurnCircle();
-        private readonly ICircle m_Circle;
-        private readonly bool m_IsUnknown;
-        private readonly Constants.CircleOrigin m_Origin;
-        private readonly Distance m_Radius;
-        private readonly Constants.CircleSide m_Side;
-        private readonly Constants.TurnDirection m_TurnDirection;
-
         private TurnCircle()
         {
-            m_Circle = Geometry.Shapes.Circle.Unknown;
-            m_Side = Constants.CircleSide.Unknown;
-            m_Origin = Constants.CircleOrigin.Unknown;
-            m_TurnDirection = Constants.TurnDirection.Unknown;
-            m_Radius = Distance.Unknown;
-            m_IsUnknown = true;
+            Circle = Geometry.Shapes.Circle.Unknown;
+            Side = Constants.CircleSide.Unknown;
+            Origin = Constants.CircleOrigin.Unknown;
+            TurnDirection = Constants.TurnDirection.Unknown;
+            Radius = Distance.Unknown;
+            IsUnknown = true;
         }
 
         public TurnCircle([NotNull] ICircle circle,
@@ -35,12 +27,14 @@ namespace Core2.Selkie.Racetrack.Turn
                           Constants.CircleOrigin origin,
                           Constants.TurnDirection turnDirection)
         {
-            m_Circle = circle;
-            m_Side = side;
-            m_Origin = origin;
-            m_TurnDirection = turnDirection;
-            m_Radius = new Distance(m_Circle.Radius);
+            Circle = circle;
+            Side = side;
+            Origin = origin;
+            TurnDirection = turnDirection;
+            Radius = new Distance(Circle.Radius);
         }
+
+        public static TurnCircle Unknown = new TurnCircle();
 
         #region IEquatable<TurnCircle> Members
 
@@ -56,56 +50,16 @@ namespace Core2.Selkie.Racetrack.Turn
             {
                 return true;
             }
-            return Equals(other.m_Circle,
-                          m_Circle) && Equals(other.m_Side,
-                                              m_Side) && Equals(other.m_Origin,
-                                                                m_Origin) && Equals(other.m_TurnDirection,
-                                                                                    m_TurnDirection);
+            return Equals(other.Circle,
+                          Circle) && Equals(other.Side,
+                                            Side) && Equals(other.Origin,
+                                                            Origin) && Equals(other.TurnDirection,
+                                                                              TurnDirection);
         }
 
         #endregion
 
-        public bool IsUnknown
-        {
-            get
-            { 
-                return m_IsUnknown;
-            }
-        }
-
-        
-        public override bool Equals(object obj)
-        {
-            if ( ReferenceEquals(null,
-                                 obj) )
-            {
-                return false;
-            }
-            if ( ReferenceEquals(this,
-                                 obj) )
-            {
-                return true;
-            }
-            if ( obj.GetType() != typeof ( TurnCircle ) )
-            {
-                return false;
-            }
-            return Equals(( TurnCircle ) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                int result = ( m_Circle != null
-                                   ? m_Circle.GetHashCode()
-                                   : 0 );
-                result = ( result * 397 ) ^ m_Side.GetHashCode();
-                result = ( result * 397 ) ^ m_Origin.GetHashCode();
-                result = ( result * 397 ) ^ m_TurnDirection.GetHashCode();
-                return result;
-            }
-        }
+        public bool IsUnknown { get; }
 
         public static bool operator ==(TurnCircle left,
                                        TurnCircle right)
@@ -121,60 +75,58 @@ namespace Core2.Selkie.Racetrack.Turn
                            right);
         }
 
+
+        public override bool Equals(object obj)
+        {
+            if ( ReferenceEquals(null,
+                                 obj) )
+            {
+                return false;
+            }
+            if ( ReferenceEquals(this,
+                                 obj) )
+            {
+                return true;
+            }
+            if ( obj.GetType() != typeof( TurnCircle ) )
+            {
+                return false;
+            }
+            return Equals(( TurnCircle ) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int result = Circle != null
+                                 ? Circle.GetHashCode()
+                                 : 0;
+                result = ( result * 397 ) ^ Side.GetHashCode();
+                result = ( result * 397 ) ^ Origin.GetHashCode();
+                result = ( result * 397 ) ^ TurnDirection.GetHashCode();
+                return result;
+            }
+        }
+
         #region ITurnCircle Members
 
-        public ICircle Circle
-        {
-            get
-            {
-                return m_Circle;
-            }
-        }
+        public ICircle Circle { get; }
 
-        public Point CentrePoint
-        {
-            get
-            {
-                return m_Circle.CentrePoint;
-            }
-        }
+        public Point CentrePoint => Circle.CentrePoint;
 
-        public Distance Radius
-        {
-            get
-            {
-                return m_Radius;
-            }
-        }
+        public Distance Radius { get; }
 
-        public Constants.CircleSide Side
-        {
-            get
-            {
-                return m_Side;
-            }
-        }
+        public Constants.CircleSide Side { get; }
 
-        public Constants.CircleOrigin Origin
-        {
-            get
-            {
-                return m_Origin;
-            }
-        }
+        public Constants.CircleOrigin Origin { get; }
 
         public bool IsPointOnCircle(Point point)
         {
-            return m_Circle.IsPointOnCircle(point);
+            return Circle.IsPointOnCircle(point);
         }
 
-        public Constants.TurnDirection TurnDirection
-        {
-            get
-            {
-                return m_TurnDirection;
-            }
-        }
+        public Constants.TurnDirection TurnDirection { get; }
 
         #endregion
     }

@@ -1,11 +1,11 @@
 ﻿using System;
 using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Shapes;
-using JetBrains.Annotations;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Converters;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
 using Core2.Selkie.Windsor.Interfaces;
+using JetBrains.Annotations;
 using ITurnCircleArcSegment = Core2.Selkie.Geometry.Shapes.ITurnCircleArcSegment;
 
 namespace Core2.Selkie.Racetrack.Converters
@@ -18,23 +18,16 @@ namespace Core2.Selkie.Racetrack.Converters
                                            [NotNull] ILine tangent)
         {
             m_Logger = logger;
-            m_Path = CreatePath(settings,
-                                turnCirclePair,
-                                tangent);
+            Path = CreatePath(settings,
+                              turnCirclePair,
+                              tangent);
         }
 
         private readonly ISelkieLogger m_Logger;
-        private readonly IPath m_Path;
 
         #region ITurnCirclePairToPathCreator Members
 
-        public IPath Path
-        {
-            get
-            {
-                return m_Path;
-            }
-        }
+        public IPath Path { get; }
 
         #endregion
 

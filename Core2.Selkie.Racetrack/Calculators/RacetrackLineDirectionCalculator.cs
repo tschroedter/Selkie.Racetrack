@@ -1,9 +1,9 @@
 using System;
-using JetBrains.Annotations;
-using NLog;
 using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Interfaces.Calculators;
+using JetBrains.Annotations;
+using NLog;
 
 namespace Core2.Selkie.Racetrack.Calculators
 {
@@ -20,14 +20,14 @@ namespace Core2.Selkie.Racetrack.Calculators
             {
                 case Constants.TurnDirection.Clockwise:
                 case Constants.TurnDirection.Counterclockwise:
-                    m_TurnDirection = direction;
+                    TurnDirection = direction;
                     break;
 
                 case Constants.TurnDirection.Unknown:
                     var calculator = new LinePointDirectionForHorizontalOrVerticalLineCalculator(line,
                                                                                                  point,
                                                                                                  defaultTurnDirection);
-                    m_TurnDirection = calculator.TurnDirection;
+                    TurnDirection = calculator.TurnDirection;
                     break;
 
                 default:
@@ -37,17 +37,10 @@ namespace Core2.Selkie.Racetrack.Calculators
         }
 
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly Constants.TurnDirection m_TurnDirection;
 
         #region IRacetrackLineDirectionCalculator Members
 
-        public Constants.TurnDirection TurnDirection
-        {
-            get
-            {
-                return m_TurnDirection;
-            }
-        }
+        public Constants.TurnDirection TurnDirection { get; }
 
         #endregion
 

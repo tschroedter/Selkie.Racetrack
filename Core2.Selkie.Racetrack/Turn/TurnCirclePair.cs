@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using Core2.Selkie.Geometry.Calculators;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
 using Core2.Selkie.Windsor;
+using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.Turn
 {
@@ -14,63 +14,51 @@ namespace Core2.Selkie.Racetrack.Turn
     {
         private TurnCirclePair(bool isUnknown)
         {
-            m_IsUnknown = isUnknown;
-            m_Calculator = new CirclePairTangentLinesCalculator(m_CirclePair);
+            IsUnknown = isUnknown;
+            m_Calculator = new CirclePairTangentLinesCalculator(CirclePair);
         }
 
         public TurnCirclePair([NotNull] ISettings settings,
                               [NotNull] ITurnCircle one,
                               [NotNull] ITurnCircle two)
         {
-            m_CirclePair = new CirclePair(one.Circle,
-                                          two.Circle);
-            m_Calculator = new CirclePairTangentLinesCalculator(m_CirclePair);
+            CirclePair = new CirclePair(one.Circle,
+                                        two.Circle);
+            m_Calculator = new CirclePairTangentLinesCalculator(CirclePair);
 
-            if ( m_CirclePair.Zero.CentrePoint == one.CentrePoint )
+            if ( CirclePair.Zero.CentrePoint == one.CentrePoint )
             {
-                m_Zero = one;
-                m_One = two;
+                Zero = one;
+                One = two;
             }
             else
             {
-                m_Zero = two;
-                m_One = one;
+                Zero = two;
+                One = one;
             }
 
             // Note: special case half-circle required
-            if ( m_Zero.Circle.Equals(m_One.Circle) )
+            if ( Zero.Circle.Equals(One.Circle) )
             {
-                m_ValidTangents = CreateDummyTangentsForSameCircles(settings,
-                                                                    m_Zero);
-                m_IsValid = true;
+                ValidTangents = CreateDummyTangentsForSameCircles(settings,
+                                                                  Zero);
+                IsValid = true;
             }
             else
             {
-                m_Calculator.CirclePair = m_CirclePair;
+                m_Calculator.CirclePair = CirclePair;
                 m_Calculator.Calculate();
 
-                m_ValidTangents = SelectTangents(m_Calculator);
-                m_IsValid = DetermineIsValid(one,
-                                             two) && m_ValidTangents.Any();
+                ValidTangents = SelectTangents(m_Calculator);
+                IsValid = DetermineIsValid(one,
+                                           two) && ValidTangents.Any();
             }
         }
 
         public static readonly ITurnCirclePair Unknown = new TurnCirclePair(true);
         private readonly ICirclePairTangentLinesCalculator m_Calculator;
-        private readonly ICirclePair m_CirclePair = Geometry.Shapes.CirclePair.Unknown;
-        private readonly bool m_IsUnknown;
-        private readonly bool m_IsValid;
-        private readonly ITurnCircle m_One = TurnCircle.Unknown;
-        private readonly IEnumerable <ILine> m_ValidTangents = new ILine[0];
-        private readonly ITurnCircle m_Zero = TurnCircle.Unknown;
 
-        public bool IsUnknown
-        {
-            get
-            {
-                return m_IsUnknown;
-            }
-        }
+        public bool IsUnknown { get; }
 
         [NotNull]
         internal IEnumerable <ILine> CreateDummyTangentsForSameCircles([NotNull] ISettings settings,
@@ -115,77 +103,23 @@ namespace Core2.Selkie.Racetrack.Turn
 
         #region ITurnCirclePair Members
 
-        public bool IsValid
-        {
-            get
-            {
-                return m_IsValid;
-            }
-        }
+        public bool IsValid { get; }
 
-        public IEnumerable <ILine> OuterTangents
-        {
-            get
-            {
-                return m_Calculator.OuterTangents;
-            }
-        }
+        public IEnumerable <ILine> OuterTangents => m_Calculator.OuterTangents;
 
-        public IEnumerable <ILine> InnerTangents
-        {
-            get
-            {
-                return m_Calculator.InnerTangents;
-            }
-        }
+        public IEnumerable <ILine> InnerTangents => m_Calculator.InnerTangents;
 
-        public IEnumerable <ILine> Tangents
-        {
-            get
-            {
-                return m_Calculator.Tangents;
-            }
-        }
+        public IEnumerable <ILine> Tangents => m_Calculator.Tangents;
 
-        public IEnumerable <ILine> ValidTangents
-        {
-            get
-            {
-                return m_ValidTangents;
-            }
-        }
+        public IEnumerable <ILine> ValidTangents { get; } = new ILine[0];
 
-        public int NumberOfTangents
-        {
-            get
-            {
-                return m_CirclePair.NumberOfTangents;
-            }
-        }
+        public int NumberOfTangents => CirclePair.NumberOfTangents;
 
-        public ITurnCircle Zero
-        {
-            get
-            {
-                return m_Zero;
-            }
-        }
+        public ITurnCircle Zero { get; } = TurnCircle.Unknown;
 
-        public ITurnCircle One
-        {
-            get
-            {
-                return m_One;
-            }
-        }
+        public ITurnCircle One { get; } = TurnCircle.Unknown;
 
-        public ICirclePair CirclePair
-        {
-            get
-            {
-                return m_CirclePair;
-            }
-        }
+        public ICirclePair CirclePair { get; } = Geometry.Shapes.CirclePair.Unknown;
 
         #endregion
     }

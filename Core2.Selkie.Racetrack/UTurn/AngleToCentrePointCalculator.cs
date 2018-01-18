@@ -1,6 +1,4 @@
 ﻿using System;
-using JetBrains.Annotations;
-using NLog;
 using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
@@ -8,6 +6,9 @@ using Core2.Selkie.Racetrack.Interfaces.Turn;
 using Core2.Selkie.Racetrack.Interfaces.UTurn;
 using Core2.Selkie.Racetrack.Turn;
 using Core2.Selkie.Windsor;
+using JetBrains.Annotations;
+using NLog;
+using TurnCircle = Core2.Selkie.Racetrack.Turn.TurnCircle;
 
 namespace Core2.Selkie.Racetrack.UTurn
 {
@@ -19,8 +20,8 @@ namespace Core2.Selkie.Racetrack.UTurn
             CentrePoint = Point.Unknown;
             LeftIntersectionPoint = Point.Unknown;
             RightIntersectionPoint = Point.Unknown;
-            LeftTurnCircle = Turn.TurnCircle.Unknown;
-            RightTurnCircle = Turn.TurnCircle.Unknown;
+            LeftTurnCircle = TurnCircle.Unknown;
+            RightTurnCircle = TurnCircle.Unknown;
             AngleForLeftTurnCircle = Angle.Unknown;
             AngleForRightTurnCircle = Angle.Unknown;
             Pair = TurnCirclePair.Unknown;

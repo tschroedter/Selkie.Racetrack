@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Calculators;
 using Core2.Selkie.Racetrack.Interfaces.Converters;
 using Core2.Selkie.Racetrack.Interfaces.UTurn;
+using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.Calculators
 {
@@ -16,25 +16,18 @@ namespace Core2.Selkie.Racetrack.Calculators
             m_UTurnPath = uTurnPath;
         }
 
-        internal bool IsUTurnAllowed
-        {
-            get
-            {
-                return m_Settings.IsPortTurnAllowed && m_Settings.IsStarboardTurnAllowed;
-            }
-        }
+        internal bool IsUTurnAllowed => Settings.IsPortTurnAllowed && Settings.IsStarboardTurnAllowed;
 
         private readonly ITurnCirclePairsToPathsConverter m_Converter;
         private readonly IUTurnPath m_UTurnPath;
         private List <IPath> m_Paths = new List <IPath>();
-        private ISettings m_Settings = Racetrack.Settings.Unknown;
 
         public void Calculate()
         {
-            m_Converter.Settings = m_Settings;
+            m_Converter.Settings = Settings;
             m_Converter.Convert();
 
-            m_UTurnPath.Settings = m_Settings;
+            m_UTurnPath.Settings = Settings;
             m_UTurnPath.Calculate();
 
             var paths = new List <IPath>();
@@ -47,25 +40,9 @@ namespace Core2.Selkie.Racetrack.Calculators
             m_Paths = paths;
         }
 
-        public IEnumerable <IPath> Paths
-        {
-            get
-            {
-                return m_Paths;
-            }
-        }
+        public IEnumerable <IPath> Paths => m_Paths;
 
-        public ISettings Settings
-        {
-            get
-            {
-                return m_Settings;
-            }
-            set
-            {
-                m_Settings = value;
-            }
-        }
+        public ISettings Settings { get; set; } = Racetrack.Settings.Unknown;
 
         [NotNull]
         internal IEnumerable <IPath> SelectPaths([NotNull] IUTurnPath uTurnPath,

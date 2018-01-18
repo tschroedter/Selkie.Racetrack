@@ -1,7 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using NSubstitute;
-using NUnit.Framework;
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.NUnit.Extensions;
@@ -10,14 +8,15 @@ using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
 using Core2.Selkie.Racetrack.Turn;
 using Core2.Selkie.Windsor.Interfaces;
+using NSubstitute;
+using NUnit.Framework;
 using Constants = Core2.Selkie.Geometry.Constants;
+using ITurnCircleArcSegment = Core2.Selkie.Geometry.Shapes.ITurnCircleArcSegment;
 using TurnCircle = Core2.Selkie.Racetrack.Turn.TurnCircle;
 // using ITurnCircleArcSegment = Core2.Selkie.Racetrack.Interfaces.Turn.ITurnCircleArcSegment; // Todo check if there is a general TurnCircle,ITurnCircleArcSegment in Geometry
-using ITurnCircleArcSegment = Core2.Selkie.Geometry.Shapes.ITurnCircleArcSegment;
 
 namespace Core2.Selkie.Racetrack.Tests.Converter
 {
-    
     [ExcludeFromCodeCoverage]
     internal sealed class TurnCirclePairToPathConverterTests
     {

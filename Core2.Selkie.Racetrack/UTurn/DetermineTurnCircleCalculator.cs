@@ -1,64 +1,27 @@
-﻿using JetBrains.Annotations;
-using Core2.Selkie.Geometry.Shapes;
+﻿using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.UTurn;
+using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.UTurn
 {
     public class DetermineTurnCircleCalculator : IDetermineTurnCircleCalculator
     {
-        private ITurnCircle m_FinishTurnCircle = TurnCircle.Unknown;
-        private ISettings m_Settings = Racetrack.Settings.Unknown;
-        private ITurnCircle m_StartTurnCircle = TurnCircle.Unknown;
-        private IUTurnCircle m_UTurnCircle = UTurn.UTurnCircle.Unknown;
-
         public void Calculate()
         {
-            m_StartTurnCircle = DetermineStartTurnCircle(m_Settings,
-                                                         m_UTurnCircle);
-            m_FinishTurnCircle = DetermineFinishTurnCircle(m_Settings,
-                                                           m_UTurnCircle);
+            StartTurnCircle = DetermineStartTurnCircle(Settings,
+                                                       UTurnCircle);
+            FinishTurnCircle = DetermineFinishTurnCircle(Settings,
+                                                         UTurnCircle);
         }
 
-        public ISettings Settings
-        {
-            get
-            {
-                return m_Settings;
-            }
-            set
-            {
-                m_Settings = value;
-            }
-        }
+        public ISettings Settings { get; set; } = Racetrack.Settings.Unknown;
 
-        public IUTurnCircle UTurnCircle
-        {
-            get
-            {
-                return m_UTurnCircle;
-            }
-            set
-            {
-                m_UTurnCircle = value;
-            }
-        }
+        public IUTurnCircle UTurnCircle { get; set; } = UTurn.UTurnCircle.Unknown;
 
-        public ITurnCircle StartTurnCircle
-        {
-            get
-            {
-                return m_StartTurnCircle;
-            }
-        }
+        public ITurnCircle StartTurnCircle { get; private set; } = TurnCircle.Unknown;
 
-        public ITurnCircle FinishTurnCircle
-        {
-            get
-            {
-                return m_FinishTurnCircle;
-            }
-        }
+        public ITurnCircle FinishTurnCircle { get; private set; } = TurnCircle.Unknown;
 
         [NotNull]
         internal ITurnCircle DetermineFinishTurnCircle([NotNull] ISettings settings,

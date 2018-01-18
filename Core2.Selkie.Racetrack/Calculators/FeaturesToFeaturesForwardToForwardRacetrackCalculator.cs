@@ -1,6 +1,6 @@
-using JetBrains.Annotations;
 using Core2.Selkie.Geometry.Surveying;
 using Core2.Selkie.Racetrack.Interfaces.Calculators;
+using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.Calculators
 {
@@ -8,7 +8,8 @@ namespace Core2.Selkie.Racetrack.Calculators
         : BaseFeaturesToFeaturesRacetracksCalculator,
           IFeaturesToFeaturesForwardToForwardRacetrackCalculator
     {
-        public FeaturesToFeaturesForwardToForwardRacetrackCalculator([NotNull] IForwardToForwardFeatureCalculator calculator)
+        public FeaturesToFeaturesForwardToForwardRacetrackCalculator(
+            [NotNull] IForwardToForwardFeatureCalculator calculator)
             : base(calculator)
         {
         }

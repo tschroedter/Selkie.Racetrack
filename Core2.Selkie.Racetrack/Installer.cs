@@ -11,7 +11,7 @@ using Core2.Selkie.Geometry.ThreeD.Interfaces.Converters;
 using Core2.Selkie.Racetrack.Interfaces.Calculators;
 using ICalculator = Core2.Selkie.Geometry.Calculators.ICalculator;
 
-[assembly: InternalsVisibleTo("Core2.Selkie.Racetrack.Tests")]
+[assembly : InternalsVisibleTo("Core2.Selkie.Racetrack.Tests")]
 
 namespace Core2.Selkie.Racetrack
 {
@@ -23,7 +23,7 @@ namespace Core2.Selkie.Racetrack
         {
             container.Register(Component.For <ICalculatorFactory>().AsFactory());
 
-            Assembly assembly = Assembly.GetAssembly(typeof(Installer));
+            Assembly assembly = Assembly.GetAssembly(typeof( Installer ));
 
             container.Register(
                                Classes.FromAssembly(assembly)

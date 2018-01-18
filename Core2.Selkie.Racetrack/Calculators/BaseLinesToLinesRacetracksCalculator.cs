@@ -1,17 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Calculators;
+using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.Calculators
 {
     public abstract class BaseLinesToLinesRacetracksCalculator : IBaseLinesToLinesRacetracksCalculator
     {
-        private readonly IBaseRacetrackCalculator m_Calculator;
-
         protected BaseLinesToLinesRacetracksCalculator([NotNull] IBaseRacetrackCalculator calculator)
         {
             TurnRadiusForStarboard = Distance.Unknown;
@@ -22,6 +20,8 @@ namespace Core2.Selkie.Racetrack.Calculators
             IsPortTurnAllowed = true;
             m_Calculator = calculator;
         }
+
+        private readonly IBaseRacetrackCalculator m_Calculator;
 
         public bool IsPortTurnAllowed { get; set; }
 

@@ -1,10 +1,10 @@
-﻿using JetBrains.Annotations;
-using Core2.Selkie.Geometry;
+﻿using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
 using Core2.Selkie.Windsor;
+using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.Turn
 {
@@ -190,7 +190,7 @@ namespace Core2.Selkie.Racetrack.Turn
 
         #region IPossibleTurnCircles Members
 
-        public bool IsUnknown { get; private set; }
+        public bool IsUnknown { get; }
 
         public ISettings Settings { get; set; }
 
