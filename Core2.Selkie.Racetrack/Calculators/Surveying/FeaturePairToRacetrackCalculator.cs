@@ -2,11 +2,12 @@
 using Core2.Selkie.Geometry.Surveying;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Calculators;
+using Core2.Selkie.Racetrack.Interfaces.Calculators.Surveying;
 using Core2.Selkie.Windsor;
 using JetBrains.Annotations;
 using SelkieRacetrack = Core2.Selkie.Racetrack;
 
-namespace Core2.Selkie.Racetrack.Calculators
+namespace Core2.Selkie.Racetrack.Calculators.Surveying
 {
     [ProjectComponent(Lifestyle.Transient)]
     public sealed class FeaturePairToRacetrackCalculator

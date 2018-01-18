@@ -2,7 +2,7 @@
 using Core2.Selkie.Geometry.Surveying;
 using JetBrains.Annotations;
 
-namespace Core2.Selkie.Racetrack.Interfaces.Calculators
+namespace Core2.Selkie.Racetrack.Interfaces.Calculators.Surveying
 {
     public interface IBaseRacetrackFeatureCalculator : ICalculator
     {
