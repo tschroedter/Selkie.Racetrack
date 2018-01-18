@@ -15,7 +15,7 @@ using TurnCircle = Core2.Selkie.Racetrack.Turn.TurnCircle;
 
 namespace Core2.Selkie.Racetrack.Tests.Converter.NUnit
 {
-    // ReSharper disable ClassTooBig
+    
     [ExcludeFromCodeCoverage]
     internal sealed class TurnCirclePairToPathCreatorTests
     {

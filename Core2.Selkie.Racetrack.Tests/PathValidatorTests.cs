@@ -11,8 +11,8 @@ using Core2.Selkie.Windsor.Interfaces;
 namespace Core2.Selkie.Racetrack.Tests
 {
     // todo cleanup all tests, make sure to use arrange, act, assert and method name
-    // ReSharper disable ClassTooBig
-    // ReSharper disable MethodTooLong
+    
+    
     [TestFixture]
     [ExcludeFromCodeCoverage]
     internal sealed class PathValidatorTests

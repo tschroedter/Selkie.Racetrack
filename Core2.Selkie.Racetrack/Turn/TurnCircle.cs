@@ -44,7 +44,6 @@ namespace Core2.Selkie.Racetrack.Turn
 
         #region IEquatable<TurnCircle> Members
 
-        // ReSharper disable once CodeAnnotationAnalyzer
         public bool Equals(TurnCircle other)
         {
             if ( ReferenceEquals(null,
@@ -69,12 +68,12 @@ namespace Core2.Selkie.Racetrack.Turn
         public bool IsUnknown
         {
             get
-            {
+            { 
                 return m_IsUnknown;
             }
         }
 
-        // ReSharper disable once CodeAnnotationAnalyzer
+        
         public override bool Equals(object obj)
         {
             if ( ReferenceEquals(null,

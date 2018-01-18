@@ -85,7 +85,7 @@ namespace Core2.Selkie.Racetrack.Tests.UTurn.NUnit
             public void DetermineFinishTurnCircleReturnsOneForFinishPointIsOnOneCircleTest()
             {
                 var zeroTurnCircle = Substitute.For <ITurnCircle>();
-                // ReSharper disable once MaximumChainedReferences
+                
                 zeroTurnCircle.IsPointOnCircle(Arg.Any <Point>()).ReturnsForAnyArgs(false);
 
                 var oneTurnCircle = Substitute.For <ITurnCircle>();
@@ -105,7 +105,6 @@ namespace Core2.Selkie.Racetrack.Tests.UTurn.NUnit
             public void DetermineFinishTurnCircleReturnsZeroForFinishPointIsOnZeroCircleTest()
             {
                 var zeroTurnCircle = Substitute.For <ITurnCircle>();
-                // ReSharper disable once MaximumChainedReferences
                 zeroTurnCircle.IsPointOnCircle(Arg.Any <Point>()).ReturnsForAnyArgs(true);
 
                 var uTurnCircle = Substitute.For <IUTurnCircle>();
@@ -122,7 +121,6 @@ namespace Core2.Selkie.Racetrack.Tests.UTurn.NUnit
             public void DetermineStartTurnCircleReturnsOneForStartPointIsOnOneCircleTest()
             {
                 var zeroTurnCircle = Substitute.For <ITurnCircle>();
-                // ReSharper disable once MaximumChainedReferences
                 zeroTurnCircle.IsPointOnCircle(Arg.Any <Point>()).ReturnsForAnyArgs(false);
 
                 var oneTurnCircle = Substitute.For <ITurnCircle>();
@@ -142,7 +140,7 @@ namespace Core2.Selkie.Racetrack.Tests.UTurn.NUnit
             public void DetermineStartTurnCircleReturnsZeroForFinishPointIsOnZeroCircleTest()
             {
                 var zeroTurnCircle = Substitute.For <ITurnCircle>();
-                // ReSharper disable once MaximumChainedReferences
+                
                 zeroTurnCircle.IsPointOnCircle(Arg.Any <Point>()).ReturnsForAnyArgs(true);
 
                 var uTurnCircle = Substitute.For <IUTurnCircle>();

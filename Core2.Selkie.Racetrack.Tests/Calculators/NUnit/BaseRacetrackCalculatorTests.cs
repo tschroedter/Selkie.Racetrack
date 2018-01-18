@@ -20,10 +20,8 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators.NUnit
         {
             m_LineOne = Substitute.For <ILine>();
             m_LineTwo = Substitute.For <ILine>();
-            // ReSharper disable MaximumChainedReferences
             m_LineOne.Equals(m_LineOne).Returns(true);
             m_LineOne.Equals(m_LineTwo).Returns(false);
-            // ReSharper enable MaximumChainedReferences
 
             m_Racetrack = Substitute.For <IPath>();
 

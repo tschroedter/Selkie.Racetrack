@@ -12,8 +12,8 @@ using Core2.Selkie.Racetrack.UTurn;
 
 namespace Core2.Selkie.Racetrack.Tests.UTurn.NUnit
 {
-    // ReSharper disable ClassTooBig
-    // ReSharper disable MethodTooLong
+    
+    
     [ExcludeFromCodeCoverage]
     internal sealed class UTurnCircleTests
     {

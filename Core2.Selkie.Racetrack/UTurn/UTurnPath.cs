@@ -100,7 +100,6 @@ namespace Core2.Selkie.Racetrack.UTurn
         }
 
         [NotNull]
-        // ReSharper disable once TooManyArguments
         internal ITurnCircleArcSegment CreateUTurnArcSegment([NotNull] IUTurnCircle uTurnCircle,
                                                              Constants.CircleOrigin origin,
                                                              [NotNull] Point startPoint,

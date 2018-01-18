@@ -17,7 +17,7 @@ using ITurnCircleArcSegment = Core2.Selkie.Geometry.Shapes.ITurnCircleArcSegment
 
 namespace Core2.Selkie.Racetrack.Tests.Converter
 {
-    // ReSharper disable ClassTooBig
+    
     [ExcludeFromCodeCoverage]
     internal sealed class TurnCirclePairToPathConverterTests
     {

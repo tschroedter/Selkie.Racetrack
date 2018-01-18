@@ -7,7 +7,7 @@ using Core2.Selkie.Geometry.Shapes;
 
 namespace Core2.Selkie.Racetrack.Tests
 {
-    // ReSharper disable ClassTooBig
+    
     [TestFixture]
     [ExcludeFromCodeCoverage]
     internal sealed class SettingsTests
@@ -45,7 +45,6 @@ namespace Core2.Selkie.Racetrack.Tests
         [NotNull]
         private Settings CreateSettings()
         {
-            // ReSharper disable once IntroduceOptionalParameters.Local
             return CreateSettings(true,
                                   true);
         }
@@ -205,7 +204,6 @@ namespace Core2.Selkie.Racetrack.Tests
 
             // Act
             // Assert
-            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
             Assert.DoesNotThrow(() => sut.GetHashCode());
         }
 

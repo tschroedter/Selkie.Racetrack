@@ -21,7 +21,6 @@ namespace Core2.Selkie.Racetrack
 
         #region IPathValidator Members
 
-        // ReSharper disable once MethodTooLong
         public bool IsValid(IPath path,
                             Constants.TurnDirection defaultTurnDirection)
         {
@@ -61,7 +60,6 @@ namespace Core2.Selkie.Racetrack
                 return false;
             }
 
-            // ReSharper disable once ConvertIfStatementToReturnStatement
             if ( !IsValidArcSegment(middleSegment,
                                     endSegment,
                                     defaultTurnDirection) )

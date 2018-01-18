@@ -14,7 +14,7 @@ using TurnCircle = Core2.Selkie.Racetrack.Turn.TurnCircle;
 
 namespace Core2.Selkie.Racetrack.Tests.Turn
 {
-    // ReSharper disable ClassTooBig
+    
     [ExcludeFromCodeCoverage]
     internal sealed class TurnCirclePairTests
     {
@@ -284,7 +284,7 @@ namespace Core2.Selkie.Racetrack.Tests.Turn
             public void DetermineIsValidForForDistanceLessRadiusTest()
             {
                 var oneCircle = Substitute.For <ICircle>();
-                // ReSharper disable once MaximumChainedReferences
+                
                 oneCircle.Distance(Arg.Any <ICircle>()).Returns(5.0);
 
                 var one = Substitute.For <ITurnCircle>();

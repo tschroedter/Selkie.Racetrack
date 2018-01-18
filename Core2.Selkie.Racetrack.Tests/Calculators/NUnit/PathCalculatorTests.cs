@@ -21,8 +21,6 @@ using ITurnCircleArcSegment = Core2.Selkie.Geometry.Shapes.ITurnCircleArcSegment
 
 namespace Core2.Selkie.Racetrack.Tests.Calculators.NUnit
 {
-    // ReSharper disable ClassTooBig
-    // ReSharper disable MethodTooLong
     [ExcludeFromCodeCoverage]
     internal sealed class PathCalculatorTests
     {
@@ -52,7 +50,6 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators.NUnit
                 m_RadiusForPortTurn = new Distance(30.0);
                 m_RadiusForStarboardTurn = new Distance(30.0);
 
-                // ReSharper disable once PossibleNullReferenceException
                 m_Settings = new Settings(m_FromLine.EndPoint,
                                           m_FromLine.AngleToXAxis,
                                           m_ToLine.StartPoint,
@@ -245,7 +242,6 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators.NUnit
         internal sealed class CaseTwoTimesRadiusDistanceTest
         {
             [SetUp]
-            // ReSharper disable once MethodTooLong
             public void Setup()
             {
                 m_Logger = Substitute.For <ISelkieLogger>();
@@ -266,7 +262,6 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators.NUnit
                 m_RadiusForPortTurn = new Distance(30.0);
                 m_RadiusForStarboardTurn = new Distance(30.0);
 
-                // ReSharper disable once PossibleNullReferenceException
                 m_Settings = new Settings(m_FromLine.EndPoint,
                                           m_FromLine.AngleToXAxis,
                                           m_ToLine.StartPoint,
@@ -464,7 +459,6 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators.NUnit
         internal sealed class ConstructorForUTurnIsRequiredIsFalseCaseTwoTest
         {
             [SetUp]
-            // ReSharper disable once MethodTooLong
             public void Setup()
             {
                 m_Logger = Substitute.For <ISelkieLogger>();
@@ -647,7 +641,6 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators.NUnit
         internal sealed class ConstructorForUTurnIsRequiredIsFalseTest
         {
             [SetUp]
-            // ReSharper disable once MethodTooLong
             public void Setup()
             {
                 Substitute.For <ISelkieLogger>();
@@ -758,7 +751,6 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators.NUnit
         internal sealed class ConstructorForUTurnIsRequiredIsTrueTest
         {
             [SetUp]
-            // ReSharper disable once MethodTooLong
             public void Setup()
             {
                 m_Logger = Substitute.For <ISelkieLogger>();
@@ -867,7 +859,6 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators.NUnit
         internal sealed class LinePairToRacetrackConverterUTurnTests
         {
             [SetUp]
-            // ReSharper disable once MethodTooLong
             public void Setup()
             {
                 m_Logger = Substitute.For <ISelkieLogger>();
@@ -1063,7 +1054,6 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators.NUnit
                 m_RadiusForPortTurn = new Distance(100.0);
                 m_RadiusForStarboardTurn = new Distance(10.0);
 
-                // ReSharper disable once PossibleNullReferenceException
                 m_Settings = new Settings(m_FromLine.EndPoint,
                                           m_FromLine.AngleToXAxis,
                                           m_ToLine.StartPoint,

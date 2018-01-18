@@ -27,7 +27,6 @@ namespace Core2.Selkie.Racetrack
             m_LargestRadiusForTurn = Distance.Unknown;
         }
 
-        // ReSharper disable once TooManyDependencies
         public Settings([NotNull] Point startPoint,
                         [NotNull] Angle startAzimuth,
                         [NotNull] Point finishPoint,
@@ -65,7 +64,7 @@ namespace Core2.Selkie.Racetrack
 
         #region IEquatable<Settings> Members
 
-        // ReSharper disable once CodeAnnotationAnalyzer
+        
         public bool Equals(Settings other)
         {
             if ( ReferenceEquals(null,
@@ -109,7 +108,7 @@ namespace Core2.Selkie.Racetrack
                            right);
         }
 
-        // ReSharper disable once CodeAnnotationAnalyzer
+        
         public override bool Equals(object obj)
         {
             if ( ReferenceEquals(null,

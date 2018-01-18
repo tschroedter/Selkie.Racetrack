@@ -14,7 +14,6 @@ using TurnCircle = Core2.Selkie.Racetrack.Turn.TurnCircle;
 
 namespace Core2.Selkie.Racetrack.Tests.UTurn.NUnit
 {
-    // ReSharper disable ClassTooBig
     [ExcludeFromCodeCoverage]
     internal sealed class AngleToCentrePointCalculatorTests
     {
@@ -698,7 +697,6 @@ namespace Core2.Selkie.Racetrack.Tests.UTurn.NUnit
                                               zero,
                                               one);
 
-                // ReSharper disable once ObjectCreationAsStatement
                 Assert.Throws <ArgumentException>(() => new AngleToCentrePointCalculator
                                                         {
                                                             Pair = pair

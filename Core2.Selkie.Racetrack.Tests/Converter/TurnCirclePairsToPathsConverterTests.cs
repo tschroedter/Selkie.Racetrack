@@ -20,7 +20,7 @@ namespace Core2.Selkie.Racetrack.Tests.Converter
     {
         [TestFixture]
         [ExcludeFromCodeCoverage]
-        // ReSharper disable MethodTooLong
+        
         internal sealed class TurnCirclePairsToPathsConverterPortAndStarboardRadiusAreTheSameTests
         {
             [SetUp]
@@ -168,7 +168,7 @@ namespace Core2.Selkie.Racetrack.Tests.Converter
 
         [TestFixture]
         [ExcludeFromCodeCoverage]
-        // ReSharper disable MethodTooLong
+        
         internal sealed class TurnCirclePairsToPathsConverterForPortAndStarboardWithDifferentRadiusTests
         {
             [SetUp]

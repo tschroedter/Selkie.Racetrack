@@ -24,7 +24,6 @@ namespace Core2.Selkie.Racetrack
 
             foreach ( IPath path in Paths )
             {
-                // ReSharper disable once InvertIf
                 if ( minLength > path.Distance.Length )
                 {
                     minLength = path.Distance.Length;

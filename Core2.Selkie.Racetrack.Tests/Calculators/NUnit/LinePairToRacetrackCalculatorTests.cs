@@ -41,7 +41,6 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators.NUnit
             m_PathCalculator.Received().Calculate();
         }
 
-        // ReSharper disable once MethodTooLong
         [Test]
         public void CalculateSetsSettingsTest()
         {

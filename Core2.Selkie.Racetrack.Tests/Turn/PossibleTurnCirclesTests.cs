@@ -9,7 +9,7 @@ using Core2.Selkie.Racetrack.Turn;
 
 namespace Core2.Selkie.Racetrack.Tests.Turn
 {
-    // ReSharper disable ClassTooBig
+    
     [ExcludeFromCodeCoverage]
     internal sealed class PossibleTurnCirclesTests
     {

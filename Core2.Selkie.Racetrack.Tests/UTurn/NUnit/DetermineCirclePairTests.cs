@@ -11,7 +11,7 @@ using Core2.Selkie.Racetrack.UTurn;
 
 namespace Core2.Selkie.Racetrack.Tests.UTurn.NUnit
 {
-    // ReSharper disable ClassTooBig
+    
     [TestFixture]
     [ExcludeFromCodeCoverage]
     internal sealed class DetermineCirclePairTests

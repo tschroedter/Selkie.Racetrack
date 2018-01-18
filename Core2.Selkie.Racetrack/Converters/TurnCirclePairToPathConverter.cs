@@ -7,7 +7,6 @@ using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Converters;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
-using Core2.Selkie.Windsor;
 using Core2.Selkie.Windsor.Interfaces;
 
 namespace Core2.Selkie.Racetrack.Converters
@@ -47,9 +46,7 @@ namespace Core2.Selkie.Racetrack.Converters
                 return paths;
             }
 
-            // ReSharper disable LoopCanBeConvertedToQuery
             foreach ( ILine tangent in turnCirclePair.ValidTangents )
-                // ReSharper restore LoopCanBeConvertedToQuery
             {
                 var creator = new TurnCirclePairToPathCreator(m_Logger,
                                                               settings,

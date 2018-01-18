@@ -12,8 +12,8 @@ using Core2.Selkie.Geometry.Shapes;
 
 namespace Core2.Selkie.Racetrack.Tests.Calculators
 {
-    // ReSharper disable ClassTooBig
-    // ReSharper disable MethodTooLong
+    
+    
     [TestFixture]
     [ExcludeFromCodeCoverage]
     internal sealed class RacetracksCalculatorTests

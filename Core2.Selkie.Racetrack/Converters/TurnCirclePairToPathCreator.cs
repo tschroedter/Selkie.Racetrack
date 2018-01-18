@@ -38,7 +38,6 @@ namespace Core2.Selkie.Racetrack.Converters
 
         #endregion
 
-        // ReSharper disable once MethodTooLong
         [NotNull]
         private IPath CreatePath([NotNull] ISettings settings,
                                  [NotNull] ITurnCirclePair turnCirclePair,

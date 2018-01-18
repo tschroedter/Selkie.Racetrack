@@ -13,7 +13,7 @@ using TurnCircle = Core2.Selkie.Racetrack.Turn.TurnCircle;
 
 namespace Core2.Selkie.Racetrack.Tests.Turn.NUnit
 {
-    // ReSharper disable ClassTooBig
+    
     [ExcludeFromCodeCoverage]
     internal sealed class PossibleTurnCirclePairsTests
     {
@@ -39,7 +39,7 @@ namespace Core2.Selkie.Racetrack.Tests.Turn.NUnit
                 m_RadiusForPortTurn = new Distance(30.0);
                 m_RadiusForStarboardTurn = new Distance(30.0);
 
-                // ReSharper disable once PossibleNullReferenceException
+                
                 m_Settings = new Settings(m_FromLine.EndPoint,
                                           m_FromLine.AngleToXAxis,
                                           m_ToLine.StartPoint,
@@ -292,7 +292,7 @@ namespace Core2.Selkie.Racetrack.Tests.Turn.NUnit
                 m_RadiusForPortTurn = new Distance(30.0);
                 m_RadiusForStarboardTurn = new Distance(30.0);
 
-                // ReSharper disable once PossibleNullReferenceException
+                
                 m_Settings = new Settings(m_FromLine.EndPoint,
                                           m_FromLine.AngleToXAxis,
                                           m_ToLine.StartPoint,
@@ -527,7 +527,6 @@ namespace Core2.Selkie.Racetrack.Tests.Turn.NUnit
         internal sealed class PossibleTurnCirclePairsGeneralTests
         {
             [SetUp]
-            // ReSharper disable once MethodTooLong
             public void Setup()
             {
                 m_Settings = Substitute.For <ISettings>();
@@ -1078,7 +1077,7 @@ namespace Core2.Selkie.Racetrack.Tests.Turn.NUnit
                 m_RadiusForPortTurn = new Distance(10.0);
                 m_RadiusForStarboardTurn = new Distance(100.0);
 
-                // ReSharper disable once PossibleNullReferenceException
+                
                 m_Settings = new Settings(m_FromLine.EndPoint,
                                           m_FromLine.AngleToXAxis,
                                           m_ToLine.StartPoint,

@@ -8,7 +8,7 @@ using TurnCircle = Core2.Selkie.Racetrack.Turn.TurnCircle;
 
 namespace Core2.Selkie.Racetrack.Tests.Turn.NUnit
 {
-    // ReSharper disable ClassTooBig
+    
     [TestFixture]
     [ExcludeFromCodeCoverage]
     internal sealed class TurnCircleTests
@@ -161,7 +161,6 @@ namespace Core2.Selkie.Racetrack.Tests.Turn.NUnit
         [Test]
         public void GetHashCodeTest()
         {
-            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
             Assert.DoesNotThrow(() => m_TurnCircle.GetHashCode());
         }
 
