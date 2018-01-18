@@ -15,10 +15,8 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators.NUnit
         [SetUp]
         public void Setup()
         {
-            m_ToLineReversed = Substitute.For <ILine>();
             m_FromLine = Substitute.For <ILine>();
-            m_ToLine = Substitute.For <ILine>();
-            m_ToLine.Reverse().Returns(m_ToLineReversed);
+            m_ToLine = new Line(0,1,2,3,4);
             m_RadiusForPortTurn = new Distance(123.0);
             m_RadiusForStarboardTurn = new Distance(456.0);
 
@@ -31,7 +29,6 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators.NUnit
         private ILine m_FromLine;
         private ILinePairToRacetrackCalculator m_RacetrackCalculator;
         private ILine m_ToLine;
-        private ILine m_ToLineReversed;
         private Distance m_RadiusForPortTurn;
         private Distance m_RadiusForStarboardTurn;
 
@@ -134,12 +131,14 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators.NUnit
         [Test]
         public void GetCalculatorSetsToLineTest()
         {
+            var toLineReversed = m_ToLine.Reverse();
+
             m_Calculator.GetCalculator(m_FromLine,
                                        m_ToLine,
                                        m_RadiusForPortTurn,
                                        m_RadiusForStarboardTurn);
 
-            Assert.AreEqual(m_ToLineReversed,
+            Assert.AreEqual(toLineReversed,
                             m_RacetrackCalculator.ToLine);
         }
     }

@@ -6,8 +6,7 @@ using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Converters;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
 using Core2.Selkie.Windsor.Interfaces;
-using ITurnCircleArcSegment = Core2.Selkie.Racetrack.Interfaces.Turn.ITurnCircleArcSegment;
-using TurnCircleArcSegment = Core2.Selkie.Racetrack.Turn.TurnCircleArcSegment;
+using ITurnCircleArcSegment = Core2.Selkie.Geometry.Shapes.ITurnCircleArcSegment;
 
 namespace Core2.Selkie.Racetrack.Converters
 {

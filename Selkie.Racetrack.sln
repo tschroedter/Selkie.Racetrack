@@ -3,14 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27205.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Selkie.Racetrack", "Selkie.Racetrack\Selkie.Racetrack.csproj", "{C0C3967F-0CB2-4632-9FE9-CDAD632F45C8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet.Selkie.Racetrack", "NuGet.Selkie.Racetrack\NuGet.Selkie.Racetrack.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
-	ProjectSection(ProjectDependencies) = postProject
-		{C0C3967F-0CB2-4632-9FE9-CDAD632F45C8} = {C0C3967F-0CB2-4632-9FE9-CDAD632F45C8}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Selkie.Racetrack.Tests", "Selkie.Racetrack.Tests\Selkie.Racetrack.Tests.csproj", "{3FA60B76-CD43-4F71-88D8-3FA944D3D278}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core2.Selkie.Racetrack", "Core2.Selkie.Racetrack\Core2.Selkie.Racetrack.csproj", "{9F206BDF-71D2-427D-9D6D-8335FAD78E15}"
 EndProject
@@ -24,18 +17,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C0C3967F-0CB2-4632-9FE9-CDAD632F45C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C0C3967F-0CB2-4632-9FE9-CDAD632F45C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C0C3967F-0CB2-4632-9FE9-CDAD632F45C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C0C3967F-0CB2-4632-9FE9-CDAD632F45C8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3FA60B76-CD43-4F71-88D8-3FA944D3D278}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3FA60B76-CD43-4F71-88D8-3FA944D3D278}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3FA60B76-CD43-4F71-88D8-3FA944D3D278}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3FA60B76-CD43-4F71-88D8-3FA944D3D278}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9F206BDF-71D2-427D-9D6D-8335FAD78E15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9F206BDF-71D2-427D-9D6D-8335FAD78E15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F206BDF-71D2-427D-9D6D-8335FAD78E15}.Release|Any CPU.ActiveCfg = Release|Any CPU

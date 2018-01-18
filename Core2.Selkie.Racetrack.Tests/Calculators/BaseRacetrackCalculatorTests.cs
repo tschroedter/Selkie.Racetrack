@@ -4,7 +4,6 @@ using JetBrains.Annotations;
 using NSubstitute;
 using NUnit.Framework;
 using Core2.Selkie.Geometry.Primitives;
-using Core2.Selkie.Geometry.Surveying;
 using Core2.Selkie.Racetrack.Calculators;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Calculators;
@@ -20,7 +19,15 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators
         public void Setup()
         {
             m_LineOne = Substitute.For <ILine>();
+            m_LineOne.Id.Returns(0);
+            m_LineOne.Equals(m_LineOne).Returns(true);
+
             m_LineTwo = Substitute.For <ILine>();
+            m_LineTwo.Id.Returns(2);
+            m_LineTwo.Equals(m_LineTwo).Returns(true);
+
+            m_LineOne.Equals(m_LineTwo).Returns(false);
+            m_LineTwo.Equals(m_LineOne).Returns(false);
 
             m_Racetrack = Substitute.For <IPath>();
 

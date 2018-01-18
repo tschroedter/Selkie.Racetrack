@@ -2,7 +2,6 @@
 using NSubstitute;
 using NUnit.Framework;
 using Core2.Selkie.Geometry.Primitives;
-using Core2.Selkie.Geometry.Surveying;
 using Core2.Selkie.Racetrack.Calculators;
 using Core2.Selkie.Racetrack.Interfaces.Calculators;
 using Core2.Selkie.Geometry.Shapes;
@@ -16,10 +15,12 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators
         [SetUp]
         public void Setup()
         {
-            m_ToLineReversed = Substitute.For <ILine>();
-            m_FromFeature = Substitute.For <ILine>();
-            m_ToLine = Substitute.For <ILine>();
-            m_ToLine.Reverse().Returns(m_ToLineReversed);
+            m_FromLine = Substitute.For <ILine>();
+            m_ToLine = new Line(0,
+                                1,
+                                2,
+                                3,
+                                4);
             m_RadiusForPortTurn = new Distance(123.0);
             m_RadiusForStarboardTurn = new Distance(456.0);
 
@@ -29,17 +30,16 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators
         }
 
         private ForwardToReverseCalculator m_Calculator;
-        private ILine m_FromFeature;
+        private ILine m_FromLine;
         private ILinePairToRacetrackCalculator m_RacetrackCalculator;
         private ILine m_ToLine;
-        private ILine m_ToLineReversed;
         private Distance m_RadiusForPortTurn;
         private Distance m_RadiusForStarboardTurn;
 
         [Test]
         public void GetCalculatorCallsCalculateTest()
         {
-            m_Calculator.GetCalculator(m_FromFeature,
+            m_Calculator.GetCalculator(m_FromLine,
                                        m_ToLine,
                                        m_RadiusForPortTurn,
                                        m_RadiusForStarboardTurn);
@@ -50,7 +50,7 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators
         [Test]
         public void GetCalculatorReturnsCalculatorTest()
         {
-            ILinePairToRacetrackCalculator actual = m_Calculator.GetCalculator(m_FromFeature,
+            ILinePairToRacetrackCalculator actual = m_Calculator.GetCalculator(m_FromLine,
                                                                                   m_ToLine,
                                                                                   m_RadiusForPortTurn,
                                                                                   m_RadiusForStarboardTurn);
@@ -62,19 +62,19 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators
         [Test]
         public void GetCalculatorSetsFromFeatureTest()
         {
-            m_Calculator.GetCalculator(m_FromFeature,
+            m_Calculator.GetCalculator(m_FromLine,
                                        m_ToLine,
                                        m_RadiusForPortTurn,
                                        m_RadiusForStarboardTurn);
 
-            Assert.AreEqual(m_FromFeature,
+            Assert.AreEqual(m_FromLine,
                             m_RacetrackCalculator.FromLine);
         }
 
         [Test]
         public void GetCalculatorSetsIsPortTurnAllowedTest()
         {
-            m_Calculator.GetCalculator(m_FromFeature,
+            m_Calculator.GetCalculator(m_FromLine,
                                        m_ToLine,
                                        m_RadiusForPortTurn,
                                        m_RadiusForStarboardTurn);
@@ -85,7 +85,7 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators
         [Test]
         public void GetCalculatorSetsIsStarboardTurnAllowedTest()
         {
-            m_Calculator.GetCalculator(m_FromFeature,
+            m_Calculator.GetCalculator(m_FromLine,
                                        m_ToLine,
                                        m_RadiusForPortTurn,
                                        m_RadiusForStarboardTurn);
@@ -96,7 +96,7 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators
         [Test]
         public void GetCalculatorSetsRadiusForPortTurnTest()
         {
-            m_Calculator.GetCalculator(m_FromFeature,
+            m_Calculator.GetCalculator(m_FromLine,
                                        m_ToLine,
                                        m_RadiusForPortTurn,
                                        m_RadiusForStarboardTurn);
@@ -108,7 +108,7 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators
         [Test]
         public void GetCalculatorSetsRadiusForStarboardTurnTest()
         {
-            m_Calculator.GetCalculator(m_FromFeature,
+            m_Calculator.GetCalculator(m_FromLine,
                                        m_ToLine,
                                        m_RadiusForPortTurn,
                                        m_RadiusForStarboardTurn);
@@ -123,7 +123,7 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators
             var ToLine = Substitute.For <ILine>();
             ToLine.Reverse().Returns(( ILine ) null);
 
-            m_Calculator.GetCalculator(m_FromFeature,
+            m_Calculator.GetCalculator(m_FromLine,
                                        ToLine,
                                        m_RadiusForPortTurn,
                                        m_RadiusForStarboardTurn);
@@ -135,12 +135,14 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators
         [Test]
         public void GetCalculatorSetsToLineTest()
         {
-            m_Calculator.GetCalculator(m_FromFeature,
+            var toLineReversed = m_ToLine.Reverse();
+
+            m_Calculator.GetCalculator(m_FromLine,
                                        m_ToLine,
                                        m_RadiusForPortTurn,
                                        m_RadiusForStarboardTurn);
 
-            Assert.AreEqual(m_ToLineReversed,
+            Assert.AreEqual(toLineReversed,
                             m_RacetrackCalculator.ToLine);
         }
     }
