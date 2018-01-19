@@ -10,9 +10,6 @@ using NUnit.Framework;
 
 namespace Core2.Selkie.Racetrack.Tests
 {
-    // todo cleanup all tests, make sure to use arrange, act, assert and method name
-
-
     [TestFixture]
     [ExcludeFromCodeCoverage]
     internal sealed class PathValidatorTests

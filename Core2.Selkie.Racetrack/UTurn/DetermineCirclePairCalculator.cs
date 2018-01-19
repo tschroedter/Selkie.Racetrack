@@ -7,12 +7,13 @@ using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
 using Core2.Selkie.Racetrack.Interfaces.UTurn;
 using Core2.Selkie.Racetrack.Turn;
+using Core2.Selkie.Windsor;
 using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.UTurn
 {
     [UsedImplicitly]
-    // Todo why is this not a ProjectComponent
+    [ProjectComponent(Lifestyle.Transient)]
     public class DetermineCirclePairCalculator : IDetermineCirclePairCalculator
     {
         public DetermineCirclePairCalculator([NotNull] IPossibleTurnCircles possibleTurnCircles)

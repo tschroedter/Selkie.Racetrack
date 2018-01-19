@@ -3,11 +3,13 @@ using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
 using Core2.Selkie.Racetrack.Interfaces.UTurn;
+using Core2.Selkie.Windsor;
 using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.UTurn
 {
     [UsedImplicitly]
+    [ProjectComponent(Lifestyle.Transient)]
     public class UTurnCircleCalculator : IUTurnCircleCalculator
     {
         public UTurnCircleCalculator([NotNull] IDetermineCirclePairCalculator determineCirclePairCalculator,
