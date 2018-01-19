@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.Converters
 {
+    [UsedImplicitly]
     public class TurnCirclePairsToPathsConverter : ITurnCirclePairsToPathsConverter
     {
         public TurnCirclePairsToPathsConverter([NotNull] ITurnCirclePairToPathConverter turnCirclePairToPathConverter,

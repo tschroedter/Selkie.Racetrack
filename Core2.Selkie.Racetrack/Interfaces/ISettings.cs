@@ -25,6 +25,7 @@ namespace Core2.Selkie.Racetrack.Interfaces
         Constants.TurnDirection
             DefaultTurnDirection { get; } // TODO: Remove TurnDirectiom from Selkie.Geometry and use Selkie.Common one
 
+        [UsedImplicitly]
         bool IsUnknown { get; }
 
         [NotNull]

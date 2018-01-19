@@ -11,6 +11,7 @@ using NLog;
 
 namespace Core2.Selkie.Racetrack.UTurn
 {
+    [UsedImplicitly]
     [ProjectComponent(Lifestyle.Transient)]
     public class AngleToCentrePointCalculator : IAngleToCentrePointCalculator
     {

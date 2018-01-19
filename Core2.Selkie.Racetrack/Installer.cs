@@ -9,12 +9,14 @@ using Castle.Windsor;
 using Core2.Selkie.Common;
 using Core2.Selkie.Geometry.ThreeD.Interfaces.Converters;
 using Core2.Selkie.Racetrack.Interfaces.Calculators;
+using JetBrains.Annotations;
 using ICalculator = Core2.Selkie.Geometry.Calculators.ICalculator;
 
 [assembly : InternalsVisibleTo("Core2.Selkie.Racetrack.Tests")]
 
 namespace Core2.Selkie.Racetrack
 {
+    [UsedImplicitly]
     [ExcludeFromCodeCoverage]
     public class Installer : SelkieInstaller <Installer>
     {

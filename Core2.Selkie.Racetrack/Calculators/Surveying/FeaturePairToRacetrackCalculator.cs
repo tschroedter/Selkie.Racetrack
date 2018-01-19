@@ -9,6 +9,7 @@ using SelkieRacetrack = Core2.Selkie.Racetrack;
 
 namespace Core2.Selkie.Racetrack.Calculators.Surveying
 {
+    [UsedImplicitly]
     [ProjectComponent(Lifestyle.Transient)]
     public sealed class FeaturePairToRacetrackCalculator
         : IFeaturePairToRacetrackCalculator

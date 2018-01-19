@@ -7,6 +7,7 @@ namespace Core2.Selkie.Racetrack.Interfaces.Turn
     public interface IPossibleTurnCircles : ICalculator
     {
         [NotNull]
+        [UsedImplicitly]
         ISettings Settings { get; set; }
 
         [NotNull]
@@ -21,6 +22,7 @@ namespace Core2.Selkie.Racetrack.Interfaces.Turn
         [NotNull]
         ITurnCircle FinishTurnCircleStarboard { get; }
 
+        [UsedImplicitly]
         bool IsUnknown { get; }
     }
 }

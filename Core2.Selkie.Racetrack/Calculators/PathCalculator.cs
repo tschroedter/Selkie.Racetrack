@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.Calculators
 {
+    [UsedImplicitly]
     [ProjectComponent(Lifestyle.Transient)]
     public class PathCalculator : IPathCalculator
     {

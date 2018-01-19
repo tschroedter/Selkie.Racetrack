@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.Calculators
 {
+    [UsedImplicitly]
     public class PathSelectorCalculator : IPathSelectorCalculator
     {
         public PathSelectorCalculator([NotNull] ITurnCirclePairsToPathsConverter converter,

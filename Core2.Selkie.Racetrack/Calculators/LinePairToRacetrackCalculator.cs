@@ -8,6 +8,7 @@ using SelkieRacetrack = Core2.Selkie.Racetrack;
 
 namespace Core2.Selkie.Racetrack.Calculators
 {
+    [UsedImplicitly]
     [ProjectComponent(Lifestyle.Transient)]
     public sealed class LinePairToRacetrackCalculator
         : ILinePairToRacetrackCalculator

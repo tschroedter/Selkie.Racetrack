@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Windsor;
+using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack
 {
+    [UsedImplicitly]
     [ProjectComponent(Lifestyle.Transient)]
     public class PathShortestFinder : IPathShortestFinder
     {

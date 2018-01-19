@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.UTurn
 {
+    [UsedImplicitly]
     public class UTurnCircleCalculator : IUTurnCircleCalculator
     {
         public UTurnCircleCalculator([NotNull] IDetermineCirclePairCalculator determineCirclePairCalculator,

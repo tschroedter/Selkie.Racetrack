@@ -12,6 +12,7 @@ namespace Core2.Selkie.Racetrack.Interfaces.Calculators
         ISettings Settings { get; set; }
 
         [NotNull]
+        [UsedImplicitly]
         IEnumerable <IPath> Paths { get; }
     }
 }

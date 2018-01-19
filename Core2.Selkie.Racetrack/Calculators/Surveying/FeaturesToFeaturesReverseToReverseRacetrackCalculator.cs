@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.Calculators.Surveying
 {
+    [UsedImplicitly]
     public class FeaturesToFeaturesReverseToReverseRacetrackCalculator
         : BaseFeaturesToFeaturesRacetracksCalculator,
           IFeaturesToFeaturesReverseToReverseRacetrackCalculator

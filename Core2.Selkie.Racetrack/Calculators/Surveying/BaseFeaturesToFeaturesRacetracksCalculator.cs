@@ -3,7 +3,6 @@ using System.Linq;
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Surveying;
 using Core2.Selkie.Racetrack.Interfaces;
-using Core2.Selkie.Racetrack.Interfaces.Calculators;
 using Core2.Selkie.Racetrack.Interfaces.Calculators.Surveying;
 using JetBrains.Annotations;
 
@@ -17,6 +16,8 @@ namespace Core2.Selkie.Racetrack.Calculators.Surveying
             TurnRadiusForPort = Distance.Unknown;
             Paths = new IPath[0][];
             Features = new ISurveyFeature[0];
+            FromFeature = SurveyFeature.Unknown;
+            ToFeatures = new ISurveyFeature[0];
             IsStarboardTurnAllowed = true;
             IsPortTurnAllowed = true;
             m_Calculator = calculator;

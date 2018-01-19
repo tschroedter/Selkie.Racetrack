@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack
 {
+    [UsedImplicitly]
     [ProjectComponent(Lifestyle.Transient)]
     public class PathValidator : IPathValidator
     {
@@ -33,22 +34,18 @@ namespace Core2.Selkie.Racetrack
 
             IPolylineSegment[] segments = path.Segments.ToArray();
 
-            var middleSegment = segments [ 1 ] as ILine;
-
-            if ( middleSegment == null ||
+            if ( !( segments [ 1 ] is ILine middleSegment ) ||
                  middleSegment.StartPoint == middleSegment.EndPoint )
             {
                 return true;
             }
 
-            var startSegment = segments [ 0 ] as ITurnCircleArcSegment;
-            if ( startSegment == null )
+            if ( !( segments [ 0 ] is ITurnCircleArcSegment startSegment ) )
             {
                 return false;
             }
 
-            var endSegment = segments [ 2 ] as ITurnCircleArcSegment;
-            if ( endSegment == null )
+            if ( !( segments [ 2 ] is ITurnCircleArcSegment endSegment ) )
             {
                 return false;
             }

@@ -11,6 +11,7 @@ using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.Converters
 {
+    [UsedImplicitly]
     public class TurnCirclePairToPathConverter : ITurnCirclePairToPathConverter
     {
         public TurnCirclePairToPathConverter([NotNull] ISelkieLogger logger,

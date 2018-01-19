@@ -11,6 +11,8 @@ using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.UTurn
 {
+    [UsedImplicitly]
+    // Todo why is this not a ProjectComponent
     public class DetermineCirclePairCalculator : IDetermineCirclePairCalculator
     {
         public DetermineCirclePairCalculator([NotNull] IPossibleTurnCircles possibleTurnCircles)

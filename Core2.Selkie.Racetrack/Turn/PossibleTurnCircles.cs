@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 
 namespace Core2.Selkie.Racetrack.Turn
 {
+    [UsedImplicitly]
     [ProjectComponent(Lifestyle.Transient)]
     public class PossibleTurnCircles : IPossibleTurnCircles
     {
@@ -30,6 +31,7 @@ namespace Core2.Selkie.Racetrack.Turn
             IsUnknown = isUnknown;
         }
 
+        [UsedImplicitly]
         public static readonly IPossibleTurnCircles Unknown = new PossibleTurnCircles(true);
 
         public void Calculate()
@@ -41,6 +43,7 @@ namespace Core2.Selkie.Racetrack.Turn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal Point CalculateCentrePointForFinishPointPort()
         {
             Point centrePoint = Settings.FinishPoint;
@@ -55,6 +58,7 @@ namespace Core2.Selkie.Racetrack.Turn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal Point CalculateCentrePointForFinishPointStarboard()
         {
             Point centrePoint = Settings.FinishPoint;
@@ -69,6 +73,7 @@ namespace Core2.Selkie.Racetrack.Turn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal Point CalculateCentrePointForStartPointPort()
         {
             Point centrePoint = Settings.StartPoint;
@@ -83,6 +88,7 @@ namespace Core2.Selkie.Racetrack.Turn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal Point CalculateCentrePointForStartPointStarboard()
         {
             Point centrePoint = Settings.StartPoint;
@@ -97,6 +103,7 @@ namespace Core2.Selkie.Racetrack.Turn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal ITurnCircle CreateTurnCircleFinishPointPort()
         {
             Point centrePoint = CalculateCentrePointForFinishPointPort();
@@ -113,6 +120,7 @@ namespace Core2.Selkie.Racetrack.Turn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal ITurnCircle CreateTurnCircleFinishPointStarboard()
         {
             Point centrePoint = CalculateCentrePointForFinishPointStarboard();
@@ -129,6 +137,7 @@ namespace Core2.Selkie.Racetrack.Turn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal ITurnCircle CreateTurnCircleStartPointPort()
         {
             Point centrePoint = CalculateCentrePointForStartPointPort();
@@ -145,6 +154,7 @@ namespace Core2.Selkie.Racetrack.Turn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal ITurnCircle CreateTurnCircleStartPointStarboard()
         {
             Point centrePoint = CalculateCentrePointForStartPointStarboard();
@@ -161,6 +171,7 @@ namespace Core2.Selkie.Racetrack.Turn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal Angle PortAzimuth([NotNull] Angle azimuth)
         {
             Angle portAzimuth = azimuth + Angle.FromDegrees(90.0);
@@ -169,6 +180,7 @@ namespace Core2.Selkie.Racetrack.Turn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal Angle StarboardAzimuth([NotNull] Angle azimuth)
         {
             Angle portAzimuth = azimuth - Angle.FromDegrees(90.0);
