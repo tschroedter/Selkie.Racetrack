@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Description>This package contains classes to calculate a racetrack from one point two another using a minimum turncircle. The UTurn option is included in the calculation and will be used if it's the only or shortest option. The calculation are based on triangles.</Description>
+    <PackageIconUrl>https://github.com/tschroedter/Selkie/blob/master/LaptopDeskPerson.png</PackageIconUrl>
+    <Copyright>Copyright © Thomas Schroedter 2017</Copyright>
+    <PackageLicenseUrl>https://github.com/tschroedter/Selkie.Racetracks/blob/dotnetcore2/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/tschroedter/Selkie.Racetracks/tree/dotnetcore2</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/tschroedter/Selkie.Racetracks/tree/dotnetcore2</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageTags>Selkie Racetracks Core2</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
