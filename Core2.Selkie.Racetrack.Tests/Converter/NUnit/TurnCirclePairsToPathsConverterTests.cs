@@ -12,7 +12,6 @@ using Core2.Selkie.Racetrack.Interfaces.Converters;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
 using Core2.Selkie.Racetrack.Turn;
 using Core2.Selkie.Windsor.Interfaces;
-using TurnCircle = Core2.Selkie.Racetrack.Turn.TurnCircle;
 
 namespace Core2.Selkie.Racetrack.Tests.Converter.NUnit
 {

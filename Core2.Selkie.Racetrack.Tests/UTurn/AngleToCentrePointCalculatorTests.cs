@@ -10,7 +10,6 @@ using Core2.Selkie.Racetrack.UTurn;
 using JetBrains.Annotations;
 using NSubstitute;
 using NUnit.Framework;
-using TurnCircle = Core2.Selkie.Racetrack.Turn.TurnCircle;
 
 namespace Core2.Selkie.Racetrack.Tests.UTurn
 {

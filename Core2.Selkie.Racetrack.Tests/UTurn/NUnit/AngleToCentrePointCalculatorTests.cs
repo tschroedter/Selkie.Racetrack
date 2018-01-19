@@ -10,7 +10,6 @@ using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
 using Core2.Selkie.Racetrack.Turn;
 using Core2.Selkie.Racetrack.UTurn;
-using TurnCircle = Core2.Selkie.Racetrack.Turn.TurnCircle;
 
 namespace Core2.Selkie.Racetrack.Tests.UTurn.NUnit
 {

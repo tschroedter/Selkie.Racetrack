@@ -8,7 +8,6 @@ using Core2.Selkie.Racetrack.Turn;
 using Core2.Selkie.Windsor;
 using JetBrains.Annotations;
 using NLog;
-using TurnCircle = Core2.Selkie.Racetrack.Turn.TurnCircle;
 
 namespace Core2.Selkie.Racetrack.UTurn
 {

@@ -17,7 +17,6 @@ using Core2.Selkie.Racetrack.Turn;
 using Core2.Selkie.Racetrack.UTurn;
 using Core2.Selkie.Windsor.Interfaces;
 using Constants = Core2.Selkie.Geometry.Constants;
-using ITurnCircleArcSegment = Core2.Selkie.Geometry.Shapes.ITurnCircleArcSegment;
 
 namespace Core2.Selkie.Racetrack.Tests.Calculators.NUnit
 {

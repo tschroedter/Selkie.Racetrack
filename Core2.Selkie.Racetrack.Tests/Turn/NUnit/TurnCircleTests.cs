@@ -3,8 +3,6 @@ using NUnit.Framework;
 using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
-using Core2.Selkie.Racetrack.Turn;
-using TurnCircle = Core2.Selkie.Racetrack.Turn.TurnCircle;
 
 namespace Core2.Selkie.Racetrack.Tests.Turn.NUnit
 {
