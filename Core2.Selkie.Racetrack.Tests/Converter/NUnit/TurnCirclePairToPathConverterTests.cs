@@ -1,7 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using NSubstitute;
-using NUnit.Framework;
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.NUnit.Extensions;
@@ -10,11 +8,12 @@ using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
 using Core2.Selkie.Racetrack.Turn;
 using Core2.Selkie.Windsor.Interfaces;
+using NSubstitute;
+using NUnit.Framework;
 using Constants = Core2.Selkie.Geometry.Constants;
 
 namespace Core2.Selkie.Racetrack.Tests.Converter.NUnit
 {
-    
     [ExcludeFromCodeCoverage]
     internal sealed class TurnCirclePairToPathConverterTests
     {
@@ -679,13 +678,6 @@ namespace Core2.Selkie.Racetrack.Tests.Converter.NUnit
             private ISelkieLogger m_Logger;
             private IPathValidator m_PathValidator;
 
-            [SetUp]
-            public void Setup()
-            {
-                m_Logger = Substitute.For <ISelkieLogger>();
-                m_PathValidator = Substitute.For <IPathValidator>();
-            }
-
             [Test]
             public void SettingsDefaultTest()
             {
@@ -708,6 +700,13 @@ namespace Core2.Selkie.Racetrack.Tests.Converter.NUnit
 
                 Assert.AreEqual(settings,
                                 converter.Settings);
+            }
+
+            [SetUp]
+            public void Setup()
+            {
+                m_Logger = Substitute.For <ISelkieLogger>();
+                m_PathValidator = Substitute.For <IPathValidator>();
             }
 
             [Test]

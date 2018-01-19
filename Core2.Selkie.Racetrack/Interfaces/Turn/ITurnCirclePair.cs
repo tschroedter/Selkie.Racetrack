@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Core2.Selkie.Geometry.Shapes;
 using JetBrains.Annotations;
+
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedMemberInSuper.Global
 

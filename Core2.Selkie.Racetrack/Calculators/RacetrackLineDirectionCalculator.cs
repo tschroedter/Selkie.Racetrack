@@ -44,6 +44,7 @@ namespace Core2.Selkie.Racetrack.Calculators
 
         #endregion
 
+        [UsedImplicitly]
         internal Constants.TurnDirection Calculate([NotNull] ILine line,
                                                    [NotNull] Point point)
         {
@@ -78,6 +79,7 @@ namespace Core2.Selkie.Racetrack.Calculators
             }
         }
 
+        [UsedImplicitly]
         internal Side FindSide(double ax,
                                double ay,
                                double bx,
@@ -115,6 +117,7 @@ namespace Core2.Selkie.Racetrack.Calculators
                                             cy);
         }
 
+        [UsedImplicitly]
         internal Side FindSideDependingOnSlope(double ax,
                                                double ay,
                                                double bx,

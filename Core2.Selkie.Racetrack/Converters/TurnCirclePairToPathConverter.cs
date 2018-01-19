@@ -33,6 +33,7 @@ namespace Core2.Selkie.Racetrack.Converters
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal IEnumerable <IPath> CreatePossiblePaths([NotNull] ISettings settings,
                                                          [NotNull] ITurnCirclePair turnCirclePair)
         {
@@ -60,6 +61,7 @@ namespace Core2.Selkie.Racetrack.Converters
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal IPath ReversePathIfNeccessary([NotNull] ISettings settings,
                                                [NotNull] IPath path)
         {

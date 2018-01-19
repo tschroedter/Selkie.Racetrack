@@ -25,6 +25,7 @@ namespace Core2.Selkie.Racetrack.UTurn
         public ITurnCircle FinishTurnCircle { get; private set; } = TurnCircle.Unknown;
 
         [NotNull]
+        [UsedImplicitly]
         internal ITurnCircle DetermineFinishTurnCircle([NotNull] ISettings settings,
                                                        [NotNull] IUTurnCircle uTurnCircle)
         {
@@ -39,6 +40,7 @@ namespace Core2.Selkie.Racetrack.UTurn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal ITurnCircle DetermineStartTurnCircle([NotNull] ISettings settings,
                                                       [NotNull] IUTurnCircle uTurnCircle)
         {

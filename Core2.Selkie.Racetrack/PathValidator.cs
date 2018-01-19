@@ -69,6 +69,7 @@ namespace Core2.Selkie.Racetrack
 
         #endregion
 
+        [UsedImplicitly]
         internal bool IsValidArcSegment([NotNull] ILine line,
                                         [NotNull] ITurnCircleArcSegment arcSegment,
                                         Constants.TurnDirection defaultTurnDirection)

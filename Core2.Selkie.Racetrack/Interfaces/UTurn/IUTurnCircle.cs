@@ -3,6 +3,7 @@ using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Interfaces.Calculators;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
 using JetBrains.Annotations;
+
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedMemberInSuper.Global
 

@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using NSubstitute;
-using NUnit.Framework;
 using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Calculators;
 using Core2.Selkie.Geometry.Primitives;
@@ -10,10 +8,11 @@ using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
 using Core2.Selkie.Racetrack.Turn;
+using NSubstitute;
+using NUnit.Framework;
 
 namespace Core2.Selkie.Racetrack.Tests.Turn.NUnit
 {
-    
     [ExcludeFromCodeCoverage]
     internal sealed class TurnCirclePairTests
     {
@@ -283,7 +282,7 @@ namespace Core2.Selkie.Racetrack.Tests.Turn.NUnit
             public void DetermineIsValidForForDistanceLessRadiusTest()
             {
                 var oneCircle = Substitute.For <ICircle>();
-                
+
                 oneCircle.Distance(Arg.Any <ICircle>()).Returns(5.0);
 
                 var one = Substitute.For <ITurnCircle>();

@@ -42,6 +42,7 @@ namespace Core2.Selkie.Racetrack.UTurn
         public IUTurnCircle UTurnCircle { get; }
 
         [NotNull]
+        [UsedImplicitly]
         internal ITurnCircleArcSegment CreateFinishArcSegment([NotNull] ISettings settings,
                                                               [NotNull] Point intersectionPoint,
                                                               [NotNull] ITurnCircle finishTurnCircle)
@@ -56,6 +57,7 @@ namespace Core2.Selkie.Racetrack.UTurn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal ITurnCircleArcSegment CreateFinishTurnCircleArcSegment([NotNull] ISettings settings,
                                                                         [NotNull] IUTurnCircle uTurnCircle,
                                                                         [NotNull] IDetermineTurnCircleCalculator
@@ -71,6 +73,7 @@ namespace Core2.Selkie.Racetrack.UTurn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal ITurnCircleArcSegment CreateStartArcSegment([NotNull] ISettings settings,
                                                              [NotNull] Point intersectionPoint,
                                                              [NotNull] ITurnCircle startTurnCircle)
@@ -85,6 +88,7 @@ namespace Core2.Selkie.Racetrack.UTurn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal ITurnCircleArcSegment CreateStartTurnCircleArcSegment([NotNull] ISettings settings,
                                                                        [NotNull] IUTurnCircle uTurnCircle,
                                                                        [NotNull] IDetermineTurnCircleCalculator
@@ -100,6 +104,7 @@ namespace Core2.Selkie.Racetrack.UTurn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal ITurnCircleArcSegment CreateUTurnArcSegment([NotNull] IUTurnCircle uTurnCircle,
                                                              Constants.CircleOrigin origin,
                                                              [NotNull] Point startPoint,
@@ -115,6 +120,7 @@ namespace Core2.Selkie.Racetrack.UTurn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal Point DeterminArcSegmentIntersectionPoint([NotNull] IUTurnCircle uTurnCircle,
                                                            [NotNull] ITurnCircle circle)
         {
@@ -123,6 +129,7 @@ namespace Core2.Selkie.Racetrack.UTurn
                        : uTurnCircle.UTurnOneIntersectionPoint;
         }
 
+        [UsedImplicitly]
         internal void DetermineTurnCircles()
         {
             m_Calculator.Settings = UTrunCircleSettings;
@@ -131,6 +138,7 @@ namespace Core2.Selkie.Racetrack.UTurn
         }
 
         [NotNull]
+        [UsedImplicitly]
         private IPath CalculatePath([NotNull] ISettings settings,
                                     [NotNull] IUTurnCircle uTurnCircle)
         {

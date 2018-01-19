@@ -37,8 +37,8 @@ namespace Core2.Selkie.Racetrack.Calculators.Surveying
 
         public Distance TurnRadiusForStarboard { get; set; }
 
-        public ISurveyFeature[] ToFeatures { get; set; } // TODO FIXS THIS not tested, currently work-around = ToLine
-        public ISurveyFeature FromFeature { get; set; } // TODO FIXS THIS not tested, currently work-around = FromLine
+        public ISurveyFeature[] ToFeatures { get; set; } // Todo Fixs this, not tested, currently work-around = ToLine
+        public ISurveyFeature FromFeature { get; set; } // Todo Fixs this, not tested, currently work-around = FromLine
 
         public void Calculate()
         {
@@ -65,6 +65,7 @@ namespace Core2.Selkie.Racetrack.Calculators.Surveying
         protected abstract ISurveyFeature GetFromFeature([NotNull] ISurveyFeature toFeature);
 
         [NotNull]
+        [UsedImplicitly]
         internal IPath[] CallCalculator([NotNull] ISurveyFeature fromLine,
                                         [NotNull] ISurveyFeature[] toFeatures)
         {

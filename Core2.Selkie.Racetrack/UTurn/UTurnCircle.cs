@@ -48,6 +48,7 @@ namespace Core2.Selkie.Racetrack.UTurn
             CalculatePossibleUTurnCircle();
         }
 
+        [UsedImplicitly]
         internal bool DetermineIsUTurnRequired([NotNull] IPossibleTurnCircles possibleTurnCircles)
         {
             ICircle startPointPort = possibleTurnCircles.StartTurnCirclePort.Circle;

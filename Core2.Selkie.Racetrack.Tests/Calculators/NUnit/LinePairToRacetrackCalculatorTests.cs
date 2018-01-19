@@ -1,15 +1,16 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using NSubstitute;
-using NUnit.Framework;
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Calculators;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Calculators;
+using NSubstitute;
+using NUnit.Framework;
 
 namespace Core2.Selkie.Racetrack.Tests.Calculators.NUnit
 {
-    [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")]
+    [SuppressMessage("Microsoft.Design",
+        "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")]
     [TestFixture]
     [ExcludeFromCodeCoverage]
     internal sealed class LinePairToRacetrackCalculatorTests

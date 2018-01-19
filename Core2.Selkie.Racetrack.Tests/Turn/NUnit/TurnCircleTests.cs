@@ -1,12 +1,11 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using NUnit.Framework;
 using Core2.Selkie.Geometry;
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
+using NUnit.Framework;
 
 namespace Core2.Selkie.Racetrack.Tests.Turn.NUnit
 {
-    
     [TestFixture]
     [ExcludeFromCodeCoverage]
     internal sealed class TurnCircleTests

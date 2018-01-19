@@ -32,6 +32,7 @@ namespace Core2.Selkie.Racetrack.Calculators
         #region ICalculator Members
 
         [NotNull]
+        [UsedImplicitly]
         internal IPathShortestFinder PathShortestFinder { get; }
 
         public IPath Path => PathShortestFinder.ShortestPath;

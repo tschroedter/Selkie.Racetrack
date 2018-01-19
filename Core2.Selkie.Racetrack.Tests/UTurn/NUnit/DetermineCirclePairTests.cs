@@ -1,17 +1,16 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using JetBrains.Annotations;
-using NSubstitute;
-using NUnit.Framework;
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
 using Core2.Selkie.Racetrack.Turn;
 using Core2.Selkie.Racetrack.UTurn;
+using JetBrains.Annotations;
+using NSubstitute;
+using NUnit.Framework;
 
 namespace Core2.Selkie.Racetrack.Tests.UTurn.NUnit
 {
-    
     [TestFixture]
     [ExcludeFromCodeCoverage]
     internal sealed class DetermineCirclePairTests

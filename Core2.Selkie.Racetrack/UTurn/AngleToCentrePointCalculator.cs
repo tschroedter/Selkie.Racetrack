@@ -61,6 +61,7 @@ namespace Core2.Selkie.Racetrack.UTurn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal Angle CalculateAngleRelativeToCentreLine([NotNull] Point zeroCentrePoint,
                                                           [NotNull] Point oneCentrePoint,
                                                           double radius)
@@ -75,6 +76,7 @@ namespace Core2.Selkie.Racetrack.UTurn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal Angle CalculateRadiansRelativeToXAxisForLeftTurnCircle([NotNull] Point zeroCentrePoint,
                                                                         [NotNull] Point oneCentrePoint,
                                                                         double radius)
@@ -93,6 +95,7 @@ namespace Core2.Selkie.Racetrack.UTurn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal Angle CalculateRadiansRelativeToXAxisForRightTurnCircle([NotNull] Point zeroCentrePoint,
                                                                          [NotNull] Point oneCentrePoint,
                                                                          double radius)
@@ -111,6 +114,7 @@ namespace Core2.Selkie.Racetrack.UTurn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal ITurnCircle DetermineLeftTurnCircle([NotNull] ITurnCirclePair pair)
         {
             ITurnCircle zero = pair.Zero;
@@ -135,6 +139,7 @@ namespace Core2.Selkie.Racetrack.UTurn
             throw new ArgumentException(message);
         }
 
+        [UsedImplicitly]
         internal bool IsValid([NotNull] ITurnCirclePair pair)
         {
             return pair.Zero.Side == pair.One.Side;

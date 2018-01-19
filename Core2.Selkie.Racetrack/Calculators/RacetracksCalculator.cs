@@ -38,6 +38,7 @@ namespace Core2.Selkie.Racetrack.Calculators
             m_LinesToLinesReverseToReverseCalculator = linesToLinesReverseToReverseCalculator;
         }
 
+        [UsedImplicitly]
         public static readonly Distance DefaultTurnRadius = new Distance(60.0);
 
         private readonly ILinesToLinesForwardToForwardRacetrackCalculator
@@ -102,6 +103,7 @@ namespace Core2.Selkie.Racetrack.Calculators
         public IPath[][] ReverseToReverse { get; private set; }
 
         [NotNull]
+        [UsedImplicitly]
         internal IPath[][] CalculateGeneral([NotNull] IBaseLinesToLinesRacetracksCalculator calculator,
                                             [NotNull] IEnumerable <ILine> lines,
                                             [NotNull] Distance turnRadiusForPort,

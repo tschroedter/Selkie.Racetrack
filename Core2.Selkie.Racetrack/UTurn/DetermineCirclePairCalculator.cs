@@ -29,6 +29,7 @@ namespace Core2.Selkie.Racetrack.UTurn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal ITurnCirclePair Determine([NotNull] ISettings settings,
                                            [NotNull] IPossibleTurnCircles possibleTurnCircles)
         {

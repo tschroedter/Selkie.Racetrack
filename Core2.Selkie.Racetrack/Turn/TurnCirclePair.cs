@@ -61,6 +61,7 @@ namespace Core2.Selkie.Racetrack.Turn
         public bool IsUnknown { get; }
 
         [NotNull]
+        [UsedImplicitly]
         internal IEnumerable <ILine> CreateDummyTangentsForSameCircles([NotNull] ISettings settings,
                                                                        [NotNull] ITurnCircle turnCircle)
         {
@@ -76,6 +77,7 @@ namespace Core2.Selkie.Racetrack.Turn
             return lines;
         }
 
+        [UsedImplicitly]
         internal bool DetermineIsValid([NotNull] ITurnCircle one,
                                        [NotNull] ITurnCircle two)
         {
@@ -91,6 +93,7 @@ namespace Core2.Selkie.Racetrack.Turn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal IEnumerable <ILine> SelectTangents([NotNull] ICirclePairTangentLinesCalculator calculator)
         {
             var lines = new List <ILine>();

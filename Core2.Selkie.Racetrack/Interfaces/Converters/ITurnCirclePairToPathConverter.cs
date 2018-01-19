@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
 using JetBrains.Annotations;
+
 // ReSharper disable UnusedMemberInSuper.Global
 
 namespace Core2.Selkie.Racetrack.Interfaces.Converters

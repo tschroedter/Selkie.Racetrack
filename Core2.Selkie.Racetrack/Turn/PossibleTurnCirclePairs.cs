@@ -27,6 +27,7 @@ namespace Core2.Selkie.Racetrack.Turn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal IEnumerable <ITurnCirclePair> CreateAllPairs([NotNull] ISettings settings,
                                                               [NotNull] IPossibleTurnCircles turnCircles)
         {
@@ -54,6 +55,7 @@ namespace Core2.Selkie.Racetrack.Turn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal List <ITurnCirclePair> CreateOnlyPortTurnsPairs([NotNull] ISettings settings,
                                                                  [NotNull] IPossibleTurnCircles turnCircles)
         {
@@ -69,6 +71,7 @@ namespace Core2.Selkie.Racetrack.Turn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal IEnumerable <ITurnCirclePair> CreateOnlyStarboardTurnsPairs([NotNull] ISettings settings,
                                                                              [NotNull] IPossibleTurnCircles turnCircles)
         {
@@ -84,6 +87,7 @@ namespace Core2.Selkie.Racetrack.Turn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal IEnumerable <ITurnCirclePair> CreatePairs([NotNull] ISettings settings,
                                                            [NotNull] IPossibleTurnCircles turnCircles)
         {
@@ -105,6 +109,7 @@ namespace Core2.Selkie.Racetrack.Turn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal TurnCirclePair CreateTurnCirclePairPortToPort([NotNull] ISettings settings,
                                                                [NotNull] IPossibleTurnCircles turnCircles)
         {
@@ -115,6 +120,7 @@ namespace Core2.Selkie.Racetrack.Turn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal TurnCirclePair CreateTurnCirclePairPortToStarboard([NotNull] ISettings settings,
                                                                     [NotNull] IPossibleTurnCircles turnCircles)
         {
@@ -125,6 +131,7 @@ namespace Core2.Selkie.Racetrack.Turn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal TurnCirclePair CreateTurnCirclePairStarboardToPort([NotNull] ISettings settings,
                                                                     [NotNull] IPossibleTurnCircles turnCircles)
         {
@@ -135,6 +142,7 @@ namespace Core2.Selkie.Racetrack.Turn
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal TurnCirclePair CreateTurnCirclePairStarboardToStarboard([NotNull] ISettings settings,
                                                                          [NotNull] IPossibleTurnCircles turnCircles)
         {

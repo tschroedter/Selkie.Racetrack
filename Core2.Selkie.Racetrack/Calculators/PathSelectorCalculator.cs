@@ -17,6 +17,7 @@ namespace Core2.Selkie.Racetrack.Calculators
             m_UTurnPath = uTurnPath;
         }
 
+        [UsedImplicitly]
         internal bool IsUTurnAllowed => Settings.IsPortTurnAllowed && Settings.IsStarboardTurnAllowed;
 
         private readonly ITurnCirclePairsToPathsConverter m_Converter;
@@ -46,6 +47,7 @@ namespace Core2.Selkie.Racetrack.Calculators
         public ISettings Settings { get; set; } = Racetrack.Settings.Unknown;
 
         [NotNull]
+        [UsedImplicitly]
         internal IEnumerable <IPath> SelectPaths([NotNull] IUTurnPath uTurnPath,
                                                  [NotNull] ITurnCirclePairsToPathsConverter converters)
         {

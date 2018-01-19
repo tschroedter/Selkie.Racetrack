@@ -1,13 +1,13 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using JetBrains.Annotations;
-using NSubstitute;
-using NUnit.Framework;
 using Core2.Selkie.Geometry.Primitives;
 using Core2.Selkie.Geometry.Shapes;
 using Core2.Selkie.Racetrack.Calculators;
 using Core2.Selkie.Racetrack.Interfaces;
 using Core2.Selkie.Racetrack.Interfaces.Calculators;
+using JetBrains.Annotations;
+using NSubstitute;
+using NUnit.Framework;
 
 namespace Core2.Selkie.Racetrack.Tests.Calculators.NUnit
 {
@@ -230,40 +230,6 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators.NUnit
         }
 
         [Test]
-        public void TurnRadiusForPortDefaultTest()
-        {
-            Assert.True(m_Calculator.TurnRadiusForPort.IsUnknown);
-        }
-
-        [Test]
-        public void TurnRadiusForStarboardDefaultTest()
-        {
-            Assert.True(m_Calculator.TurnRadiusForStarboard.IsUnknown);
-        }
-
-        [Test]
-        public void TurnRadiusForPortRoundtripTest()
-        {
-            var radius = new Distance(123.0);
-
-            m_Calculator.TurnRadiusForPort = radius;
-
-            Assert.AreEqual(radius,
-                            m_Calculator.TurnRadiusForPort);
-        }
-
-        [Test]
-        public void TurnRadiusForStarboardRoundtripTest()
-        {
-            var radius = new Distance(123.0);
-
-            m_Calculator.TurnRadiusForStarboard = radius;
-
-            Assert.AreEqual(radius,
-                            m_Calculator.TurnRadiusForStarboard);
-        }
-
-        [Test]
         public void ToLineRoundtripTest()
         {
             var line = Substitute.For <ILine>();
@@ -283,6 +249,40 @@ namespace Core2.Selkie.Racetrack.Tests.Calculators.NUnit
         {
             Assert.AreEqual(0,
                             m_Calculator.ToLines.Length);
+        }
+
+        [Test]
+        public void TurnRadiusForPortDefaultTest()
+        {
+            Assert.True(m_Calculator.TurnRadiusForPort.IsUnknown);
+        }
+
+        [Test]
+        public void TurnRadiusForPortRoundtripTest()
+        {
+            var radius = new Distance(123.0);
+
+            m_Calculator.TurnRadiusForPort = radius;
+
+            Assert.AreEqual(radius,
+                            m_Calculator.TurnRadiusForPort);
+        }
+
+        [Test]
+        public void TurnRadiusForStarboardDefaultTest()
+        {
+            Assert.True(m_Calculator.TurnRadiusForStarboard.IsUnknown);
+        }
+
+        [Test]
+        public void TurnRadiusForStarboardRoundtripTest()
+        {
+            var radius = new Distance(123.0);
+
+            m_Calculator.TurnRadiusForStarboard = radius;
+
+            Assert.AreEqual(radius,
+                            m_Calculator.TurnRadiusForStarboard);
         }
     }
 }

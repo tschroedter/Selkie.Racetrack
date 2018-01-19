@@ -23,6 +23,7 @@ namespace Core2.Selkie.Racetrack.Calculators
 
         public Constants.TurnDirection TurnDirection { get; }
 
+        [UsedImplicitly]
         internal Constants.TurnDirection DetermineDirection([NotNull] ILine line,
                                                             [NotNull] Point point)
         {
@@ -56,6 +57,7 @@ namespace Core2.Selkie.Racetrack.Calculators
             return Constants.TurnDirection.Unknown;
         }
 
+        [UsedImplicitly]
         internal Constants.TurnDirection FindSideForHorizontalLine(double ax,
                                                                    double bx,
                                                                    double by,
@@ -83,6 +85,7 @@ namespace Core2.Selkie.Racetrack.Calculators
             return m_DefaultTurnDirection;
         }
 
+        [UsedImplicitly]
         internal Constants.TurnDirection FindSideForVerticalLine(double ay,
                                                                  double bx,
                                                                  double by,

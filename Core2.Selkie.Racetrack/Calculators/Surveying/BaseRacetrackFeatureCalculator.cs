@@ -43,6 +43,7 @@ namespace Core2.Selkie.Racetrack.Calculators.Surveying
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal abstract IFeaturePairToRacetrackCalculator GetCalculator([NotNull] ISurveyFeature fromFeature,
                                                                           [NotNull] ISurveyFeature toFeature,
                                                                           [NotNull] Distance radiusForPortTurn,

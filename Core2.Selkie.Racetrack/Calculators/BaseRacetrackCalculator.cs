@@ -42,6 +42,7 @@ namespace Core2.Selkie.Racetrack.Calculators
         }
 
         [NotNull]
+        [UsedImplicitly]
         internal abstract ILinePairToRacetrackCalculator GetCalculator([NotNull] ILine fromLine,
                                                                        [NotNull] ILine toLine,
                                                                        [NotNull] Distance radiusForPortTurn,

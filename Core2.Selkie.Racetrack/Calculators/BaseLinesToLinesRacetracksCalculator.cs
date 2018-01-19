@@ -60,6 +60,7 @@ namespace Core2.Selkie.Racetrack.Calculators
         protected abstract ILine GetFromLine([NotNull] ILine toLine);
 
         [NotNull]
+        [UsedImplicitly]
         internal IPath[] CallCalculator([NotNull] ILine fromLine,
                                         [NotNull] ILine[] toLines)
         {
