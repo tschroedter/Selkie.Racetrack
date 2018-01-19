@@ -10,6 +10,7 @@ namespace Core2.Selkie.Racetrack.Interfaces.Turn
         IEnumerable <ITurnCirclePair> Pairs { get; }
 
         [NotNull]
+        [UsedImplicitly]
         ISettings Settings { get; set; }
     }
 }

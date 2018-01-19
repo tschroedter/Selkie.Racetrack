@@ -4,6 +4,7 @@ using Core2.Selkie.Racetrack.Interfaces.Calculators;
 using Core2.Selkie.Racetrack.Interfaces.Turn;
 using JetBrains.Annotations;
 // ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedMemberInSuper.Global
 
 namespace Core2.Selkie.Racetrack.Interfaces.UTurn
 {

@@ -9,6 +9,7 @@ namespace Core2.Selkie.Racetrack.Interfaces.UTurn
     public interface IUTurnCircleCalculator : ICalculator
     {
         [NotNull]
+        [UsedImplicitly]
         ISettings Settings { get; set; }
 
         [NotNull]

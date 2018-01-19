@@ -17,6 +17,7 @@ namespace Core2.Selkie.Racetrack.Interfaces.UTurn
         ITurnCircle One { get; }
 
         [NotNull]
+        [UsedImplicitly]
         ISettings Settings { get; set; }
     }
 }

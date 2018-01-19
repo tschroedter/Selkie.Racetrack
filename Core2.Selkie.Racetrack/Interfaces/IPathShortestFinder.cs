@@ -9,6 +9,7 @@ namespace Core2.Selkie.Racetrack.Interfaces
         IPath ShortestPath { get; }
 
         [NotNull]
+        [UsedImplicitly]
         IEnumerable <IPath> Paths { get; set; }
 
         void Find();

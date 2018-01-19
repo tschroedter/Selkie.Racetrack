@@ -10,9 +10,11 @@ namespace Core2.Selkie.Racetrack.Interfaces.Converters
         IEnumerable <IPath> Paths { get; }
 
         [NotNull]
+        [UsedImplicitly]
         ISettings Settings { get; set; }
 
         [NotNull]
+        [UsedImplicitly]
         IPossibleTurnCirclePairs PossibleTurnCirclePairs { get; }
 
         void Convert();
